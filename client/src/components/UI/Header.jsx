@@ -1,25 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { navLinks } from "../../assets/assets"
 
-const Navbar = () => {
+const Navbar = ({ setShowLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Features", path: "/features" },
-    { name: "Pricing", path: "/pricing" },
-    { name: "Contact", path: "/contact" },
-  ];
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#050818]/70 backdrop-blur-xl">
-
-      {/* Glow Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-cyan-400/10 blur-2xl"></div>
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-700 backdrop-blur-sm">
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center h-20">
@@ -27,9 +18,9 @@ const Navbar = () => {
           {/* ✅ Logo */}
           <Link
             to="/"
-            className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text"
+            className="text-2xl font-bold bg-linear-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text flex items-center justify-center gap-2"
           >
-            NextGen AI Studio
+            <img src="./logo.svg" alt="logo" className="h-10" /> Studio
           </Link>
 
           {/* ✅ Desktop Menu */}
@@ -55,7 +46,7 @@ const Navbar = () => {
             <Link
               to="/get-started"
               className="px-6 py-2 rounded-full font-semibold text-white 
-              bg-gradient-to-r from-purple-500 to-cyan-400 
+              bg-linear-to-r from-purple-500 to-cyan-400 
               shadow-lg shadow-purple-500/30 hover:scale-105 transition"
             >
               Get Started
@@ -63,7 +54,7 @@ const Navbar = () => {
 
             {/* Login Button */}
             <Link
-              to="/login"
+              onClick={() => setShowLogin(true)}
               className="px-6 py-2 rounded-full border border-purple-400/60 
               text-white hover:bg-purple-500/20 transition"
             >
@@ -104,13 +95,13 @@ const Navbar = () => {
             <Link
               to="/get-started"
               className="text-center px-6 py-2 rounded-full font-semibold text-white 
-              bg-gradient-to-r from-purple-500 to-cyan-400"
+              bg-linear-to-r from-purple-500 to-cyan-400"
             >
               Get Started
             </Link>
 
             <Link
-              to="/login"
+              onClick={() => setShowLogin(true)}
               className="text-center px-6 py-2 rounded-full border border-purple-400/60 
               hover:bg-purple-500/20 transition"
             >
