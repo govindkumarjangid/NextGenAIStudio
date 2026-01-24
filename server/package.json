@@ -1,0 +1,21 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "nodemon server.js"
+	},
+	"keywords": [],
+	"author": "govind jangid",
+	"license": "ISC",
+	"description": "Modern React frontend for NextGen AI Studio. A responsive dashboard built with Vite and Tailwind CSS to interact with AI Resume Builder, Analyzer, and Image Generation tools.",
+	"dependencies": {
+		"@google/generative-ai": "^0.24.1",
+		"cors": "^2.8.6",
+		"dotenv": "^17.2.3",
+		"express": "^5.2.1",
+		"mongoose": "^9.1.5",
+		"multer": "^2.0.2"
+	}
+}
