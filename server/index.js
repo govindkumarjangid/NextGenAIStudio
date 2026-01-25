@@ -1,21 +1,32 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import connectDB from './src/configs/connectdb.js';
 dotenv.config();
 
+//app
 const app = express();
+
+// Database Connection
+connectDB();
+
+// Port
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-// Test Route
-app.get('/', (req, res) => {
-  res.send('AI Server is Running with ES Modules! 🚀');
-});
 
 // Server Start
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = () => {
+  try {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}...`);
+    });
+  } catch (error) {
+    console.error("Error starting the server:", error);
+  }
+};
+
+startServer();

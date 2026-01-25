@@ -11,7 +11,7 @@ const Hero = () => {
       <div className="absolute -top-40 -left-20 w-125 h-125
       bg-purple-500 opacity-30 blur-[150px]" />
 
-      <div className="absolute -bottom-40 -right-20  w-125 h-125 
+      <div className="absolute bottom-0 -right-10  w-125 h-125 
       bg-cyan-400 opacity-30 blur-[150px]" />
 
       {/* Hero Section */}
@@ -68,7 +68,7 @@ const Hero = () => {
           whileTap={{ scale: 0.95 }}
           className="mt-8 px-8 sm:px-10 py-3 rounded-full 
           font-semibold text-white text-sm sm:text-base
-          bg-linear-to-r from-purple-500 to-cyan-400 "
+          bg-linear-to-r from-purple-500 to-cyan-400 cursor-pointer"
         >
           Get Started Now
         </motion.button>
