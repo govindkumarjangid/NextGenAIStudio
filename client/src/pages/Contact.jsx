@@ -7,14 +7,14 @@ import Title from "../components/UI/Title";
 
 const Contect = () => {
   return (
-    <div className="min-h-screen bg-[#050818] text-white px-6 py-20 relative overflow-hidden">
+    <div className="min-h-screen bg-[#050818] text-white px-2 sm:px-6 py-20 relative overflow-hidden">
 
       {/* Glow Background */}
       <div className="absolute -top-50 -left-50 w-125 h-125 bg-purple-500/30 blur-[160px]" />
       <div className="absolute -bottom-50 -right-50  w-125 h-125 bg-cyan-400/30 blur-[160px]" />
 
       {/* Heading */}
-      <div className="pl-22">
+      <div className="md:pl-22">
         <Title title="Get in Touch." subTitle="Have questions or ideas? We’re here to help!" align="left" />
       </div>
 
@@ -28,7 +28,7 @@ const Contect = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9 }}
           className="lg:col-span-2 rounded-2xl border border-white/15 
-        bg-white/5 backdrop-blur-xl p-10 shadow-xl"
+        bg-white/5 backdrop-blur-xl p-5 sm:p-10 shadow-xl"
         >
           {/* Inputs Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -54,11 +54,10 @@ const Contect = () => {
 
           {/* Button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
             className="mt-8 w-full py-4 rounded-full font-semibold text-lg
-          bg-gradient-to-r from-purple-500 to-cyan-400 
-          shadow-lg shadow-purple-500/30"
+             bg-linear-to-r from-purple-500 to-cyan-400 cursor-pointer"
           >
             Send Message
           </motion.button>

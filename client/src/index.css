@@ -3,6 +3,26 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #020617;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-inner {
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
 }
 
 /* Custom Scrollbar */
