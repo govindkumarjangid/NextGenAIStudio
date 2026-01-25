@@ -18,6 +18,21 @@ const Hero = () => {
       <section className="flex flex-col items-center text-center 
       px-4 sm:px-6 lg:px-12 pt-20 relative z-10">
 
+        {/* Bottom Star Icon */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            repeat: Infinity,
+            duration: 6,
+            ease: "linear",
+          }}
+          className="hidden lg:flex absolute top-7 left-25 
+          text-6xl font-bold bg-linear-to-r from-purple-600  to-cyan-400 text-transparent bg-clip-text
+           drop-shadow-[0_0_25px_rgba(168,85,247,0.8)]"
+        >
+          ✦
+        </motion.div>
+
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -53,17 +68,25 @@ const Hero = () => {
           whileTap={{ scale: 0.95 }}
           className="mt-8 px-8 sm:px-10 py-3 rounded-full 
           font-semibold text-white text-sm sm:text-base
-          bg-linear-to-r from-purple-500 to-cyan-400 
-          shadow-lg shadow-purple-500/30"
+          bg-linear-to-r from-purple-500 to-cyan-400 "
         >
           Get Started Now
         </motion.button>
 
         {/* Bottom Star Icon */}
-        <div className="hidden lg:block absolute bottom-10 right-10 
-        text-gray-400 text-4xl">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            repeat: Infinity,
+            duration: 6,
+            ease: "linear",
+          }}
+          className="hidden lg:flex absolute top-55 right-25 
+          text-6xl font-bold bg-linear-to-r from-purple-600  to-cyan-400 text-transparent bg-clip-text
+           drop-shadow-[0_0_25px_rgba(168,85,247,0.8)]"
+        >
           ✦
-        </div>
+        </motion.div>
 
         {/* Feature Cards Section */}
         <section

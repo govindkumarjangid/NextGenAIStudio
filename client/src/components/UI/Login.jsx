@@ -24,8 +24,7 @@ const Login = ({ showLogin, setShowLogin }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-999 flex items-center justify-center 
-           backdrop-blur-xl px-4"
+          className="fixed inset-0 z-999 flex items-center justify-center backdrop-blur-xl px-4"
         >
           {/* Modal Box */}
           <motion.div
@@ -36,7 +35,7 @@ const Login = ({ showLogin, setShowLogin }) => {
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
             className="w-full max-w-sm rounded-2xl py-8 px-6 
             border border-white/15 bg-white/5 backdrop-blur-2xl 
-            shadow-xl shadow-purple-500/20 relative"
+            shadow-xl relative"
           >
             {/* Close Button */}
             <button
@@ -100,7 +99,7 @@ const Login = ({ showLogin, setShowLogin }) => {
                 type="submit"
                 className="w-full py-3 rounded-full font-semibold text-white
                 bg-linear-to-r from-purple-500 to-cyan-400
-                shadow-lg shadow-purple-500/30 hover:scale-[1.03] transition"
+                shadow-lg hover:scale-[1.03] transition"
               >
                 {state === "login" ? "Login" : "Sign Up"}
               </button>

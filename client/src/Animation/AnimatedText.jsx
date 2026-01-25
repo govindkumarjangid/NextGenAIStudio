@@ -23,7 +23,6 @@ const AnimatedText = ({ text }) => {
       }}
       whileHover={{
         scale: 1.05,
-        textShadow: "0px 0px 25px rgba(168,85,247,0.9)",
       }}
       className="bg-linear-to-r from-purple-400 to-cyan-400 
       text-transparent bg-clip-text inline-block"
