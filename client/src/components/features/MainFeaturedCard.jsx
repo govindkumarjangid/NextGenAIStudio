@@ -10,24 +10,42 @@ const MainFeaturedCard = ({ icon, title, desc, color, path }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.97 }}
       onClick={() => navigate(path)}
-      className="cursor-pointer p-6 rounded-2xl 
-      border border-white/15 bg-white/5 backdrop-blur-xl
-      hover:border-purple-400/50 transition duration-300"
+      className="relative cursor-pointer p-0.5 rounded-2xl group overflow-hidden"
     >
-      {/* Icon */}
+      {/* Rotating Gradient Border */}
       <div
-        className={`w-14 h-14 flex items-center justify-center rounded-xl 
-        bg-black/30 border border-white/10 ${color}`}
+        className="absolute -inset-5 rounded-2xl 
+      bg-linear-to-r from-purple-600 via-pink-600 to-blue-600
+      opacity-0 group-hover:opacity-100 blur-sm
+      animate-spin-slow"
+      />
+
+      {/* Inner Card */}
+      <div
+        className="relative p-6 rounded-2xl 
+      border border-white/15 hover:bg-black/50 backdrop-blur-xl
+      group-hover:border-transparent transition duration-300"
       >
-        {icon}
+        {/* Icon */}
+        <div
+          className={`w-14 h-14 flex items-center justify-center rounded-xl 
+        bg-black/30 border border-white/10 ${color}`}
+        >
+          {icon}
+        </div>
+
+        {/* Title */}
+        <h2 className="mt-5 text-xl font-bold text-white">
+          {title}
+        </h2>
+
+        {/* Desc */}
+        <p className="mt-2 text-gray-300 text-sm leading-relaxed">
+          {desc}
+        </p>
       </div>
-
-      {/* Title */}
-      <h2 className="mt-5 text-xl font-bold text-white">{title}</h2>
-
-      {/* Desc */}
-      <p className="mt-2 text-gray-300 text-sm leading-relaxed">{desc}</p>
     </motion.div>
+
   )
 }
 
