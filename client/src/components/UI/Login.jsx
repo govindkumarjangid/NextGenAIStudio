@@ -34,13 +34,13 @@ const Login = ({ showLogin, setShowLogin }) => {
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
             className="w-full max-w-sm rounded-2xl py-8 px-6 
-            border border-white/15 bg-white/5 backdrop-blur-2xl 
+            border border-white/15 backdrop-blur-2xl bg-black/30 
             shadow-xl relative"
           >
             {/* Close Button */}
             <button
               onClick={() => setShowLogin(false)}
-              className="absolute top-2 right-2 text-gray-300 hover:text-white cursor-pointer border border-gray-700 rounded-full p-1"
+              className="absolute top-2 right-2 text-gray-300 hover:text-white cursor-pointer border border-gray-700 bg-white/10 rounded-full p-1"
             >
               <X size={25} />
             </button>
@@ -66,9 +66,9 @@ const Login = ({ showLogin, setShowLogin }) => {
                   placeholder="Full Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-5 py-3 rounded-full bg-black/30 
+                  className="w-full px-5 py-3 rounded-full bg-white/10 
                   border border-white/10 text-white placeholder-gray-400
-                  focus:ring-2 focus:ring-purple-500 outline-none"
+                  focus:ring-1 focus:ring-purple-500 outline-none"
                 />
               )}
 
@@ -78,9 +78,9 @@ const Login = ({ showLogin, setShowLogin }) => {
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-5 py-3 rounded-full bg-black/30 
+                className="w-full px-5 py-3 rounded-full bg-white/10 
                 border border-white/10 text-white placeholder-gray-400
-                focus:ring-2 focus:ring-cyan-400 outline-none"
+                focus:ring-1 focus:ring-cyan-400 outline-none"
               />
 
               {/* Password */}
@@ -89,9 +89,9 @@ const Login = ({ showLogin, setShowLogin }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-3 rounded-full bg-black/30 
+                className="w-full px-5 py-3 rounded-full bg-white/10 
                 border border-white/10 text-white placeholder-gray-400
-                focus:ring-2 focus:ring-purple-500 outline-none"
+                focus:ring-1 focus:ring-purple-500 outline-none"
               />
 
               {/* Button */}

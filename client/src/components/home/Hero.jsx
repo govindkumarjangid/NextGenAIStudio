@@ -5,14 +5,14 @@ import AnimatedText from "../../Animation/AnimatedText";
 
 const Hero = () => {
   return (
-    <div className="min-h-screen w-full relative overflow-hidden">
+    <div className="w-full overflow-hidden">
 
       {/* Background Glow Effects */}
-      <div className="absolute -top-40 -left-20 w-125 h-125
-      bg-purple-500 opacity-30 blur-[150px]" />
+      <div className="fixed top-0 left-0 w-125 h-125
+      bg-purple-500 opacity-30 blur-[100px] rounded-full" />
 
-      <div className="absolute bottom-0 -right-10  w-125 h-125 
-      bg-cyan-400 opacity-30 blur-[150px]" />
+      <div className="fixed bottom-0 right-0  w-125 h-125 
+      bg-cyan-400 opacity-30 blur-[100px] rounded-full" />
 
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center 
@@ -35,9 +35,10 @@ const Hero = () => {
 
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          initial={{ y: -20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
           className="font-bold leading-tight"
         >
           <h1
@@ -64,6 +65,10 @@ const Hero = () => {
 
         {/* CTA Button */}
         <motion.button
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="mt-8 px-8 sm:px-10 py-3 rounded-full 
@@ -81,7 +86,7 @@ const Hero = () => {
             duration: 6,
             ease: "linear",
           }}
-          className="hidden lg:flex absolute top-55 right-25 
+          className="hidden lg:flex absolute top-90 right-30 
           text-6xl font-bold bg-linear-to-r from-purple-600  to-cyan-400 text-transparent bg-clip-text
            drop-shadow-[0_0_25px_rgba(168,85,247,0.8)]"
         >
@@ -93,12 +98,13 @@ const Hero = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 
           gap-6 mt-16 w-full max-w-7xl px-2 sm:px-6 lg:px-10 pb-20"
         >
-          {cardsData.map((card) => (
+          {cardsData.map((card, index) => (
             <FeaturedCard
               key={card.title}
               icon={card.icon}
               title={card.title}
               desc={card.desc}
+              index={index}
             />
           ))}
         </section>

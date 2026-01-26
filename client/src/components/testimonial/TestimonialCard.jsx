@@ -5,7 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 const TestimonialCard = ({ card }) => {
   return (
     <div className="relative w-72 shrink-0 mx-4">
-      <div className="relative p-5 rounded-2xl bg-slate-900/70 border border-white/10 backdrop-blur-xl shadow-lg hover:border-white/20 transition-colors duration-200">
+      <div className="relative p-5 rounded-2xl border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20 transition-colors duration-200 bg-black/20">
         <div className="flex items-center gap-3">
           <img
             className="size-12 rounded-full border border-white/10 object-cover"

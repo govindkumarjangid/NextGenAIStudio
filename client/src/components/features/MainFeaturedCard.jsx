@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const MainFeaturedCard = ({ icon, title, desc, color, path }) => {
+const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
 
   const navigate = useNavigate();
 
@@ -9,6 +9,10 @@ const MainFeaturedCard = ({ icon, title, desc, color, path }) => {
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
+      initial={{ y: 40, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.1 * index, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       onClick={() => navigate(path)}
       className="relative cursor-pointer p-0.5 rounded-2xl group overflow-hidden"
     >

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navLinks } from "../../assets/assets";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 
 
@@ -13,7 +13,12 @@ const Navbar = ({ setShowLogin }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="ticky top-0 z-50 w-full border-b border-gray-700 backdrop-blur-sm relative">
+    <motion.nav
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
+      className="sticky top-0 z-50 w-full backdrop-blur-sm ">
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center h-20">
@@ -147,7 +152,7 @@ const Navbar = ({ setShowLogin }) => {
       </AnimatePresence>
 
 
-    </nav>
+    </motion.nav>
   );
 };
 
