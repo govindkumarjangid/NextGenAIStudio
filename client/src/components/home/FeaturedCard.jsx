@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 
-const FeaturedCard = ({ icon, title, desc }) => {
+const FeaturedCard = ({ icon, title, desc, index }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="p-6 rounded-2xl border border-white/20 bg-white/5 
+      initial={{ y: 20, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+      className="p-6 rounded-2xl border border-white/20 bg-white/5
         backdrop-blur-xl hover:scale-105 duration-300 transition-transform flex flex-col items-center justify-center"
     >
       {/* Icon */}
