@@ -9,40 +9,39 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
-      initial={{ y: 40, opacity: 0 }}
+       initial={{ y: 150, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.1 * index, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+      transition={{ delay: index * 0.15, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       onClick={() => navigate(path)}
       className="relative cursor-pointer p-0.5 rounded-2xl group overflow-hidden"
     >
       {/* Rotating Gradient Border */}
-      <div className="absolute inset-0 rounded-full 
+      <div className="absolute inset-0 rounded-full
       bg-linear-to-r from-purple-500 via-pink-500 to-blue-700
       opacity-0 group-hover:opacity-100 blur-2xl animate-spin-slow"
       />
 
       {/* Inner Card */}
       <div
-        className="relative p-6 rounded-2xl 
+        className="relative p-6 rounded-2xl
       border border-white/15 hover:bg-black/30 backdrop-blur-xl
       group-hover:border-transparent transition duration-300"
       >
         {/* Icon */}
         <div
-          className={`w-14 h-14 flex items-center justify-center rounded-xl 
-        bg-black/30 border border-white/10 ${color}`}
+          className={`w-12 h-12 flex items-center justify-center rounded-xl bg-black/30 border border-white/10 ${color}`}
         >
           {icon}
         </div>
 
         {/* Title */}
-        <h2 className="mt-5 text-xl font-bold text-white">
+        <h2 className="mt-5 text-xl font-semibold text-white">
           {title}
         </h2>
 
         {/* Desc */}
-        <p className="mt-2 text-gray-300 text-sm leading-relaxed">
+        <p className="mt-2 text-gray-300 text-sm leading-relaxed line-clamp-2">
           {desc}
         </p>
       </div>

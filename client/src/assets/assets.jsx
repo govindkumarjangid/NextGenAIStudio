@@ -34,8 +34,14 @@ export const cardsData = [
 export const navLinks = [
   { name: "Home", path: "/" },
   { name: "Features", path: "/features" },
-  { name: "Testimonials", path: "/testimonials" },
+  { name: "Pricing", path: "/pricing" },
   { name: "Contact", path: "/contact" },
+];
+
+export const specialFeatures = [
+  "No credit card",
+  "30 days free trial",
+  "Setup in 10 minutes",
 ];
 
 export const featuresCardsData = [

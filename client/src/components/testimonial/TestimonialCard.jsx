@@ -1,10 +1,16 @@
-import React from "react";
+import {motion} from "motion/react";
 import { HiCheckBadge } from "react-icons/hi2";
 import { FaXTwitter } from "react-icons/fa6";
 
-const TestimonialCard = ({ card }) => {
+const TestimonialCard = ({ card, index }) => {
   return (
-    <div className="relative w-72 shrink-0 mx-4">
+    <motion.div
+      className="relative w-72 shrink-0 mx-4"
+      initial={{ y: 150, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.15, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+    >
       <div className="relative p-5 rounded-2xl border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20 transition-colors duration-200 bg-black/20">
         <div className="flex items-center gap-3">
           <img
@@ -24,7 +30,7 @@ const TestimonialCard = ({ card }) => {
           </div>
         </div>
 
-        <p className="text-sm leading-relaxed py-4 text-slate-200">
+        <p className="text-xs leading-relaxed py-4 text-slate-200">
           Radiant made undercutting all of our competitors an absolute breeze.
         </p>
 
@@ -44,7 +50,7 @@ const TestimonialCard = ({ card }) => {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 };
 

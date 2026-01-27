@@ -4,8 +4,6 @@ import { Menu, X } from "lucide-react";
 import { navLinks } from "../../assets/assets";
 import { motion, AnimatePresence } from "motion/react";
 
-
-
 const Navbar = ({ setShowLogin }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -18,10 +16,10 @@ const Navbar = ({ setShowLogin }) => {
       animate={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
-      className="sticky top-0 z-50 w-full backdrop-blur-sm ">
+      className="sticky top-0 z-50 w-full backdrop-blur-sm">
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex justify-between items-center h-20">
+      <div className="relative max-w-8xl mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
+        <div className="flex justify-between items-center h-18">
 
           {/* ✅ Logo */}
           <Link
@@ -38,7 +36,7 @@ const Navbar = ({ setShowLogin }) => {
                 key={link.name}
                 to={link.path}
                 className={`transition hover:text-white ${isActive(link.path)
-                  ? "text-white font-semibold"
+                  ? "text-white"
                   : "text-gray-400"
                   }`}
               >
@@ -52,10 +50,9 @@ const Navbar = ({ setShowLogin }) => {
 
             {/* Get Started */}
             <Link
-              to="/get-started"
-              className="px-6 py-2 rounded-full font-semibold text-white 
-              bg-linear-to-r from-purple-500 to-cyan-400 
-              hover:scale-105 transition"
+              className="px-6 py-2 rounded-full text-white
+              bg-linear-to-r from-purple-500 to-cyan-400
+              hover:scale-105 transition-transform active:scale-99 "
             >
               Get Started
             </Link>
@@ -63,8 +60,7 @@ const Navbar = ({ setShowLogin }) => {
             {/* Login Button */}
             <Link
               onClick={() => setShowLogin(true)}
-              className="px-6 py-2 rounded-full border border-purple-400/60 
-              text-white hover:bg-purple-500/20 transition"
+              className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer"
             >
               Log In
             </Link>
@@ -74,10 +70,11 @@ const Navbar = ({ setShowLogin }) => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md text-gray-300 cursor-pointer hover:bg-white/10"
+              className="p-2 rounded-md text-gray-300 cursor-pointer active:scale-95 transition"
             > {isOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
+
         </div>
       </div>
 
@@ -116,7 +113,7 @@ const Navbar = ({ setShowLogin }) => {
                   <Link
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`hover:text-white transition ${isActive(link.path) ? "font-semibold text-white" : ""
+                    className={`hover:text-white transition ${isActive(link.path) ? " text-white" : ""
                       }`}
                   >
                     {link.name}
@@ -134,7 +131,7 @@ const Navbar = ({ setShowLogin }) => {
               >
                 <Link
                   to="/get-started"
-                  className="text-center px-6 py-2 rounded-full font-semibold text-white bg-linear-to-r from-purple-500 to-cyan-400"
+                  className="text-center px-6 py-2 rounded-full text-white bg-linear-to-r from-purple-500 to-cyan-400"
                 >
                   Get Started
                 </Link>
