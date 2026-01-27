@@ -5,7 +5,7 @@
 import React from 'react';
 import { Github, Twitter, Linkedin, Heart } from 'lucide-react';
 
-const Footer = () => {
+const Footer = () => { 
   return (
     <footer className="bg-slate-950 text-gray-400 border-t border-slate-800 py-8 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -118,10 +118,13 @@
 Follow these steps to run the project locally.
 
 ### Prerequisites
-* Node.js (v16+)
-* MongoDB (Local or Atlas URL)
+
+- Node.js (v16+)
+- MongoDB (Local or Atlas URL)
 
 ### 1. Clone the Repo
+
 ```bash
 git clone [https://github.com/your-username/nextgen-ai-studio.git](https://github.com/your-username/nextgen-ai-studio.git)
 cd nextgen-ai-studio
+```

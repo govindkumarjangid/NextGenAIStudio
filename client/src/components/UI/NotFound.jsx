@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle } from "lucide-react";
 
-const NotFound = () => {
+const NotFound = () => { 
   return (
     <div className="flex flex-col items-center justify-center h-[70vh] text-center">
 
