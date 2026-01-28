@@ -8,14 +8,14 @@ import Symbol from "../components/UI/Symbol";
 
 const Contect = () => {
   return (
-    <div className="h-auto bg-[#050818] text-white px-2 sm:px-6 py-20 relative max-w-8xl">
+    <div className="h-auto text-white px-2 sm:px-6 py-20 relative max-w-8xl">
 
       {/* Glow Background */}
-      <div className="fixed top-0 left-0 w-125 h-125
+      {/* <div className="fixed top-0 left-0 w-125 h-125
       bg-purple-500 opacity-30 blur-[100px] rounded-full" />
 
       <div className="fixed bottom-0 right-0  w-125 h-125
-      bg-cyan-400 opacity-30 blur-[100px] rounded-full" />
+      bg-cyan-400 opacity-30 blur-[100px] rounded-full" /> */}
 
       {/* Heading */}
       <div className="flex flex-col justify-center items-center text-center gap-4">

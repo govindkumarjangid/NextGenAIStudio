@@ -14,20 +14,9 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
       viewport={{ once: true }}
       transition={{ delay: index * 0.15, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       onClick={() => navigate(path)}
-      className="relative cursor-pointer p-0.5 rounded-2xl group overflow-hidden"
+      className="relative cursor-pointer rounded-2xl group overflow-hidden  transition-colors duration-200 bg-black/10 p-6  border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20"
     >
-      {/* Rotating Gradient Border */}
-      <div className="absolute inset-0 rounded-full
-      bg-linear-to-r from-purple-500 via-pink-500 to-blue-700
-      opacity-0 group-hover:opacity-100 blur-2xl animate-spin-slow"
-      />
 
-      {/* Inner Card */}
-      <div
-        className="relative p-6 rounded-2xl
-      border border-white/15 hover:bg-black/30 backdrop-blur-xl
-      group-hover:border-transparent transition duration-300"
-      >
         {/* Icon */}
         <div
           className={`w-12 h-12 flex items-center justify-center rounded-xl bg-black/30 border border-white/10 ${color}`}
@@ -44,7 +33,6 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
         <p className="mt-2 text-gray-300 text-sm leading-relaxed line-clamp-2">
           {desc}
         </p>
-      </div>
     </motion.div>
 
   )

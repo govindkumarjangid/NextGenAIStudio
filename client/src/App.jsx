@@ -14,6 +14,9 @@ import CaptionStudio from './pages/owner/CaptionStdio'
 import { useState } from "react";
 import Login from './components/UI/Login'
 import Pricing from "./pages/Pricing";
+import ScrollToTop from "./components/UI/ScrollToTop";
+import Builder from "./components/features/resumeBuilder/Builder";
+import ResumeLanding from "./components/features/resumeBuilder/ResumeLanding";
 
 
 const App = () => {
@@ -24,12 +27,17 @@ const App = () => {
     <>
       <Login showLogin={showLogin} setShowLogin={setShowLogin} />
       <Navbar setShowLogin={setShowLogin} />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/resume-builder" element={<ResumeBuilder />} />
+        <Route path="/resume-builder" element={<ResumeBuilder />}>
+          <Route index element={<ResumeLanding />} />
+          <Route path="builder" element={<Builder />} />
+        </Route>
+
         <Route path="/resume-analyzer" element={<ResumeAnalyzer />} />
         <Route path="/image-stdio" element={<ImageStudio />} />
         <Route path="/thumbnail-genration" element={<YTThumbnail />} />

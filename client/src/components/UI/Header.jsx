@@ -18,7 +18,7 @@ const Navbar = ({ setShowLogin }) => {
       transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
       className="sticky top-0 z-50 w-full backdrop-blur-sm">
 
-      <div className="relative max-w-8xl mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
+      <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
         <div className="flex justify-between items-center h-18">
 
           {/* ✅ Logo */}
@@ -34,7 +34,7 @@ const Navbar = ({ setShowLogin }) => {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                to={link.path}
+                to={{pathname: link.path, scrollToTop: 0}}
                 className={`transition hover:text-white ${isActive(link.path)
                   ? "text-white"
                   : "text-gray-400"

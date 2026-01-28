@@ -5,13 +5,14 @@
     --font-poppins: "Poppins", sans-serif;
     --color-purple: #A855F7;
     --color-cyan: #22D3EE;
+    --color-main: #10011E;
 }
 
 body {
-  background-color: #020617;
+  background-image: radial-gradient(circle at top left, #160027, #00232d);
   overflow-x: hidden;
   scroll-behavior: smooth;
-  @apply bg-black text-white text-sm antialiased font-poppins;
+  @apply  antialiased font-poppins;
 }
 
 @keyframes marqueeScroll {
