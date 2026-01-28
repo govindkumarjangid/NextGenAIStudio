@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 const Builder = () => {
 
@@ -10,8 +11,15 @@ const Builder = () => {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-black text-white">
-        {/* back to landing page  */}
-        <button onClick={() => navigate("/resume-builder")}>Back to Landing Page</button>
+            {/* back to landing page  */}
+            <button
+                onClick={() => navigate(-1)}
+                className="absolute top-6 left-6  text-gray-300 hover:text-white px-4 py-2 rounded-full
+                 flex items-center gap-2 transition-colors z-50 cursor-pointer"
+            >
+                <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform duration-200" />
+                Back
+            </button>
 
             {/* Page Title */}
             <motion.h2

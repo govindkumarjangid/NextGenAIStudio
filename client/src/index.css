@@ -15,6 +15,17 @@ body {
   @apply  antialiased font-poppins;
 }
 
+@layer base{
+  button{
+    @apply cursor-pointer;
+  }
+  input:not([type="checkbox"]):not([type="radio"]){
+    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg;
+  }
+  textarea{
+    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
+}
+}
 @keyframes marqueeScroll {
   0% {
     transform: translateX(0%);

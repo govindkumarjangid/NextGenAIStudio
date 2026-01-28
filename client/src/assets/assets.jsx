@@ -6,6 +6,7 @@ import {
   Youtube,
   Video,
   Type,
+  Phone,
 } from "lucide-react";
 import { LuKey, LuLock, LuDownload } from "react-icons/lu";
 
@@ -231,4 +232,22 @@ export const processData = [
     iconStroke: "stroke-orange-600",
     Icon: LuDownload
   }
+]
+
+export const dummyResumeData = [
+  {
+   personal_info:{
+    full_name: "John Doe",
+    email: "john.doe@example.com",
+    Phone: "+1 234 567 8901",
+    location: "New York, USA",
+    linkedin: "linkedin.com/in/johndoe",
+    website : "johndoe.com",
+    profession: "Software Engineer"
+   },
+   _id: "64f0c8e2b4f5a2d3c4e5f678",
+   userId: "8uhu23rh9huhe89er89he8",
+   title: "Modern Resume",
+   updatedAt: "2024-06-15T10:20:30Z"
+}
 ]
