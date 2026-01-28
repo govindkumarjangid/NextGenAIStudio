@@ -1,16 +1,28 @@
 import { motion } from "motion/react";
 import { trustedUsers } from "../../../assets/assets";
-import { Star, VideoIcon } from "lucide-react";
+import { ChevronLeft, Star, VideoIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+
+    const navigate = useNavigate();
+
     return (
         <div className="w-full mb-30 relative">
 
-            {/* Background Glow Effects */}
+            <button
+            onClick={() => navigate(-1)}
+            className="absolute top-6 left-30 text-gray-300 hover:text-white cursor-pointer flex items-center gap-2 z-49 max-w-6xl group active:scale-95 transition-transform"
+            >
+                <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform duration-200" />
+                Back to features
+            </button>
+
+            {/* Background Glow Effects - Optimized */}
             <div className="fixed top-0 left-0 w-125 h-125
-             bg-purple-500 opacity-40 blur-[150px] rounded-full" />
+             bg-purple-500 opacity-40 blur-[150px] rounded-full will-change-transform" />
             <div className="fixed bottom-0 right-0  w-125 h-125
-             bg-cyan-400 opacity-40 blur-[150px] rounded-full" />
+             bg-cyan-400 opacity-40 blur-[150px] rounded-full will-change-transform" />
 
             {/* Hero Section */}
             <section className="flex flex-col items-center text-center
@@ -18,13 +30,12 @@ const Hero = () => {
 
                 <motion.div className="flex items-center mt-24"
                     initial={{ y: -20, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <div className="flex -space-x-3 pr-3">
                         {trustedUsers.map((user, index) => (
-                            <img alt={`user${index}`} className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-1" src={user.image} />
+                            <img key={index} alt={`user${index}`} className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition-transform duration-200 z-1" src={user.image} />
                         ))}
                     </div>
                     <div className="flex flex-col">
@@ -41,39 +52,25 @@ const Hero = () => {
                 </motion.div>
 
                 {/* Heading */}
-                <motion.div
-                    initial={{ opacity: 0, y: -30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6 }}
-                    className="font-bold leading-tight"
+                <motion.h1
+                    className="text-4xl/13 md:text-6xl/21  max-w-4xl text-center text-white flex flex-wrap justify-center items-center  leading-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                 >
-                    <motion.h1
-                        className="text-4xl/13 md:text-6xl/21 font-medium max-w-4xl text-center text-white flex flex-wrap justify-center items-center"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                            delay: 0.2,
-                            type: "spring",
-                            stiffness: 120,
-                            damping: 18,
-                        }}
-                    >
-                        Land your dream job with
-                        <span className="move-gradient px-3 rounded-xl text-nowrap mx-2">
-                            AI-powered
-                        </span>
-                        resumes.
-                    </motion.h1>
-                </motion.div>
+                    Land your dream job with
+                    <span className="move-gradient px-3 rounded-xl text-nowrap mx-2">
+                        AI-powered
+                    </span>
+                    resumes.
+                </motion.h1>
 
 
                 {/* Subtitle */}
                 <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
                     className="mt-6 text-gray-300 max-w-xl sm:max-w-2xl
                      text-sm sm:text-base md:text-lg"
                 >
@@ -83,19 +80,28 @@ const Hero = () => {
 
                 {/* CTA Button */}
                 <motion.div className="flex items-center gap-4 mt-8"
-                    initial={{ y: 50, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
                 >
-                    <button className="bg-linear-to-r from-purple-500 to-cyan-400
-                      hover:scale-105 transition text-white rounded-full px-7 h-11 cursor-pointer text-xs md:text-base">
+                    <motion.button
+                        className="bg-linear-to-r from-purple-500 to-cyan-400
+                      text-white rounded-full px-7 h-11 cursor-pointer text-xs md:text-base"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                    >
                         Get started
-                    </button>
-                    <button className="flex items-center gap-2 border border-purple-400/60 text-white hover:bg-purple-500/20 transition rounded-full px-6 h-11  cursor-pointer text-xs md:text-base">
+                    </motion.button>
+                    <motion.button
+                        className="flex items-center gap-2 border border-purple-400/60 text-white hover:bg-purple-500/20 transition-colors duration-200 rounded-full px-6 h-11  cursor-pointer text-xs md:text-base"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                    >
                         <VideoIcon strokeWidth={1} className="size-5" />
                         <span>Try demo</span>
-                    </button>
+                    </motion.button>
                 </motion.div>
 
             </section>

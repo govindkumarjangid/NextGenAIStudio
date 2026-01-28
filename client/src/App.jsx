@@ -17,6 +17,7 @@ import Pricing from "./pages/Pricing";
 import ScrollToTop from "./components/UI/ScrollToTop";
 import Builder from "./components/features/resumeBuilder/Builder";
 import ResumeLanding from "./components/features/resumeBuilder/ResumeLanding";
+import Dashboard from "./components/features/resumeBuilder/Dashboard";
 
 
 const App = () => {
@@ -35,9 +36,9 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/resume-builder" element={<ResumeBuilder />}>
           <Route index element={<ResumeLanding />} />
-          <Route path="builder" element={<Builder />} />
+          <Route path="builder" element={<Dashboard />} />
+          <Route path="builder/:resumeId" element={<Builder />} />
         </Route>
-
         <Route path="/resume-analyzer" element={<ResumeAnalyzer />} />
         <Route path="/image-stdio" element={<ImageStudio />} />
         <Route path="/thumbnail-genration" element={<YTThumbnail />} />
