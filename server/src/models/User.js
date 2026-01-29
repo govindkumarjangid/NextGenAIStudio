@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true
+  },
+  credits:{
+    type: Number,
+    default: 10,
   }
 }, { timestamps: true });
 

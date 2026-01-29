@@ -2,7 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './src/configs/connectdb.js';
-import ImageRoute from './src/routes/ImageRoute.js';
+import imageRoute from './src/routes/ImageRoute.js';
+import userRouter from './src/routes/UserRoute.js';
 dotenv.config();
 
 //app
@@ -19,7 +20,8 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use('/api/image', ImageRoute);
+app.use('/api/user', userRouter);
+app.use('/api/image', imageRoute);
 
 
 // Server Start
