@@ -1,8 +1,8 @@
 import Router from 'express';
 import { generateImage } from '../controllers/ImageController.js';
 
-const ImageRoute = Router();
+const imageRoute = Router();
 
-ImageRoute.post('/genrate-image', generateImage);
+imageRoute.post('/generate-image', generateImage);
 
-export default ImageRoute;
+export default imageRoute;

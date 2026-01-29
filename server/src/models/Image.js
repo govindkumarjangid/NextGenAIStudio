@@ -16,11 +16,6 @@ const imageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["generated", "failed"],
-      default: "generated",
-    },
   },
   {
     timestamps: true,
