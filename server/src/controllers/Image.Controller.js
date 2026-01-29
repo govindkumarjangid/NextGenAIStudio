@@ -1,4 +1,4 @@
-import Image from "../models/Image.js";
+import Image from "../models/Image.model.js";
 
 export const generateImage = async (req, res) => {
   try {

@@ -3,12 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navLinks } from "../../assets/assets";
 import { motion, AnimatePresence } from "motion/react";
+import { useAppContext } from "../../context/AppContext";
 
-const Navbar = ({ setShowLogin }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, setShowLogin, logout, setState } = useAppContext();
 
-  const isActive = (path) => location.pathname === path;
+  let isActive = (path) => location.pathname === path;
+
 
   return (
     <motion.nav
@@ -17,10 +20,9 @@ const Navbar = ({ setShowLogin }) => {
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
       className="sticky top-0 z-50 w-full backdrop-blur-sm">
-
       <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
         <div className="flex justify-between items-center h-18">
-
+          
           {/* ✅ Logo */}
           <Link
             to="/"
@@ -34,7 +36,7 @@ const Navbar = ({ setShowLogin }) => {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                to={{pathname: link.path, scrollToTop: 0}}
+                to={{ pathname: link.path }}
                 className={`transition hover:text-white ${isActive(link.path)
                   ? "text-white"
                   : "text-gray-400"
@@ -49,21 +51,37 @@ const Navbar = ({ setShowLogin }) => {
           <div className="hidden md:flex items-center space-x-4">
 
             {/* Get Started */}
-            <Link
+            <button
+              type="button"
+              onClick={() => {
+                if (user) return;
+                setState("register");
+                setShowLogin(true);
+              }}
+              disabled={!!user}
               className="px-6 py-2 rounded-full text-white
               bg-linear-to-r from-purple-500 to-cyan-400
-              hover:scale-105 transition-transform active:scale-99 "
+              hover:scale-105 transition-transform active:scale-99
+              disabled:opacity-60 disabled:cursor-not-allowed"
             >
               Get Started
-            </Link>
+            </button>
 
             {/* Login Button */}
             <Link
-              onClick={() => setShowLogin(true)}
               className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer"
+              onClick={async () => {
+                if (user) {
+                  await logout();
+                } else {
+                  setState("login");
+                  setShowLogin(true);
+                }
+              }}
             >
-              Log In
+              {user ? "Logout" : "Login"}
             </Link>
+
           </div>
 
           {/* ✅ Mobile Toggle */}
@@ -129,19 +147,33 @@ const Navbar = ({ setShowLogin }) => {
                 }}
                 className="flex flex-col space-y-4 pt-3"
               >
-                <Link
-                  to="/get-started"
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (user) return;
+                    setState("register");
+                    setShowLogin(true);
+                  }}
+                  disabled={!!user}
                   className="text-center px-6 py-2 rounded-full text-white bg-linear-to-r from-purple-500 to-cyan-400"
                 >
                   Get Started
-                </Link>
+                </button>
 
-                <Link
-                  onClick={() => setShowLogin(true)}
-                  className="text-center px-6 py-2 rounded-full border border-purple-400/60 hover:bg-purple-500/20 transition"
+                <button
+                  type="button"
+                  className="px-6 py-2 text-center rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer"
+                  onClick={async () => {
+                    if (user) {
+                      await logout();
+                    } else {
+                      setState("login");
+                      setShowLogin(true);
+                    }
+                  }}
                 >
-                  Log In
-                </Link>
+                  {user ? "Logout" : "Login"}
+                </button>
               </motion.div>
             </motion.div>
           </motion.div>

@@ -1,19 +1,50 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { X,Loader  } from "lucide-react";
+import axios from "axios";
+import { useAppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
-const Login = ({ showLogin, setShowLogin }) => {
+const Login = () => {
 
-  const [state, setState] = useState("login");
+  const { showLogin, setShowLogin, setToken,state, setState } = useAppContext();
+
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Submit (Dummy)
-  const handleSubmit = (e) => {
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`${state === "login" ? "Logging In" : "Signing Up"} Successfully!`);
-    setShowLogin(false);
+    try {
+      setLoading(true);
+      const {data} = await axios.post(`/user/${state}`, {
+				name,
+				email,
+				password,
+			});
+      if(data?.success){
+        navigate("/");
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        toast.success("Login successful");
+        setShowLogin(false);
+      }else{
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error);
+      const message = error?.response?.data?.message || error?.message || "Something went wrong";
+      toast.error(message);
+    }finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,7 +55,7 @@ const Login = ({ showLogin, setShowLogin }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-999 flex items-center justify-center backdrop-blur-xl px-4"
+          className="fixed inset-0 z-99 flex items-center justify-center backdrop-blur-xl px-4"
         >
           {/* Modal Box */}
           <motion.div
@@ -33,8 +64,8 @@ const Login = ({ showLogin, setShowLogin }) => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
-            className="w-full max-w-sm rounded-2xl py-8 px-6 
-            border border-white/15 backdrop-blur-2xl bg-black/30 
+            className="w-full max-w-sm rounded-2xl py-8 px-6
+            border border-white/15 backdrop-blur-2xl bg-black/30
             shadow-xl relative"
           >
             {/* Close Button */}
@@ -53,20 +84,24 @@ const Login = ({ showLogin, setShowLogin }) => {
             <p className="text-gray-400 text-center mt-2 text-sm">
               {state === "login"
                 ? "Login to access NextGen AI Studio"
-                : "Sign up to start your AI journey"}
+                : "Register to start your AI journey"}
             </p>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-5"
+            onClick={(e) => e.stopPropagation()}
+            >
 
-              {/* Name Field (Only Signup) */}
-              {state === "signup" && (
+              {/* Name Field (Only Register) */}
+              {state === "register" && (
                 <input
                   type="text"
                   placeholder="Full Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-5 py-3 rounded-full bg-white/10 
+                  className="w-full px-5 py-3 rounded-full bg-white/10
                   border border-white/10 text-white placeholder-gray-400
                   focus:ring-1 focus:ring-purple-500 outline-none"
                 />
@@ -78,7 +113,7 @@ const Login = ({ showLogin, setShowLogin }) => {
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-5 py-3 rounded-full bg-white/10 
+                className="w-full px-5 py-3 rounded-full bg-white/10
                 border border-white/10 text-white placeholder-gray-400
                 focus:ring-1 focus:ring-cyan-400 outline-none"
               />
@@ -89,7 +124,7 @@ const Login = ({ showLogin, setShowLogin }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-3 rounded-full bg-white/10 
+                className="w-full px-5 py-3 rounded-full bg-white/10
                 border border-white/10 text-white placeholder-gray-400
                 focus:ring-1 focus:ring-purple-500 outline-none"
               />
@@ -97,11 +132,20 @@ const Login = ({ showLogin, setShowLogin }) => {
               {/* Button */}
               <button
                 type="submit"
-                className="w-full py-3 rounded-full font-semibold text-white
+                disabled={loading}
+                className="w-full py-3 rounded-full text-white
                 bg-linear-to-r from-purple-500 to-cyan-400
-                shadow-lg hover:scale-[1.03] transition"
+                shadow-lg transition flex items-center justify-center gap-2
+                hover:scale-[1.03] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {state === "login" ? "Login" : "Sign Up"}
+                {loading ? (
+                  <>
+                    <Loader className="h-5 w-5 animate-spin" />
+                    {state === "login" ? "Logging in..." : "Registering..."}
+                  </>
+                ) : (
+                  <>{state === "login" ? "Login" : "Register"}</>
+                )}
               </button>
             </form>
 
@@ -111,10 +155,10 @@ const Login = ({ showLogin, setShowLogin }) => {
                 <>
                   Don’t have an account?{" "}
                   <span
-                    onClick={() => setState("signup")}
+                    onClick={() => setState("register")}
                     className="text-cyan-400 cursor-pointer hover:underline"
                   >
-                    Sign Up
+                    Register
                   </span>
                 </>
               ) : (
