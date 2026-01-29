@@ -1,15 +1,17 @@
 import Router from 'express';
-import { protect } from '../middlewares/auth.js';
+import { protect } from '../middlewares/auth.middleware.js';
 import {
     deductCredits,
     loginUser,
-    registerUser
-} from '../controllers/UserController.js';
+    registerUser,
+    userData
+} from '../controllers/User.Controller.js';
 
 const userRouter = Router();
 
 userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
 userRouter.post('/handlecredit', protect, deductCredits);
+userRouter.get('/data', protect, userData);
 
 export default userRouter;

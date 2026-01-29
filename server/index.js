@@ -2,8 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './src/configs/connectdb.js';
-import imageRoute from './src/routes/ImageRoute.js';
-import userRouter from './src/routes/UserRoute.js';
+import imageRoute from './src/routes/Image.Route.js';
+import userRouter from './src/routes/User.Route.js';
 dotenv.config();
 
 //app
@@ -25,7 +25,7 @@ app.use('/api/image', imageRoute);
 
 
 // Server Start
-const startServer = () => {
+const startServer = async () => {
   try {
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}...`);

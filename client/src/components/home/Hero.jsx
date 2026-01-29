@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import {  specialFeatures } from "../../assets/assets.jsx";
 import { CheckIcon, ChevronRightIcon, VideoIcon } from "lucide-react";
+import { useAppContext } from "../../context/AppContext.jsx";
 
 const Hero = () => {
+
+  const { setShowLogin, setState } = useAppContext();
+
   return (
     <div className="w-full">
       {/* Background Glow Effects */}
@@ -70,7 +74,12 @@ const Hero = () => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
         >
-          <button className="bg-linear-to-r from-purple-500 to-cyan-400
+          <button
+             onClick={() => {
+                setState("register");
+                setShowLogin(true);
+             }}
+             className="bg-linear-to-r from-purple-500 to-cyan-400
               hover:scale-105 transition text-white rounded-full px-7 h-11 cursor-pointer text-xs md:text-base">
             Get started
           </button>
