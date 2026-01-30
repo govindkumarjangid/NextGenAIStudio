@@ -33,7 +33,7 @@ const Testimonials = () => {
 
         {/* Right blur */}
         <div className="absolute right-0 top-0 bottom-0 w-5 bg-linear-to-l from-transparent to-transparent z-10 pointer-events-none backdrop-blur-md" />
-        <div className="marquee-inner flex min-w-[200%] pt-10">
+        <div className="marquee-reverse flex min-w-[200%] pt-10">
           {[...testimonialCardsData, ...testimonialCardsData].map((card, index) => (
             <TestimonialCard key={index} card={card} index={index} />
           ))}

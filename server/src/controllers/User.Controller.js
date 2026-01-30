@@ -25,7 +25,7 @@ export const registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        console.log(name, email, hashedPassword);
+
         const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
 
@@ -107,7 +107,7 @@ export const userData = async(req,res) => {
     try {
         const userId = req.user._id;
         const user =  await User.findById(userId).select("-password");
-        console.log(user)
+       
         if(!user)
             return  res.status(404).json({ success: false, message: "User not found" });
         res.status(200).json({ success: true, message: "Data fetched successfully", user });

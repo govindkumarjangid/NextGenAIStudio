@@ -251,3 +251,10 @@ export const dummyResumeData = [
    updatedAt: "2024-06-15T10:20:30Z"
 }
 ]
+
+export const recentImages = [
+  { id: 1, src: "https://images.unsplash.com/photo-1542751110-97427bbecf20", title: "AI Robot" },
+  { id: 2, src: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa", title: "Alien Planet" },
+  { id: 3, src: "https://images.unsplash.com/photo-1557683316-973673baf926", title: "Abstract AI" },
+  { id: 4, src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97", title: "Dark Creature" },
+];

@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/AppContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showCreditsTooltip, setShowCreditsTooltip] = useState(false);
   const location = useLocation();
   const { user, setShowLogin, logout, setState } = useAppContext();
 
@@ -22,7 +23,7 @@ const Navbar = () => {
       className="sticky top-0 z-50 w-full backdrop-blur-sm">
       <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
         <div className="flex justify-between items-center h-18">
-          
+
           {/* ✅ Logo */}
           <Link
             to="/"
@@ -67,21 +68,45 @@ const Navbar = () => {
               Get Started
             </button>
 
-            {/* Login Button */}
-            <Link
-              className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer"
-              onClick={async () => {
-                if (user) {
-                  await logout();
-                } else {
-                  setState("login");
-                  setShowLogin(true);
-                }
-              }}
-            >
-              {user ? "Logout" : "Login"}
-            </Link>
+            {/* Login/Logout Button with Tooltip */}
+            <div className="relative">
+              <Link
+                className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer group text-center"
+                onMouseEnter={() => user && setShowCreditsTooltip(true)}
+                onMouseLeave={() => setShowCreditsTooltip(false)}
+                onClick={async () => {
+                  if (user) {
+                    await logout();
+                  } else {
+                    setState("login");
+                    setShowLogin(true);
+                  }
+                }}
+              >
+                {user ? "Logout" : "Login"}
+              </Link>
 
+              {/* Credits Tooltip */}
+              <AnimatePresence>
+                {showCreditsTooltip && user && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full right-0 mt-4 bg-linear-to-br from-purple-600 to-cyan-600 text-white px-2 py-1 rounded-lg text-[11px] font-medium whitespace-nowrap shadow-lg border border-purple-400/50 pointer-events-none"
+                  >
+                    <div className="flex items-center gap-1">
+                      <span>💳 Credits:</span>
+                      <span className="text-cyan-200">{user?.credits || 0}</span>
+                    </div>
+                    {/* Arrow */}
+                    <div className="absolute -top-1 right-4 w-1.5 h-1.5 bg-linear-to-br from-purple-600 to-cyan-600 rotate-45"></div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+            </div>
           </div>
 
           {/* ✅ Mobile Toggle */}
