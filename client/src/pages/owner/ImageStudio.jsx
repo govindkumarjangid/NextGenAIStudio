@@ -1,8 +1,7 @@
-import { motion } from 'motion/react'
-import Hero from '../../components/features/imagegeration/Hero';
-import Features from '../../components/features/imagegeration/features';
-import Builder from '../../components/features/imagegeration/builder';
-import RecentImages from '../../components/features/imagegeration/RecentImages';
+import Hero from '../../components/features/imagegeration/Hero.jsx';
+import Features from '../../components/features/imagegeration/Features.jsx';
+import Builder from '../../components/features/imagegeration/Builder.jsx';
+import RecentImages from '../../components/features/imagegeration/RecentImages.jsx';
 
 
 
