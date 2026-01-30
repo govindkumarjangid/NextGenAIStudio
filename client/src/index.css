@@ -6,6 +6,7 @@
     --color-purple: #A855F7;
     --color-cyan: #22D3EE;
     --color-main: #10011E;
+    --color-pink: #EC4899;
 }
 
 body {
@@ -26,29 +27,6 @@ body {
     @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
 }
 }
-@keyframes marqueeScroll {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-inner {
-  animation: marqueeScroll 25s linear infinite;
-}
-
-.marquee-reverse {
-  animation-direction: reverse;
-}
-.move-gradient {
-    background-image: linear-gradient(to right,var(--color-purple), var(--color-cyan));
-    background-size: 200% 100%;
-    animation: movegradient 5s infinite;
-}
-
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -68,6 +46,82 @@ body {
   background: #475569;
 }
 
+ /* animation  */
+.marquee-inner {
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.marquee-reverse {
+  animation: marqueeScroll 25s linear infinite reverse;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.move-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--color-purple),
+    var(--color-cyan),
+    var(--color-pink),
+    var(--color-purple)
+  );
+  background-size: 400% 400%;
+  animation: movegradient 6s ease-in-out infinite;
+  border-radius: 16px;
+  filter: brightness(1.2);
+}
+
+/* Gradient Move Animation */
+@keyframes movegradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 300% 300%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+.animate-floatSlow {
+  animation: float 1s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-100px); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 3s linear infinite;
+}
+
 @keyframes spinSlow {
   from {
     transform: rotate(0deg);
@@ -76,8 +130,4 @@ body {
   to {
     transform: rotate(360deg);
   }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 3s linear infinite;
 }
