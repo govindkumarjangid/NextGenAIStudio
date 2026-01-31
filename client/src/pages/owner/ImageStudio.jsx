@@ -2,10 +2,13 @@ import Hero from '../../components/features/imagegeration/Hero.jsx';
 import Features from '../../components/features/imagegeration/Features.jsx';
 import Builder from '../../components/features/imagegeration/Builder.jsx';
 import RecentImages from '../../components/features/imagegeration/RecentImages.jsx';
+import { useRef } from 'react';
 
 
 
 const ImageStudio = () => {
+  const builderRef = useRef(null);
+
   return (
     <div className="relative text-white overflow-hidden min-h-screen">
 
@@ -19,9 +22,9 @@ const ImageStudio = () => {
       <div className="fixed -bottom-10 right-20 w-72 h-72 bg-linear-to-bl from-blue-500 to-cyan-400 rounded-full blur-3xl pointer-events-none animate-float" style={{opacity: 0.2, animationDelay: '2s'}} />
 
       <div className="relative z-20 px-4 md:px-10 py-6">
-        <Hero />
+        <Hero builderRef={builderRef} />
         <Features />
-        <Builder />
+        <Builder ref={builderRef} />
         <RecentImages />
       </div>
 

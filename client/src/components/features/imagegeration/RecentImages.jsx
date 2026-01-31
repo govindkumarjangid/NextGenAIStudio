@@ -1,44 +1,219 @@
 import { useEffect, useState } from 'react'
-import { recentImages } from '../../../assets/assets';
 import { motion } from 'motion/react'
+import toast from 'react-hot-toast'
+import { useAppContext } from '../../../context/AppContext'
 
 const RecentImages = () => {
 
+    const { axios } = useAppContext();
     const [images, setImages] = useState([]);
+    const [userImages, setUserImages] = useState([]);
+    const [loadingImages, setLoadingImages] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [displayUserCount, setDisplayUserCount] = useState(4);
 
-    const fetchRecentImages = async () => {
-        setImages(recentImages);
+
+    const fetchUserImages = async () => {
+      setLoadingImages(true);
+      try {
+        const {data} = await axios.get('/image/get-images');
+        if(data?.success) setUserImages(data?.images);
+        else toast.error("Could not fetch user images");
+      } catch (error) {
+        console.log(error);
+        toast.error("Could not fetch user images");
+      } finally {
+        setLoadingImages(false);
+      }
     }
 
-    useEffect(() => {
-        fetchRecentImages();
-    }, [])
+    const fetchRecentImages = async () => {
+      setLoadingImages(true);
+      try {
+        const {data} = await axios.get('/image/default-images');
+        if(data?.success) console.log(data);
+        if(data?.success) setImages(data?.images);
+        else toast.error("Could not fetch recent images");
+      } catch (error) {
+        console.log(error);
+        toast.error("Could not fetch recent images");
+      } finally {
+      setLoadingImages(false);
+    }
+    }
+
+     useEffect(() => {
+       const token = localStorage.getItem("token");
+       if (token && !axios.defaults.headers.common["Authorization"]) {
+         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+       }
+       fetchRecentImages();
+       if (token) {
+         fetchUserImages();
+       }
+     }, [axios]);
+
+
+     const handleCopyLink = async () => {
+       if (!selectedImage?.imageUrl) return;
+       try {
+         await navigator.clipboard.writeText(selectedImage.imageUrl);
+         toast.success("Image link copied!");
+       } catch (error) {
+         toast.error("Failed to copy link");
+       }
+     };
+
+     const handleDownload = () => {
+       if (!selectedImage?.imageUrl) return;
+       const link = document.createElement('a');
+       link.href = selectedImage.imageUrl;
+       link.download = `ai-image-${Date.now()}.jpg`;
+       link.click();
+       toast.success("Image download started!");
+     };
+
+     const handleImageClick = (img) => {
+       setSelectedImage(img);
+     };
+
+     const loadMoreUserImages = () => {
+       setDisplayUserCount(prev => prev + 4);
+     };
+
+     const handleClosePopup = () => {
+       setSelectedImage(null);
+     };
 
   return (
+    <>
      <div className="mt-8 sm:mt-12 max-w-280 mx-auto">
-        <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Recent Creations</h3>
+        <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Your Recent Images</h3>
+        {loadingImages ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="h-40 md:h-52 rounded-2xl bg-linear-to-r from-gray-700 to-gray-600 animate-pulse"
+              />
+            ))}
+          </div>
+        ) : (
+          <>
+             {/* images grid  */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+              {userImages.slice(0, displayUserCount).map((img, i) => (
+                <motion.div
+                  key={img._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
+                  onClick={() => handleImageClick(img)}
+                >
+                  <img
+                    src={img.imageUrl}
+                    alt={img.prompt}
+                    className="h-40 md:h-52 w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
+                    <p className="line-clamp-1">{img.prompt}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* load more button  */}
+            {userImages.length > displayUserCount && (
+              <div className="flex justify-center mb-10">
+                <motion.button
+                  onClick={loadMoreUserImages}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-600 to-cyan-700 transition text-sm font-medium"
+                >
+                  Load More
+                </motion.button>
+              </div>
+            )}
+          </>
+        )}
+
+        <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Default Images preview</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {images.map((img, i) => (
             <motion.div
-              key={img.id}
+              key={img._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ scale: 1.05 }}
-              className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg"
+              className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
+              onClick={() => handleImageClick(img)}
             >
               <img
-                src={img.src}
-                alt={img.title}
+                src={img.imageUrl}
+                alt={img.prompt}
                 className="h-40 md:h-52 w-full object-cover"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium">
-                {img.title}
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
+                <p className="line-clamp-1">{img.prompt}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* image popup  */}
+      {selectedImage && (
+        <div
+         onClick={() => setSelectedImage(null)}
+         className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4">
+          <div className="w-full max-w-120 min-h-130 absolute top-20 rounded-2xl bg-purple-600/20  border border-white/20 shadow-2xl overflow-hidden">
+            <div className="p-4 sm:p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h4 className="text-lg sm:text-xl font-semibold">Image Preview</h4>
+                  <p className="text-sm text-slate-400 line-clamp-2 mt-1">{selectedImage.prompt}</p>
+                </div>
+                <button
+                  onClick={handleClosePopup}
+                  className="text-sm px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="mt-4 rounded-xl overflow-hidden border border-white/10">
+                <img
+                  src={selectedImage.imageUrl}
+                  alt={selectedImage.prompt}
+                  className="w-full h-full sm:h-80 object-contain"
+                />
+              </div>
+
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={handleCopyLink}
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 transition text-sm font-medium"
+                >
+                  Copy Link
+                </button>
+                <button
+                  onClick={handleDownload}
+                  download
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 transition text-sm font-medium"
+                >
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+    </>
   )
 }
 

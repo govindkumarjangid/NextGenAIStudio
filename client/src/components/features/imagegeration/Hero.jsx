@@ -2,10 +2,14 @@ import { ChevronRightIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react';
 
-const Hero = () => {
+const Hero = ({ builderRef }) => {
 
-
-     const [prompt, setPrompt] = useState('');
+    const [prompt, setPrompt] = useState('');
+    const scrollToBuilder = () => {
+      if (builderRef?.current) {
+        builderRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
 
     return (
         <section className="text-center mt-20 max-w-2xl mx-auto">
@@ -21,6 +25,7 @@ const Hero = () => {
                     <ChevronRightIcon size={16} className="group-hover:translate-x-0.5 transition duration-300" />
                 </p>
             </motion.a>
+            
             {/* Heading */}
             <motion.h1
                 className="text-4xl/13 md:text-6xl/21 text-center max-w-4xl text-white flex flex-wrap justify-center items-center  leading-tight font-semibold"
@@ -58,8 +63,9 @@ const Hero = () => {
                         type="text"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
+                        onFocus={scrollToBuilder}
                         placeholder="A futuristic cityscape at sunset..."
-                        className="flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-transparent text-white text-sm sm:text-base placeholder:text-gray-400 placeholder:line-clamp-1 border-0 outline-0 ring-0 focus:border-0 focus:outline-0 focus:ring-0 focus-visible:outline-none focus-visible:ring-0 appearance-none"
+                        className="flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-transparent text-white text-sm sm:text-base placeholder:text-gray-400 placeholder:line-clamp-1 border-0 outline-0 ring-0 focus:border-0 focus:outline-0 focus:ring-0 focus-visible:outline-none focus-visible:ring-0 appearance-none cursor-pointer"
                             />
                     <button className="px-6 sm:px-8 py-3 sm:py-4 bg-linear-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition font-semibold text-white text-sm sm:text-base whitespace-nowrap">
                         Generate

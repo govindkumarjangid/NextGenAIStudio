@@ -31,12 +31,12 @@ export const generateImage = async (req, res) => {
   }
 };
 
-export const getUserGenratedImages = async () => {
+export const getUserGenratedImages = async (req, res) => {
   try {
     const { _id } = req.user;
-    if (!_id) res.status(400).json({ success: false, message: "User Not found" });
+    if (!_id) return res.status(400).json({ success: false, message: "User Not found" });
 
-    const userImages = await Image.find({ userId: _id });
+    const userImages = await Image.find({ userId: _id }).sort({ createdAt: -1 });
     if (!userImages) return res.status(400).json({ success: false, message: "images Not found" })
 
     res.status(200).json({
@@ -55,11 +55,17 @@ export const getUserGenratedImages = async () => {
 
 export const getDefaultImages = async (req, res) => {
   try {
-    const defaultImages = await Image.find({ userId: null });
+    const defaultImages = await Image.find({
+      $or: [{ userId: null }, { userId: { $exists: false } }]
+    }).sort({ createdAt: -1 });
+
+    console.log("Default images found:", defaultImages.length);
+
     res.status(200).json({
       success: true,
       message: "Default images fetched successfully",
-      images: defaultImages
+      images: defaultImages,
+      count: defaultImages.length
     });
   } catch (error) {
     console.log("Error fetching default images:", error);
