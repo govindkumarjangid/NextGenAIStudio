@@ -5,14 +5,15 @@ import generateToken from "../configs/jwttoken.js";
 
 export const registerUser = async (req, res) => {
     try {
-        const{name, email, password} = req.body;
+        const{ name, email, password } = req.body;
+        console.log(req.body);
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
 
-         if(!name || !email || !password)
+            if(!name || !email || !password)
             return res.status(400).json({ success: false, message: "All fields are required" });
 
         if(!/\S+@\S+\.\S+/.test(email))
@@ -24,9 +25,11 @@ export const registerUser = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+        console.log(name, email, hashedPassword);
 
 
         const newUser = new User({ name, email, password: hashedPassword });
+        console.log(newUser)
         await newUser.save();
 
         res.status(201).json({
@@ -40,7 +43,7 @@ export const registerUser = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server error" });
+        res.status(500).json({ success: false, message: "Internal server error" });
         console.log(error);
     }
 }
@@ -107,7 +110,7 @@ export const userData = async(req,res) => {
     try {
         const userId = req.user._id;
         const user =  await User.findById(userId).select("-password");
-       
+
         if(!user)
             return  res.status(404).json({ success: false, message: "User not found" });
         res.status(200).json({ success: true, message: "Data fetched successfully", user });
