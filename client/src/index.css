@@ -69,13 +69,14 @@ body {
   background: linear-gradient(
     90deg,
     var(--color-purple),
+    var(--color-pink),
     var(--color-cyan),
     var(--color-pink),
     var(--color-purple)
   );
   background-size: 400% 400%;
   animation: movegradient 6s ease-in-out infinite;
-  border-radius: 16px;
+  border-radius: 10px;
   filter: brightness(1.2);
 }
 
@@ -85,14 +86,24 @@ body {
     background-position: 0% 50%;
   }
 
+  25% {
+    background-position: 50% 0%;
+  }
+
   50% {
     background-position: 100% 50%;
+  }
+
+  75% {
+    background-position: 50% 100%;
   }
 
   100% {
     background-position: 0% 50%;
   }
 }
+
+
 
 .animate-gradient {
   background-size: 300% 300%;
@@ -106,28 +117,10 @@ body {
 }
 
 .animate-float {
-  animation: float 2s ease-in-out infinite;
-}
-
-.animate-floatSlow {
-  animation: float 1s ease-in-out infinite;
+  animation: float 5s ease-in-out infinite;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-100px); }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 3s linear infinite;
-}
-
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }

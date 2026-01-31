@@ -23,7 +23,7 @@ const Hero = () => {
             </motion.a>
             {/* Heading */}
             <motion.h1
-                className="text-4xl/13 md:text-6xl/21  max-w-4xl text-center text-white flex flex-wrap justify-center items-center  leading-tight"
+                className="text-4xl/13 md:text-6xl/21 text-center max-w-4xl text-white flex flex-wrap justify-center items-center  leading-tight font-semibold"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
@@ -53,17 +53,15 @@ const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="mt-12 flex justify-center px-4"
             >
-                <div className="flex w-full max-w-2xl rounded-full bg-white/10 border border-white/20 backdrop-blur-xl overflow-hidden shadow-lg">
+                <div className="flex flex-col sm:flex-row w-full max-w-2xl rounded-lg sm:rounded-full bg-white/10 border border-white/20 backdrop-blur-xl overflow-hidden shadow-lg">
                     <input
                         type="text"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder="A futuristic cityscape at sunset..."
-                        className="flex-1 px-6 py-4 bg-transparent text-white       placeholder:text-gray-400 placeholder:line-clamp-1 border-0 outline-0   ring-0 focus:border-0 focus:outline-0 focus:ring-0
-                            focus-visible:outline-none focus-visible:ring-0
-                            appearance-none"
+                        className="flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-transparent text-white text-sm sm:text-base placeholder:text-gray-400 placeholder:line-clamp-1 border-0 outline-0 ring-0 focus:border-0 focus:outline-0 focus:ring-0 focus-visible:outline-none focus-visible:ring-0 appearance-none"
                             />
-                    <button className="px-8 py-4 bg-linear-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition font-semibold text-white">
+                    <button className="px-6 sm:px-8 py-3 sm:py-4 bg-linear-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition font-semibold text-white text-sm sm:text-base whitespace-nowrap">
                         Generate
                     </button>
                 </div>
