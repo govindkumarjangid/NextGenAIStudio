@@ -44,14 +44,14 @@ const Hero = () => {
           transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
           className="font-bold leading-tight"
         >
-          <motion.h1 className="text-4xl/14 md:text-6xl/21 font-medium max-w-3xl text-center text-white"
+          <motion.h1 className="text-4xl/13 md:text-6xl/21 font-medium max-w-3xl text-center text-white"
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
           >
             Unleash your creative potential{" "}
-            <span className="move-gradient px-3 rounded-xl text-nowrap">with AI.</span>
+            <span className="move-gradient px-3 rounded-full text-nowrap">with AI.</span>
           </motion.h1>
         </motion.div>
 

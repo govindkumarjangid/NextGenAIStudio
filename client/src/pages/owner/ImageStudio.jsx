@@ -7,20 +7,18 @@ import RecentImages from '../../components/features/imagegeration/RecentImages.j
 
 const ImageStudio = () => {
   return (
-    <div className="relative text-white px-4 md:px-10 py-6 overflow-hidden min-h-screen">
+    <div className="relative text-white overflow-hidden min-h-screen">
 
-      {/* 🔥 Animated Gradient Background */}
-      <div className="absolute inset-0 bg-linear-to-br from-purple-900 via-indigo-900 to-pink-800 animate-gradient pointer-events-none" />
+      <div className="fixed inset-0 opacity-60 pointer-events-none" style={{
+        backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.8) 2px, transparent 2px)`,
+        backgroundSize: '50px 50px'
+      }} />
 
-      {/* 🌌 Floating Blur Orbs */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-pink-500/30 rounded-full blur-3xl animate-float pointer-events-none" />
+      <div className="fixed left-20 top-30 w-72 h-72 bg-linear-to-tl from-purple-500 to-purple-400 rounded-full blur-3xl animate-float pointer-events-none" style={{opacity: 0.2}} />
 
-      <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-floatSlow pointer-events-none" />
+      <div className="fixed -bottom-10 right-20 w-72 h-72 bg-linear-to-bl from-blue-500 to-cyan-400 rounded-full blur-3xl pointer-events-none animate-float" style={{opacity: 0.2, animationDelay: '2s'}} />
 
-      {/* ⭐ Particles Effect */}
-      <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle,white_2px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
-
-      <div className="relative z-10">
+      <div className="relative z-20 px-4 md:px-10 py-6">
         <Hero />
         <Features />
         <Builder />
