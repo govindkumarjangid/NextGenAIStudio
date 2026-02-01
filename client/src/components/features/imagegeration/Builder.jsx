@@ -12,7 +12,7 @@ const Builder = forwardRef((_, ref) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  // ✅ Generate Image
+
   const handleGenerate = async () => {
     if (!prompt.trim()) return toast.error("Please enter a prompt!");
 
@@ -37,7 +37,6 @@ const Builder = forwardRef((_, ref) => {
       console.log("Response:", data);
 
       if (data.success && data.imageUrl) {
-        // Cache busting
         setGeneratedImage(data.imageUrl + "?t=" + Date.now());
         toast.success("Image generated successfully!");
         setPrompt("");
@@ -52,20 +51,20 @@ const Builder = forwardRef((_, ref) => {
     }
   };
 
-  // ✅ Image Loaded Successfully
+
   const handleImageLoad = () => {
     setIsGenerating(false);
     setImageError(false);
   };
 
-  // ❌ Image Failed to Load
+
   const handleImageError = () => {
     setIsGenerating(false);
     setImageError(true);
     toast.error("Image failed to load!");
   };
 
-  // ✅ Download Image
+
   const handleDownload = () => {
     if (!generatedImage) return;
 
@@ -75,7 +74,7 @@ const Builder = forwardRef((_, ref) => {
     link.click();
   };
 
-  // ✅ Copy Link
+
   const handleCopyLink = () => {
     if (!generatedImage) return;
 
@@ -88,7 +87,7 @@ const Builder = forwardRef((_, ref) => {
       ref={ref}
       className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-280 mx-auto min-h-120"
     >
-      {/* ================= Prompt Section ================= */}
+
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -108,7 +107,10 @@ const Builder = forwardRef((_, ref) => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="A futuristic cyberpunk city at sunset..."
-          className="w-full flex-1 rounded-xl p-4 bg-black/20 border border-cyan-400/40 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/70 resize-none"
+          className="w-full flex-1 rounded-xl p-4 bg-black/20
+             border border-cyan-400/40 text-white placeholder-gray-400
+              focus:outline-none focus:border-cyan-400/60
+              focus:ring-2 focus:ring-cyan-400/30 transition resize-none"
         />
 
         <motion.button
@@ -129,7 +131,6 @@ const Builder = forwardRef((_, ref) => {
         </motion.button>
       </motion.div>
 
-      {/* ================= Preview Section ================= */}
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
