@@ -12,8 +12,8 @@ const captionSchema = new mongoose.Schema({
     },
     caption: {
         type: String,
-        required: true,
         trim: true,
+        default: "",
     },
 }, {
     timestamps: true,

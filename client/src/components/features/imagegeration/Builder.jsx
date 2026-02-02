@@ -92,7 +92,7 @@ const Builder = forwardRef((_, ref) => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-2xl border border-white/10 flex flex-col"
+        className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
         <div className="flex items-center gap-3 mb-6">
           <Sparkles className="text-purple-400" size={26} />
@@ -107,9 +107,8 @@ const Builder = forwardRef((_, ref) => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="A futuristic cyberpunk city at sunset..."
-          className="w-full flex-1 rounded-xl p-4 bg-black/20
-             border border-cyan-400/40 text-white placeholder-gray-400
-              focus:outline-none focus:border-cyan-400/60
+          className="w-full h-40 flex-1 rounded-xl p-4 bg-black/20
+              border border-cyan-400/40 text-white placeholder:line-clamp-1 placeholder-gray-400 focus:outline-none focus:border-cyan-400/60
               focus:ring-2 focus:ring-cyan-400/30 transition resize-none"
         />
 
@@ -129,18 +128,19 @@ const Builder = forwardRef((_, ref) => {
             "Generate Image"
           )}
         </motion.button>
+
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-2xl border border-white/10 flex flex-col"
+        className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
         <h3 className="text-xl font-semibold mb-5">Preview</h3>
 
         {/* Image Box */}
-        <div className="relative flex-1 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center h-90">
+        <div className="relative flex-1 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center">
 
           {/* Image */}
           {generatedImage && !imageError && (
@@ -165,7 +165,7 @@ const Builder = forwardRef((_, ref) => {
 
           {/* Placeholder */}
           {!generatedImage && !isGenerating && (
-            <div className="text-center text-slate-400">
+            <div className="text-center text-slate-400 p-2">
               <Sparkles className="mx-auto mb-3 opacity-50" size={48} />
               <p>Your generated image will appear here</p>
             </div>

@@ -39,7 +39,6 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #334155;
-  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -75,7 +74,7 @@ body {
     var(--color-purple)
   );
   background-size: 400% 400%;
-  animation: movegradient 6s ease-in-out infinite;
+  animation: movegradient 15s ease-in-out infinite;
   border-radius: 10px;
   filter: brightness(1.2);
 }

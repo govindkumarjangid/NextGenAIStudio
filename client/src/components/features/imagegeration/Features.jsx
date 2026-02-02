@@ -21,7 +21,7 @@ const Features = () => {
     ]
 
     return (
-        <section className="mt-20 max-w-5xl mx-auto px-4">
+        <section className="my-30 max-w-5xl mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
                     <motion.div
@@ -33,7 +33,7 @@ const Features = () => {
                         className="relative group"
                     >
                         {/* Card */}
-                        <div className="relative bg-linear-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-lg border border-purple-500/30 rounded-2xl p-8 text-center overflow-hidden">
+                        <div className="relative bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] rounded-2xl p-8 text-center overflow-hidden backdrop-blur-sm border border-white/10 shadow-lg hover:border-white/20 transition">
                             {/* Background glow effect */}
                             <div className="absolute inset-0 bg-linear-to-br from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -67,7 +67,7 @@ const Features = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex justify-center my-12"
             >
-                <button className="px-12 py-4 rounded-full bg-linear-to-r from-purple-500 via-pink-500 to-purple-600 text-white font-semibold text-lg hover:scale-105 transition-transform ">
+                <button className="px-7 py-3 rounded-full bg-linear-to-r from-purple-500 via-pink-500 to-purple-600 text-white text-base md:text-lg hover:scale-105 transition-transform ">
                     Get Started For Free
                 </button>
             </motion.div>

@@ -10,11 +10,11 @@ const Hero = () => {
   return (
     <div className="w-full">
       {/* Background Glow Effects */}
-      <div className="fixed top-0 left-0 w-125 h-125
+      {/* <div className="fixed top-0 left-0 w-125 h-125
       bg-purple-500 opacity-40 blur-[150px] rounded-full" />
 
       <div className="fixed bottom-0 right-0  w-125 h-125
-      bg-cyan-400 opacity-40 blur-[150px] rounded-full" />
+      bg-cyan-400 opacity-40 blur-[150px] rounded-full" /> */}
 
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center
@@ -44,7 +44,7 @@ const Hero = () => {
           transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
           className="font-bold leading-tight"
         >
-          <motion.h1 className="text-4xl/13 md:text-6xl/21 font-medium max-w-3xl text-center text-white"
+          <motion.h1 className="text-4xl/13 md:text-6xl/21 font-semibold max-w-3xl text-center text-white"
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}

@@ -21,7 +21,7 @@ const Hero = () => {
 
             {/* Heading */}
             <motion.h1
-                className="text-4xl md:text-6xl/22 text-center max-w-4xl text-white flex flex-wrap justify-center items-center leading-tight font-semibold mt-6"
+                className="text-4xl/13 md:text-6xl/21 font-semibold text-center max-w-4xl text-white flex flex-wrap justify-center items-center mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}

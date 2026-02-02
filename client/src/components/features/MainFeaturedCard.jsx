@@ -14,7 +14,7 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
       viewport={{ once: true }}
       transition={{ delay: index * 0.15, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       onClick={() => navigate(path)}
-      className="relative cursor-pointer rounded-2xl group overflow-hidden  transition-colors duration-200 bg-black/10 p-6  border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20"
+      className="relative cursor-pointer rounded-2xl group overflow-hidden  transition-colors duration-200 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] p-6  border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20"
     >
 
         {/* Icon */}

@@ -53,7 +53,7 @@ const Hero = () => {
 
                 {/* Heading */}
                 <motion.h1
-                    className="text-4xl/13 md:text-6xl/21  max-w-4xl text-center text-white flex flex-wrap justify-center items-center  leading-tight"
+                    className="text-4xl/13 md:text-6xl/21 font-semibold max-w-4xl text-center text-white flex flex-wrap justify-center items-center  leading-tight"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}

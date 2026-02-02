@@ -24,15 +24,15 @@ const Navbar = () => {
       <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
         <div className="flex justify-between items-center h-18">
 
-          {/* ✅ Logo */}
+          {/* Logo */}
           <Link
             to="/"
-            className="text-2xl font-bold bg-linear-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text flex items-center justify-center gap-2"
+            className="text-2xl font-bold bg-linear-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text flex items-center justify-center gap-2 z-100"
           >
             <img src="./logo.svg" alt="logo" className="h-10" /> Studio
           </Link>
 
-          {/* ✅ Desktop Menu */}
+          {/* Desktop Menu */}
           <div className="hidden md:flex space-x-10 text-gray-300 font-medium">
             {navLinks.map((link) => (
               <Link
@@ -48,18 +48,16 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* ✅ Desktop Button */}
+          {/* Desktop Button */}
           <div className="hidden md:flex items-center space-x-4">
 
             {/* Get Started */}
             <button
               type="button"
               onClick={() => {
-                if (user) return;
                 setState("register");
                 setShowLogin(true);
               }}
-              disabled={!!user}
               className="px-6 py-2 rounded-full text-white
               bg-linear-to-r from-purple-500 to-cyan-400
               hover:scale-105 transition-transform active:scale-99
@@ -107,10 +105,11 @@ const Navbar = () => {
               </AnimatePresence>
 
             </div>
+
           </div>
 
-          {/* ✅ Mobile Toggle */}
-          <div className="md:hidden">
+          {/* Mobile Toggle */}
+          <div className="md:hidden z-100">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-md text-gray-300 cursor-pointer active:scale-95 transition"
@@ -121,89 +120,65 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ✅ Mobile Dropdown with Motion */}
+      {/* Full Screen Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className=" md:hidden absolute top-20 left-0 w-full bg-[#050818]/90 backdrop-blur-xl border-t border-white/10 z-50"
-          >
+          <>
             <motion.div
-              initial="hidden"
-              animate="show"
-              exit="hidden"
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.08 },
-                },
-              }}
-              className="flex flex-col space-y-5 px-8 py-6 text-gray-300"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.45, ease: "easeInOut" }}
+              className="fixed inset-0 z-99 w-full h-screen flex flex-col justify-center items-center text-center bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]"
             >
               {/* Links */}
-              {navLinks.map((link) => (
-                <motion.div
-                  key={link.name}
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    show: { opacity: 1, x: 0 },
-                  }}
-                >
+              <div className="flex flex-col space-y-8 text-2xl font-medium text-white ">
+                {navLinks.map((link) => (
                   <Link
+                    key={link.name}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`hover:text-white transition ${isActive(link.path) ? " text-white" : ""
+                    className={`hover:scale-105 transition-transform duration-300 ${isActive(link.path) ? "text-cyan-300" : ""
                       }`}
                   >
                     {link.name}
                   </Link>
-                </motion.div>
-              ))}
+                ))}
+              </div>
 
               {/* Buttons */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, scale: 0.9 },
-                  show: { opacity: 1, scale: 1 },
-                }}
-                className="flex flex-col space-y-4 pt-3"
-              >
+              <div className="flex flex-col space-y-5 mt-12 w-[80%] max-w-sm">
                 <button
                   type="button"
                   onClick={() => {
-                    if (user) return;
                     setState("register");
                     setShowLogin(true);
                   }}
-                  disabled={!!user}
-                  className="text-center px-6 py-2 rounded-full text-white bg-linear-to-r from-purple-500 to-cyan-400"
+                  className="w-full py-3 rounded-full bg-linear-to-r from-purple-500 to-cyan-400 text-white font-semibold
+                    hover:opacity-90 transition"
                 >
                   Get Started
                 </button>
 
                 <button
                   type="button"
-                  className="px-6 py-2 text-center rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer"
                   onClick={async () => {
-                    if (user) {
-                      await logout();
-                    } else {
+                    if (user) await logout();
+                    else {
                       setState("login");
                       setShowLogin(true);
                     }
                   }}
+                  className="w-full py-3 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition"
                 >
                   {user ? "Logout" : "Login"}
                 </button>
-              </motion.div>
+              </div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
+
 
 
     </motion.nav>

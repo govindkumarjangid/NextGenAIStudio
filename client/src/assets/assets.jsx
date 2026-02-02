@@ -258,3 +258,10 @@ export const recentImages = [
   { id: 3, src: "https://images.unsplash.com/photo-1557683316-973673baf926", title: "Abstract AI" },
   { id: 4, src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97", title: "Dark Creature" },
 ];
+
+export const captionStyles = [
+    { id: 'creative', label: 'Creative', color: 'from-purple-500 to-pink-500' },
+    { id: 'professional', label: 'Professional', color: 'from-blue-500 to-cyan-500' },
+    { id: 'casual', label: 'Casual', color: 'from-green-500 to-emerald-500' },
+    { id: 'funny', label: 'Funny', color: 'from-orange-500 to-red-500' },
+  ]

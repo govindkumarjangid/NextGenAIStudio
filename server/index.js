@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './src/configs/connectdb.js';
 import imageRoute from './src/routes/Image.Route.js';
 import userRouter from './src/routes/User.Route.js';
+import captionRouter from './src/routes/caption.Route.js';
 dotenv.config();
 
 //app
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRoute);
+app.use('/api/caption', captionRouter);
 
 
 // Server Start
