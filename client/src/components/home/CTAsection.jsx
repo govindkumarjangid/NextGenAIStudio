@@ -2,13 +2,13 @@ import { motion } from "motion/react";
 
 const CTASection = ()  => {
     return (
-        <motion.div className="max-w-5xl py-16 mt-40 md:pl-20 md:w-full max-md:mx-4 md:mx-auto flex flex-col md:flex-row max-md:gap-6 items-center justify-between backdrop-blur-3xl rounded-2xl p-6 text-white mb-20 bg-black/30 border border-white/10"
+        <motion.div className="max-w-5xl py-16 mt-40 md:pl-20 md:w-full max-md:mx-4 md:mx-auto flex flex-col md:flex-row max-md:gap-6 items-center justify-between rounded-2xl p-6 text-white mb-20 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] border border-gray-400/20"
             initial={{ y: 150, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
         >
-            <div>
+            <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
                 <motion.h1
                     className="text-4xl md:text-[46px] md:leading-15 font-semibold bg-linear-to-r from-purple-500 to-cyan-500
                     bg-clip-text text-transparent"

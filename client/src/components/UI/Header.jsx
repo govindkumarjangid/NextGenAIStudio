@@ -125,10 +125,10 @@ const Navbar = () => {
         {isOpen && (
           <>
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
+              initial={{  scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              exit={{  scaleX: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               className="fixed inset-0 z-99 w-full h-screen flex flex-col justify-center items-center text-center bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]"
             >
               {/* Links */}

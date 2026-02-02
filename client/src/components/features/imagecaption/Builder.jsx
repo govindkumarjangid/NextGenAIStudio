@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react'
-import { motion } from 'motion/react'
-import { Upload, Sparkles, Copy, Check, Download, X } from 'lucide-react'
-import { captionStyles } from '../../../assets/assets'
-import toast from 'react-hot-toast'
-import axios from 'axios'
+import { useState, useRef } from 'react';
+import { motion } from 'motion/react';
+import { Upload, Sparkles, Copy, Check, Download, X } from 'lucide-react';
+import { captionStyles } from '../../../assets/assets';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Builder = () => {
 
@@ -31,7 +31,6 @@ const Builder = () => {
       reader.readAsDataURL(file)
     }
   }
-
 
   const handleImageUploadOnServer = async() => {
      try {
@@ -76,11 +75,11 @@ const Builder = () => {
 
         console.log(data);
 
-        // if(data?.success) {
-        //     setCaption(data.caption);
-        // } else {
-        //     toast.error("Failed to generate caption. Please try again.");
-        // }
+        if(data?.success) {
+            setCaption(data.caption);
+        } else {
+            toast.error("Failed to generate caption. Please try again.");
+        }
 
     }catch (error) {
       console.error("Caption Generation Error:", error)
