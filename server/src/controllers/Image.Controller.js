@@ -1,4 +1,7 @@
 import Image from "../models/Image.model.js";
+import dotenv from "dotenv";
+import Bytez from "bytez.js"
+dotenv.config();
 
 export const generateImage = async (req, res) => {
   try {
@@ -9,7 +12,17 @@ export const generateImage = async (req, res) => {
     if (!prompt || prompt.trim() === "")
       return res.status(400).json({ success: false, message: "Prompt is required" });
 
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?seed=${Date.now()}&nologo=true`;
+    const key = process.env.BYTEZ_API_KEY;
+    const sdk = new Bytez(key);
+
+    const model = sdk.model("google/imagen-4.0-ultra-generate-001")
+
+    const { error, output } = await model.run(prompt);
+
+    if (error)
+      return res.status(500).json({ success: false, message: "Error generating image", });
+
+    const imageUrl = output;
 
     const newImage = await Image.create({
       userId: _id,

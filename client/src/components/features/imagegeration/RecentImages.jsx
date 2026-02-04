@@ -6,89 +6,91 @@ import { Copy, Download, X } from 'lucide-react'
 
 const RecentImages = () => {
 
-    const { axios } = useAppContext();
-    const [images, setImages] = useState([]);
-    const [userImages, setUserImages] = useState([]);
-    const [loadingImages, setLoadingImages] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [displayUserCount, setDisplayUserCount] = useState(4);
+  const { axios } = useAppContext();
+  const [images, setImages] = useState([]);
+  const [userImages, setUserImages] = useState([]);
+  const [loadingImages, setLoadingImages] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [displayUserCount, setDisplayUserCount] = useState(4);
+  const token = localStorage.getItem("token");
 
 
-    const fetchUserImages = async () => {
-      setLoadingImages(true);
-      try {
-        const {data} = await axios.get('/image/get-images');
-        if(data?.success) setUserImages(data?.images);
-        else toast.error("Could not fetch user images");
-      } catch (error) {
-        console.log(error);
-        toast.error("Could not fetch user images");
-      } finally {
-        setLoadingImages(false);
-      }
-    }
-
-    const fetchRecentImages = async () => {
-      setLoadingImages(true);
-      try {
-        const {data} = await axios.get('/image/default-images');
-        if(data?.success) console.log(data);
-        if(data?.success) setImages(data?.images);
-        else toast.error("Could not fetch recent images");
-      } catch (error) {
-        console.log(error);
-        toast.error("Could not fetch recent images");
-      } finally {
+  const fetchUserImages = async () => {
+    setLoadingImages(true);
+    try {
+      const { data } = await axios.get('/image/get-images');
+      if (data?.success) setUserImages(data?.images);
+      else toast.error("Could not fetch user images");
+    } catch (error) {
+      console.log(error);
+      toast.error("Could not fetch user images");
+    } finally {
       setLoadingImages(false);
     }
+  }
+
+  const fetchRecentImages = async () => {
+    setLoadingImages(true);
+    try {
+      const { data } = await axios.get('/image/default-images');
+      if (data?.success) console.log(data);
+      if (data?.success) setImages(data?.images);
+      else toast.error("Could not fetch recent images");
+    } catch (error) {
+      console.log(error);
+      toast.error("Could not fetch recent images");
+    } finally {
+      setLoadingImages(false);
     }
+  }
 
-     useEffect(() => {
-       const token = localStorage.getItem("token");
-       if (token && !axios.defaults.headers.common["Authorization"]) {
-         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-       }
-       fetchRecentImages();
-       if (token) {
-         fetchUserImages();
-       }
-     }, [axios]);
+  useEffect(() => {
+    if (token && !axios.defaults.headers.common["Authorization"]) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+    fetchRecentImages();
+  }, [axios, token]);
+
+  useEffect(() => {
+    if (token) fetchUserImages();
+  }, []);
 
 
-     const handleCopyLink = async () => {
-       if (!selectedImage?.prompt) return;
-       try {
-         await navigator.clipboard.writeText(selectedImage.prompt);
-         toast.success("Prompt copied!");
-       } catch (error) {
-         toast.error("Failed to copy prompt");
-       }
-     };
+  const handleCopyLink = async () => {
+    if (!selectedImage?.prompt) return;
+    try {
+      await navigator.clipboard.writeText(selectedImage.prompt);
+      toast.success("Prompt copied!");
+    } catch (error) {
+      toast.error("Failed to copy prompt");
+    }
+  };
 
-     const handleDownload = () => {
-       if (!selectedImage?.imageUrl) return;
-       const link = document.createElement('a');
-       link.href = selectedImage.imageUrl;
-       link.download = `ai-image-${Date.now()}.jpg`;
-       link.click();
-       toast.success("Image download started!");
-     };
+  const handleDownload = () => {
+    if (!selectedImage?.imageUrl) return;
+    const link = document.createElement('a');
+    link.href = selectedImage.imageUrl;
+    link.download = `ai-image-${Date.now()}.jpg`;
+    link.click();
+    toast.success("Image download started!");
+  };
 
-     const handleImageClick = (img) => {
-       setSelectedImage(img);
-     };
+  const handleImageClick = (img) => {
+    setSelectedImage(img);
+  };
 
-     const loadMoreUserImages = () => {
-       setDisplayUserCount(prev => prev + 4);
-     };
+  const loadMoreUserImages = () => {
+    setDisplayUserCount(prev => prev + 4);
+  };
 
-     const handleClosePopup = () => {
-       setSelectedImage(null);
-     };
+  const handleClosePopup = () => {
+    setSelectedImage(null);
+  };
 
   return (
     <>
-     <div className="mt-8 sm:mt-12 max-w-280 mx-auto">
+      <div className="mt-8 sm:mt-12 max-w-280 mx-auto">
+        
         <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Your Recent Images</h3>
         {loadingImages ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
@@ -101,7 +103,7 @@ const RecentImages = () => {
           </div>
         ) : (
           <>
-             {/* images grid  */}
+            {/* images grid  */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
               {userImages.slice(0, displayUserCount).map((img, i) => (
                 <motion.div
@@ -143,28 +145,39 @@ const RecentImages = () => {
         )}
 
         <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Default Images preview</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {images.map((img, i) => (
-            <motion.div
-              key={img._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
-              onClick={() => handleImageClick(img)}
-            >
-              <img
-                src={img.imageUrl}
-                alt={img.prompt}
-                className="h-40 md:h-52 w-full object-cover"
+        {loadingImages ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="h-40 md:h-52 rounded-2xl bg-linear-to-r from-gray-700 to-gray-600 animate-pulse"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
-                <p className="line-clamp-1">{img.prompt}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {images.map((img, i) => (
+              <motion.div
+                key={img._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
+                onClick={() => handleImageClick(img)}
+              >
+                <img
+                  src={img.imageUrl}
+                  alt={img.prompt}
+                  className="h-40 md:h-52 w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
+                  <p className="line-clamp-1">{img.prompt}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* image popup  */}

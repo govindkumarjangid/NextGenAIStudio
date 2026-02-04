@@ -1,28 +1,38 @@
 import { useState, forwardRef } from "react";
 import { motion } from "motion/react";
-import { Sparkles, Loader, Download, Copy } from "lucide-react";
+import { Sparkles, Download, Copy, LoaderCircle } from "lucide-react";
 import { useAppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 
-const Builder = forwardRef((_, ref) => {
+const Builder = forwardRef((props, ref) => {
   const { axios } = useAppContext();
+  const { onImageGenerated } = props || {};
 
   const [prompt, setPrompt] = useState("");
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [imageError, setImageError] = useState(false);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+  };
+
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return toast.error("Please enter a prompt!");
-
     try {
       setIsGenerating(true);
       setImageError(false);
       setGeneratedImage("");
-
-      console.log("Sending Prompt:", prompt);
-
       const { data } = await axios.post(
         "/image/generate-image",
         { prompt },
@@ -33,13 +43,13 @@ const Builder = forwardRef((_, ref) => {
           },
         }
       );
-
-      console.log("Response:", data);
-
       if (data.success && data.imageUrl) {
         setGeneratedImage(data.imageUrl + "?t=" + Date.now());
         toast.success("Image generated successfully!");
         setPrompt("");
+        if (onImageGenerated) {
+          onImageGenerated();
+        }
       } else {
         toast.error("No image URL returned!");
         setIsGenerating(false);
@@ -67,7 +77,6 @@ const Builder = forwardRef((_, ref) => {
 
   const handleDownload = () => {
     if (!generatedImage) return;
-
     const link = document.createElement("a");
     link.href = generatedImage;
     link.download = "ai-generated-image.jpg";
@@ -77,33 +86,37 @@ const Builder = forwardRef((_, ref) => {
 
   const handleCopyLink = () => {
     if (!generatedImage) return;
-
     navigator.clipboard.writeText(generatedImage);
     toast.success("Image link copied!");
   };
 
   return (
-    <div
+    <motion.div
       ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
       className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-280 mx-auto min-h-120"
     >
-
+      {/* Prompt Input and Generate Button */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
         className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
-        <div className="flex items-center gap-3 mb-6">
+        <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
           <Sparkles className="text-purple-400" size={26} />
           <h2 className="text-2xl font-bold">AI Image Studio</h2>
-        </div>
+        </motion.div>
 
-        <label className="text-sm text-slate-300 mb-2">
+        <motion.label variants={itemVariants} className="text-sm text-slate-300 mb-2">
           Describe your image
-        </label>
+        </motion.label>
 
-        <textarea
+        <motion.textarea
+          variants={itemVariants}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="A futuristic cyberpunk city at sunset..."
@@ -113,15 +126,17 @@ const Builder = forwardRef((_, ref) => {
         />
 
         <motion.button
+          variants={itemVariants}
           onClick={handleGenerate}
-          disabled={isGenerating}
+          disabled={isGenerating || !prompt.trim()}
+          aria-disabled={isGenerating || !prompt.trim()}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full mt-5 bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 py-4 rounded-xl font-semibold shadow-lg disabled:opacity-50"
+          className="w-full mt-5 bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 py-4 rounded-xl font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isGenerating ? (
             <span className="flex items-center justify-center gap-2">
-              <Loader className="animate-spin" size={20} />
+              <LoaderCircle  className="animate-spin" size={20} />
               Generating...
             </span>
           ) : (
@@ -131,60 +146,85 @@ const Builder = forwardRef((_, ref) => {
 
       </motion.div>
 
+     {/* right div  */}
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
         className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
-        <h3 className="text-xl font-semibold mb-5">Preview</h3>
+        <motion.h3 variants={itemVariants} className="text-xl font-semibold mb-5">
+          Generated Image Preview
+        </motion.h3>
 
         {/* Image Box */}
-        <div className="relative flex-1 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center">
+        <motion.div
+          variants={itemVariants}
+          className="relative flex-1 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center"
+        >
 
           {/* Image */}
           {generatedImage && !imageError && (
-            <img
+            <motion.img
               src={generatedImage}
               alt="Generated AI"
               onLoad={handleImageLoad}
               onError={handleImageError}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35 }}
               className="w-full h-full object-cover"
             />
           )}
 
           {/* Loader Overlay */}
           {isGenerating && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 flex items-center justify-center bg-black/70"
+            >
               <div className="text-center text-white">
-                <Loader className="mx-auto mb-3 animate-spin" size={50} />
-                <p>Loading Preview...</p>
+                <LoaderCircle className="mx-auto mb-3 animate-spin" size={40} />
+                <p className="text-lg font-medium animate-pulse">Generating Your Image...</p>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Placeholder */}
           {!generatedImage && !isGenerating && (
-            <div className="text-center text-slate-400 p-2">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center text-slate-400 p-2"
+            >
               <Sparkles className="mx-auto mb-3 opacity-50" size={48} />
               <p>Your generated image will appear here</p>
-            </div>
+            </motion.div>
           )}
 
           {/* Error */}
           {imageError && (
-            <div className="text-center text-red-400">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center text-red-400"
+            >
               <p>Failed to load image</p>
               <p className="text-sm text-slate-400 mt-2">
                 Please try again
               </p>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* Action Buttons */}
         {generatedImage && !imageError && (
-          <div className="flex gap-3 mt-4">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex gap-3 mt-4"
+          >
             <motion.button
               onClick={handleDownload}
               whileHover={{ scale: 1.05 }}
@@ -204,11 +244,12 @@ const Builder = forwardRef((_, ref) => {
               <Copy size={18} />
               Copy Link
             </motion.button>
-          </div>
+          </motion.div>
         )}
 
       </motion.div>
-    </div>
+
+    </motion.div>
   );
 });
 

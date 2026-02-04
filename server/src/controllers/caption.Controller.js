@@ -1,6 +1,5 @@
 import Caption from "../models/caption.model.js";
 import axios from "axios";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { uploadToCloudinary } from "../configs/multer.js";
 import dotenv from "dotenv";
 dotenv.config();
