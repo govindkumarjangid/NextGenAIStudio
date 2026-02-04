@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Hero from "../../components/features/ytThumbnail/Hero";
 
 const YTThumbnail = () => {
 
@@ -10,7 +11,9 @@ const YTThumbnail = () => {
   const [accentColor, setAccentColor] = useState("#0FFFFFF");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white flex flex-col items-center px-6 py-10">
+    <>
+    <Hero />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white flex flex-col items-center px-6 py-10">
       {/* Header */}
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
@@ -150,6 +153,8 @@ const YTThumbnail = () => {
         </motion.div>
       </div>
     </div>
+    </>
+
   );
 }
 

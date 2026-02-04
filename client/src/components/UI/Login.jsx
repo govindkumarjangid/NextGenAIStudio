@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X,Loader  } from "lucide-react";
+import { X, LoaderCircle  } from "lucide-react";
 import axios from "axios";
 import { useAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +9,11 @@ import { toast } from "react-hot-toast";
 const Login = () => {
 
   const { showLogin, setShowLogin, setToken,state, setState } = useAppContext();
-
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,10 +57,10 @@ const Login = () => {
             onClick={(e) => e.stopPropagation()}
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0 }}
+            exit={{ scale: 0.5, opacity: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
             className="w-full max-w-sm rounded-2xl py-8 px-6
-            border border-white/15 backdrop-blur-2xl bg-black/30
+            border border-white/15 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]
             shadow-xl relative"
           >
             {/* Close Button */}
@@ -102,8 +97,9 @@ const Login = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-5 py-3 rounded-full bg-white/10
-                  border border-white/10 text-white placeholder-gray-400
-                  focus:ring-1 focus:ring-purple-500 outline-none"
+                  border border-cyan-400/40 text-white placeholder-gray-400
+                  focus:outline-none focus:border-cyan-400/60
+                  focus:ring-2 focus:ring-cyan-400/30 outline-none"
                 />
               )}
 
@@ -114,8 +110,9 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-3 rounded-full bg-white/10
-                border border-white/10 text-white placeholder-gray-400
-                focus:ring-1 focus:ring-cyan-400 outline-none"
+                border border-cyan-400/40 text-white placeholder-gray-400
+                focus:outline-none focus:border-cyan-400/60
+                focus:ring-2 focus:ring-cyan-400/30 outline-none"
               />
 
               {/* Password */}
@@ -125,8 +122,9 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-5 py-3 rounded-full bg-white/10
-                border border-white/10 text-white placeholder-gray-400
-                focus:ring-1 focus:ring-purple-500 outline-none"
+                border border-cyan-400/40 text-white placeholder-gray-400
+                focus:outline-none focus:border-cyan-400/60
+                focus:ring-2 focus:ring-cyan-400/30 outline-none"
               />
 
               {/* Button */}
@@ -140,8 +138,8 @@ const Login = () => {
               >
                 {loading ? (
                   <>
-                    <Loader className="h-5 w-5 animate-spin" />
-                    {state === "login" ? "Logging in..." : "Registering..."}
+                    <LoaderCircle className="h-5 w-5 animate-spin" />
+                    Please wait...
                   </>
                 ) : (
                   <>{state === "login" ? "Login" : "Register"}</>
@@ -179,5 +177,4 @@ const Login = () => {
     </AnimatePresence>
   );
 };
-
 export default Login;

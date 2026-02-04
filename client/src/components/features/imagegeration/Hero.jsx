@@ -1,9 +1,13 @@
-import { ChevronRightIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Label from '../../UI/Label';
+import Heading from '../../UI/Heading';
+import Navigation from '../../UI/Navigation';
 
 const Hero = ({ builderRef }) => {
 
+    const navigate = useNavigate();
     const [prompt, setPrompt] = useState('');
     const scrollToBuilder = () => {
       if (builderRef?.current) {
@@ -12,53 +16,24 @@ const Hero = ({ builderRef }) => {
     };
 
     return (
-        <section className="text-center mt-20 max-w-2xl mx-auto">
+      <>
+        <Navigation/>
+        <section className="flex flex-col items-center text-center px-4 sm:px-6 lg:px-12 relative z-10 my-10">
 
-            <motion.a href="#" className="group flex items-center gap-2 rounded-full py-1 px-3 mt-6 mb-2 text-pink-100 bg-pink-500/20 w-fit mx-auto"
-                initial={{ y: -20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
-            >
-                <p className="flex items-center gap-1 text-sm text-pink-100/80 group-hover:underline">
-                    <span>Generate AI powered images</span>
-                    <ChevronRightIcon size={16} className="group-hover:translate-x-0.5 transition duration-300" />
-                </p>
-            </motion.a>
-            
+           {/* label  */}
+            <Label title="Generate Stunning AI Images" />
+
             {/* Heading */}
-            <motion.h1
-                className="text-4xl/13 md:text-6xl/21 text-center max-w-4xl text-white flex flex-wrap justify-center items-center  leading-tight font-semibold"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-            >
-                Create Stunning{" "}
-                <span className="move-gradient px-3 rounded-xl text-nowrap mx-2">
-                    AI-powered
-                </span>
-                Images.
-            </motion.h1>
-
-
-            {/* Subtitle */}
-            <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                className="mt-6 text-gray-300 max-w-xl sm:max-w-2xl text-sm sm:text-base md:text-lg"
-            >
-                Turn your ideas into reality with our powerful AI image generator. Simply enter your prompt and watch the magic happen!
-            </motion.p>
+            <Heading top="Create Stunning" middle="AI-powered" bottom="Images" subTitle="Turn your ideas into reality with our powerful AI image generator. Simply enter your prompt and watch the magic happen!"/>
 
             {/* Prompt Input */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-12 flex justify-center px-4"
+                className="mt-12 w-full flex justify-center px-4 max-w-2xl"
             >
-                <div className="flex flex-col sm:flex-row w-full max-w-2xl rounded-lg sm:rounded-full bg-white/10 border border-white/20 backdrop-blur-xl overflow-hidden shadow-lg">
+                <div className="flex flex-col sm:flex-row w-full rounded-lg sm:rounded-full bg-white/10 border border-white/20 backdrop-blur-xl overflow-hidden shadow-lg">
                     <input
                         type="text"
                         value={prompt}
@@ -74,7 +49,7 @@ const Hero = ({ builderRef }) => {
             </motion.div>
 
         </section>
-
+      </>
     )
 }
 

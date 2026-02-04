@@ -169,35 +169,6 @@ export const plans = [
   },
 ];
 
-export const trustedUsers = [
-  {
-    user: "user1",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&amp;w=200",
-  },
-  {
-    user: "user2",
-    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&amp;w=200",
-  },
-  {
-    user: "user3",
-    image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&amp;w=200",
-  },
-  {
-
-    user: "user4",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&amp;w=200",
-
-  },
-  {
-    user: "user5",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&amp;w=200",
-  },
-  {
-    user: "user6",
-    image: "https://randomuser.me/api/portraits/men/75.jpg"
-  }
-]
-
 export const processData = [
   {
     id: 1,
@@ -265,3 +236,18 @@ export const captionStyles = [
     { id: 'casual', label: 'Casual', color: 'from-green-500 to-emerald-500' },
     { id: 'funny', label: 'Funny', color: 'from-orange-500 to-red-500' },
   ]
+
+export const highlights = [
+  {
+    id: 1,
+    label: 'No design skills needed',
+  },
+  {
+    id: 2,
+    label: 'Fast generation',
+  },
+  {
+    id: 3,
+    label: 'High CTR templates',
+  },
+];

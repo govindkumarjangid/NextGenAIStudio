@@ -21,7 +21,7 @@ const Navbar = () => {
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
       className="sticky top-0 z-50 w-full backdrop-blur-sm">
-      <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-24 xl:px-32">
+      <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-20 xl:px-22">
         <div className="flex justify-between items-center h-18">
 
           {/* Logo */}

@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import {  specialFeatures } from "../../assets/assets.jsx";
-import { CheckIcon, ChevronRightIcon, VideoIcon } from "lucide-react";
+import { CheckIcon, VideoIcon } from "lucide-react";
 import { useAppContext } from "../../context/AppContext.jsx";
+import Label from "../UI/Label.jsx";
+import Heading from "../UI/Heading.jsx";
 
 const Hero = () => {
 
@@ -9,63 +11,16 @@ const Hero = () => {
 
   return (
     <div className="w-full">
-      {/* Background Glow Effects */}
-      {/* <div className="fixed top-0 left-0 w-125 h-125
-      bg-purple-500 opacity-40 blur-[150px] rounded-full" />
-
-      <div className="fixed bottom-0 right-0  w-125 h-125
-      bg-cyan-400 opacity-40 blur-[150px] rounded-full" /> */}
 
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center
       px-4 sm:px-6 lg:px-12 pt-20 relative z-10">
 
-
-        <motion.a href="#" className="group flex items-center gap-2 rounded-full p-1 pr-3 mt-6 mb-2 text-pink-100 bg-pink-200/15"
-          initial={{ y: -20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
-        >
-          <span className="bg-purple-800 text-white text-xs px-3.5 py-1 rounded-full">
-            NEW
-          </span>
-          <p className="flex items-center gap-1 text-sm text-pink-100/80 group-hover:underline">
-            <span>Try 30 days free trial option </span>
-            <ChevronRightIcon size={16} className="group-hover:translate-x-0.5 transition duration-300" />
-          </p>
-        </motion.a>
+      {/* label   */}
+        <Label title="Welcome to NextGen AI Studio" />
 
         {/* Heading */}
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
-          className="font-bold leading-tight"
-        >
-          <motion.h1 className="text-4xl/13 md:text-6xl/21 font-semibold max-w-3xl text-center text-white"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
-          >
-            Unleash your creative potential{" "}
-            <span className="move-gradient px-3 rounded-full text-nowrap">with AI.</span>
-          </motion.h1>
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 text-gray-300 max-w-xl sm:max-w-2xl
-          text-sm sm:text-base md:text-lg"
-        >
-          Your all-in-one platform for professional resumes, document
-          analysis, and stunning visuals.
-        </motion.p>
+        <Heading  top="Unleash your creative potential" middle="with AI." bottom ="" subTitle=" Your all-in-one platform for professional resumes, document analysis, and stunning visuals."/>
 
         {/* CTA Button */}
         <motion.div className="flex items-center gap-4 mt-8"
