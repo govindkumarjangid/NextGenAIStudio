@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import toast from 'react-hot-toast'
 import { useAppContext } from '../../../context/AppContext'
-import { Copy, Download, X } from 'lucide-react'
+import { Copy, Download, X, Image } from 'lucide-react'
 
 const RecentImages = () => {
 
@@ -90,7 +90,7 @@ const RecentImages = () => {
   return (
     <>
       <div className="mt-8 sm:mt-12 max-w-280 mx-auto">
-        
+
         <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-4 sm:mb-6">Your Recent Images</h3>
         {loadingImages ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
@@ -103,9 +103,17 @@ const RecentImages = () => {
           </div>
         ) : (
           <>
-            {/* images grid  */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
-              {userImages.slice(0, displayUserCount).map((img, i) => (
+            {userImages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 mb-10">
+                <Image className="w-16 h-16 text-gray-500 mb-4 opacity-50" />
+                <p className="text-gray-400 text-lg">No images generated yet</p>
+                <p className="text-gray-500 text-sm mt-2">Start creating amazing images with AI!</p>
+              </div>
+            ) : (
+              <>
+                {/* images grid  */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+                  {userImages.slice(0, displayUserCount).map((img, i) => (
                 <motion.div
                   key={img._id}
                   initial={{ opacity: 0, y: 20 }}
@@ -120,27 +128,28 @@ const RecentImages = () => {
                     alt={img.prompt}
                     className="h-40 md:h-52 w-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 translate-y-3 hover:opacity-100 hover:translate-y-0 transition-all duration-300 ease-out flex items-end p-3 text-sm font-medium line-clamp-1">
                     <p className="line-clamp-1">{img.prompt}</p>
                   </div>
                 </motion.div>
               ))}
-            </div>
+             </div>
 
-            {/* load more button  */}
-            {userImages.length > displayUserCount && (
-              <div className="flex justify-center mb-10">
-                <motion.button
-                  onClick={loadMoreUserImages}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 transition text-sm font-medium"
-                >
-                  Load More
-                </motion.button>
-              </div>
+                {/* load more button  */}
+                {userImages.length > displayUserCount && (
+                  <div className="flex justify-center mb-10">
+                    <motion.button
+                      onClick={loadMoreUserImages}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 transition text-sm font-medium"
+                    >
+                      Load More
+                    </motion.button>
+                  </div>
+                )}
+              </>
             )}
-
           </>
         )}
 
@@ -171,7 +180,7 @@ const RecentImages = () => {
                   alt={img.prompt}
                   className="h-40 md:h-52 w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition flex items-end p-3 text-sm font-medium line-clamp-1">
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 translate-y-3 hover:opacity-100 hover:translate-y-0 transition-all duration-300 ease-out flex items-end p-3 text-sm font-medium line-clamp-1">
                   <p className="line-clamp-1">{img.prompt}</p>
                 </div>
               </motion.div>
@@ -185,7 +194,7 @@ const RecentImages = () => {
         {selectedImage && (
           <motion.div
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -1,17 +1,17 @@
 import { useState, forwardRef } from "react";
 import { motion } from "motion/react";
-import { Sparkles, Download, Copy, LoaderCircle } from "lucide-react";
+import { Film, Download, Copy, LoaderCircle } from "lucide-react";
 import { useAppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 
 const Builder = forwardRef((props, ref) => {
   const { axios } = useAppContext();
-  const { onImageGenerated } = props || {};
+  const { onVideoGenerated } = props || {};
 
   const [prompt, setPrompt] = useState("");
-  const [generatedImage, setGeneratedImage] = useState("");
+  const [generatedVideo, setGeneratedVideo] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -31,63 +31,63 @@ const Builder = forwardRef((props, ref) => {
     if (!prompt.trim()) return toast.error("Please enter a prompt!");
     try {
       setIsGenerating(true);
-      setImageError(false);
-      setGeneratedImage("");
+      setVideoError(false);
+      setGeneratedVideo("");
       const { data } = await axios.post(
-        "/image/generate-image",
+        "/video/generate-video",
         { prompt },
         {
-          timeout: 30000,
+          timeout: 60000,
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      if (data.success && data.imageUrl) {
-        setGeneratedImage(data.imageUrl + "?t=" + Date.now());
-        toast.success("Image generated successfully!");
+      if (data.success && data.videoUrl) {
+        setGeneratedVideo(data.videoUrl + "?t=" + Date.now());
+        toast.success("Video generated successfully!");
         setPrompt("");
-        if (onImageGenerated) {
-          onImageGenerated();
+        if (onVideoGenerated) {
+          onVideoGenerated();
         }
       } else {
-        toast.error("No image URL returned!");
+        toast.error("No video URL returned!");
         setIsGenerating(false);
       }
     } catch (error) {
       console.log("Error:", error);
-      toast.error(error.response?.data?.message || "Image generation failed!");
+      toast.error(error.response?.data?.message || "Video generation failed!");
       setIsGenerating(false);
     }
   };
 
 
-  const handleImageLoad = () => {
+  const handleVideoLoad = () => {
     setIsGenerating(false);
-    setImageError(false);
+    setVideoError(false);
   };
 
 
-  const handleImageError = () => {
+  const handleVideoError = () => {
     setIsGenerating(false);
-    setImageError(true);
-    toast.error("Image failed to load!");
+    setVideoError(true);
+    toast.error("Video failed to load!");
   };
 
 
   const handleDownload = () => {
-    if (!generatedImage) return;
+    if (!generatedVideo) return;
     const link = document.createElement("a");
-    link.href = generatedImage;
-    link.download = "ai-generated-image.jpg";
+    link.href = generatedVideo;
+    link.download = "ai-generated-video.mp4";
     link.click();
   };
 
 
   const handleCopyLink = () => {
-    if (!generatedImage) return;
-    navigator.clipboard.writeText(generatedImage);
-    toast.success("Image link copied!");
+    if (!generatedVideo) return;
+    navigator.clipboard.writeText(generatedVideo);
+    toast.success("Video link copied!");
   };
 
   return (
@@ -107,22 +107,22 @@ const Builder = forwardRef((props, ref) => {
         className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
         <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
-          <Sparkles className="text-purple-400" size={26} />
-          <h2 className="text-2xl font-bold">AI Image Studio</h2>
+          <Film className="text-blue-400" size={26} />
+          <h2 className="text-2xl font-bold text-white">AI Video Studio</h2>
         </motion.div>
 
         <motion.label variants={itemVariants} className="text-sm text-slate-300 mb-2">
-          Describe your image
+          Describe your video
         </motion.label>
 
         <motion.textarea
           variants={itemVariants}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="A futuristic cyberpunk city at sunset..."
+          placeholder="A serene forest landscape with flowing water..."
           className="w-full h-40 flex-1 rounded-xl p-4 bg-black/20
-              border border-purple-400/40 text-white placeholder:line-clamp-1 placeholder-gray-400 focus:outline-none focus:border-purple-400/60
-              focus:ring-2 focus:ring-purple-400/30 transition resize-none"
+              border border-blue-400/40 text-white placeholder:line-clamp-1 placeholder-gray-400 focus:outline-none focus:border-blue-400/60
+              focus:ring-2 focus:ring-blue-400/30 transition resize-none"
         />
 
         <motion.button
@@ -132,7 +132,7 @@ const Builder = forwardRef((props, ref) => {
           aria-disabled={isGenerating || !prompt.trim()}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full mt-5 bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 py-4 rounded-xl font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full mt-5 bg-linear-to-r from-blue-500 via-purple-500 to-indigo-600 py-4 rounded-xl font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-white"
         >
           {isGenerating ? (
             <span className="flex items-center justify-center gap-2">
@@ -140,7 +140,7 @@ const Builder = forwardRef((props, ref) => {
               Generating...
             </span>
           ) : (
-            "Generate Image"
+            "Generate Video"
           )}
         </motion.button>
 
@@ -153,27 +153,27 @@ const Builder = forwardRef((props, ref) => {
         transition={{ duration: 0.4 }}
         className="bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] backdrop-blur-xl rounded-xl p-4 md:p-6 shadow-2xl border border-white/10 flex flex-col h-90 md:h-120"
       >
-        <motion.h3 variants={itemVariants} className="text-xl font-semibold mb-5">
-          Generated Image Preview
+        <motion.h3 variants={itemVariants} className="text-xl font-semibold mb-5 text-white">
+          Generated Video Preview
         </motion.h3>
 
-        {/* Image Box */}
+        {/* Video Box */}
         <motion.div
           variants={itemVariants}
           className="relative flex-1 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center"
         >
 
-          {/* Image */}
-          {generatedImage && !imageError && (
-            <motion.img
-              src={generatedImage}
-              alt="Generated AI"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
+          {/* Video */}
+          {generatedVideo && !videoError && (
+            <motion.video
+              src={generatedVideo}
+              onLoadedData={handleVideoLoad}
+              onError={handleVideoError}
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.35 }}
               className="w-full h-full object-cover"
+              controls
             />
           )}
 
@@ -186,31 +186,31 @@ const Builder = forwardRef((props, ref) => {
             >
               <div className="text-center text-white">
                 <LoaderCircle className="mx-auto mb-3 animate-spin" size={40} />
-                <p className="text-lg font-medium animate-pulse">Generating Your Image...</p>
+                <p className="text-lg font-medium animate-pulse">Generating Your Video...</p>
               </div>
             </motion.div>
           )}
 
           {/* Placeholder */}
-          {!generatedImage && !isGenerating && (
+          {!generatedVideo && !isGenerating && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center text-slate-400 p-2"
             >
-              <Sparkles className="mx-auto mb-3 opacity-50" size={48} />
-              <p>Your generated image will appear here</p>
+              <Film className="mx-auto mb-3 opacity-50" size={48} />
+              <p>Your generated video will appear here</p>
             </motion.div>
           )}
 
           {/* Error */}
-          {imageError && (
+          {videoError && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center text-red-400"
             >
-              <p>Failed to load image</p>
+              <p>Failed to load video</p>
               <p className="text-sm text-slate-400 mt-2">
                 Please try again
               </p>
@@ -219,7 +219,7 @@ const Builder = forwardRef((props, ref) => {
         </motion.div>
 
         {/* Action Buttons */}
-        {generatedImage && !imageError && (
+        {generatedVideo && !videoError && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

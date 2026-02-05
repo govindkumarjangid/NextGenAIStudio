@@ -6,7 +6,9 @@ import {
   Youtube,
   Video,
   Type,
-  Phone,
+  Zap,
+  Film,
+  Wand2,
 } from "lucide-react";
 import { LuKey, LuLock, LuDownload } from "react-icons/lu";
 
@@ -174,10 +176,8 @@ export const processData = [
     id: 1,
     title: "Real-Time Analytics",
     description: "Get instant insights into your finances with live dashboards.",
-    bgColor: "backdrop-blur-xl bg-purple-950/70",
-    hoverBgColor: "group-hover:bg-purple-100",
-    borderColor: "border-purple-400",
-    hoverBorderColor: "group-hover:border-purple-700",
+    bgColor: "backdrop-blur-xl bg-purple-950/30",
+    borderColor: "border-purple-700",
     iconStroke: "stroke-purple-600",
     Icon: LuKey
   },
@@ -185,10 +185,8 @@ export const processData = [
     id: 2,
     title: "Bank-Grade Security",
     description: "End-to-end encryption, 2FA, compliance with GDPR standards.",
-    bgColor: "backdrop-blur-xl bg-green-950/70",
-    hoverBgColor: "group-hover:bg-green-100",
-    borderColor: "border-green-400",
-    hoverBorderColor: "group-hover:border-green-700",
+    bgColor: "backdrop-blur-xl bg-green-950/30",
+    borderColor: "border-green-700",
     iconStroke: "stroke-green-600",
     Icon: LuLock
   },
@@ -196,10 +194,8 @@ export const processData = [
     id: 3,
     title: "Customizable Reports",
     description: "Export professional, audit-ready financial reports for tax or internal review.",
-    bgColor: "backdrop-blur-xl bg-orange-950/70",
-    hoverBgColor: "backdrop-blur-xl bg-orange-950/70",
-    borderColor: "border-orange-400",
-    hoverBorderColor: "group-hover:border-orange-700",
+    bgColor: "backdrop-blur-xl bg-orange-950/30",
+    borderColor: "border-orange-700",
     iconStroke: "stroke-orange-600",
     Icon: LuDownload
   }
@@ -207,20 +203,20 @@ export const processData = [
 
 export const dummyResumeData = [
   {
-   personal_info:{
-    full_name: "John Doe",
-    email: "john.doe@example.com",
-    Phone: "+1 234 567 8901",
-    location: "New York, USA",
-    linkedin: "linkedin.com/in/johndoe",
-    website : "johndoe.com",
-    profession: "Software Engineer"
-   },
-   _id: "64f0c8e2b4f5a2d3c4e5f678",
-   userId: "8uhu23rh9huhe89er89he8",
-   title: "Modern Resume",
-   updatedAt: "2024-06-15T10:20:30Z"
-}
+    personal_info: {
+      full_name: "John Doe",
+      email: "john.doe@example.com",
+      Phone: "+1 234 567 8901",
+      location: "New York, USA",
+      linkedin: "linkedin.com/in/johndoe",
+      website: "johndoe.com",
+      profession: "Software Engineer"
+    },
+    _id: "64f0c8e2b4f5a2d3c4e5f678",
+    userId: "8uhu23rh9huhe89er89he8",
+    title: "Modern Resume",
+    updatedAt: "2024-06-15T10:20:30Z"
+  }
 ]
 
 export const recentImages = [
@@ -231,11 +227,11 @@ export const recentImages = [
 ];
 
 export const captionStyles = [
-    { id: 'creative', label: 'Creative', color: 'from-purple-500 to-pink-500' },
-    { id: 'professional', label: 'Professional', color: 'from-blue-500 to-cyan-500' },
-    { id: 'casual', label: 'Casual', color: 'from-green-500 to-emerald-500' },
-    { id: 'funny', label: 'Funny', color: 'from-orange-500 to-red-500' },
-  ]
+  { id: 'creative', label: 'Creative', color: 'from-purple-500 to-pink-500' },
+  { id: 'professional', label: 'Professional', color: 'from-blue-500 to-cyan-500' },
+  { id: 'casual', label: 'Casual', color: 'from-green-500 to-emerald-500' },
+  { id: 'funny', label: 'Funny', color: 'from-orange-500 to-red-500' },
+]
 
 export const highlights = [
   {
@@ -251,3 +247,21 @@ export const highlights = [
     label: 'High CTR templates',
   },
 ];
+
+export const features = [
+  {
+    icon: <Film className="w-8 h-8" />,
+    title: "AI-Powered Generation",
+    description: "Create professional videos from simple descriptions"
+  },
+  {
+    icon: <Wand2 className="w-8 h-8" />,
+    title: "Smart Editing",
+    description: "Smart transitions and effects automatically applied"
+  },
+  {
+    icon: <Zap className="w-8 h-8" />,
+    title: "Lightning Fast",
+    description: "Generate stunning videos in 1 to 2 minutes fast"
+  },
+]

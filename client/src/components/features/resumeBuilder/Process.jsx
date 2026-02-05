@@ -46,7 +46,7 @@ const Process = () => {
                             }}
                             whileHover={{ scale: 1.03 }}
                         >
-                            <div className={`p-6 ${item.bgColor} border ${item.borderColor} ${item.hoverBorderColor} flex gap-4 rounded-xl transition-colors`}>
+                            <div className={`p-6 ${item.bgColor} border ${item.borderColor} flex gap-4 rounded-xl transition-colors`}>
                                 <item.Icon className={`size-6 ${item.iconStroke}`} />
                                 <div className="space-y-2">
                                     <h3 className="text-base font-semibold text-slate-300">{item.title}</h3>
