@@ -15,6 +15,20 @@ const captionSchema = new mongoose.Schema({
         trim: true,
         default: "",
     },
+    platform: {
+        type: String,
+        trim: true,
+        default: "instagram",
+    },
+    style: {
+        type: String,
+        trim: true,
+        default: "default",
+    },
+    output: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {},
+    },
 }, {
     timestamps: true,
 });

@@ -10,6 +10,7 @@ const RecentImages = () => {
   const [images, setImages] = useState([]);
   const [userImages, setUserImages] = useState([]);
   const [loadingImages, setLoadingImages] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [displayUserCount, setDisplayUserCount] = useState(4);
   const token = localStorage.getItem("token");
@@ -80,7 +81,12 @@ const RecentImages = () => {
   };
 
   const loadMoreUserImages = () => {
-    setDisplayUserCount(prev => prev + 4);
+    if (loadingMore || displayUserCount >= userImages.length) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setDisplayUserCount((prev) => Math.min(prev + 4, userImages.length));
+      setLoadingMore(false);
+    }, 500);
   };
 
   const handleClosePopup = () => {
@@ -140,11 +146,15 @@ const RecentImages = () => {
                   <div className="flex justify-center mb-10">
                     <motion.button
                       onClick={loadMoreUserImages}
+                      disabled={loadingMore}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-500 via-pink-500 to-indigo-600 transition text-sm font-medium"
+                      className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold py-2 px-6 rounded-xl transition flex items-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Load More
+                      {loadingMore && (
+                        <span className="h-4 w-4 border-2 border-white/60 border-t-transparent rounded-full animate-spin" />
+                      )}
+                      {loadingMore ? 'Loading...' : 'Load More'}
                     </motion.button>
                   </div>
                 )}

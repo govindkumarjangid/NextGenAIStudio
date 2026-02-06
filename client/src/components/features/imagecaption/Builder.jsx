@@ -1,9 +1,12 @@
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Upload, Sparkles, Copy, Check, Download, X } from 'lucide-react';
-import { captionStyles } from '../../../assets/assets';
+import { Upload, Sparkles, Copy, Check, Download, X, LoaderCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { platformStyles } from '../../../assets/assets';
+
+
+const getStylesForPlatform = (platform) => platformStyles[platform] || platformStyles.instagram;
 
 const Builder = () => {
 
@@ -12,11 +15,15 @@ const Builder = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [imageId, setImageId] = useState('');
   const [caption, setCaption] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [captionEmojis, setCaptionEmojis] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [captionStyle, setCaptionStyle] = useState('creative');
+  const [captionStyle, setCaptionStyle] = useState(getStylesForPlatform('instagram')[0].id);
+  const [platform, setPlatform] = useState('instagram');
   const fileInputRef = useRef(null);
+
+  const filteredStyles = getStylesForPlatform(platform);
 
 
  const handleImageUpload = (e) => {
@@ -27,6 +34,7 @@ const Builder = () => {
       reader.onload = (event) => {
         setUploadedImage(event.target?.result)
         setCaption('')
+        setCaptionEmojis([])
       }
       reader.readAsDataURL(file)
     }
@@ -71,16 +79,14 @@ const Builder = () => {
             imageUrl,
             id: imageId,
             style: captionStyle,
+            platform,
         });
-
-        console.log(data);
-
         if(data?.success) {
             setCaption(data.caption);
+          setCaptionEmojis(Array.isArray(data?.output?.emojis) ? data.output.emojis : []);
         } else {
             toast.error("Failed to generate caption. Please try again.");
         }
-
     }catch (error) {
       console.error("Caption Generation Error:", error)
       toast.error("Failed to generate caption. Please try again.")
@@ -106,6 +112,7 @@ const Builder = () => {
   const handleRemoveImage = () => {
     setUploadedImage(null)
     setCaption('')
+    setCaptionEmojis([])
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
@@ -195,7 +202,7 @@ const Builder = () => {
                   disabled={loading || !imageUrl}
                   className="flex-1 bg-linear-to-r from-purple-500 to-cyan-400 hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
                 >
-                  <Sparkles size={20} />
+                  <LoaderCircle size={20} className="animate-spin" />
                   {loading ? 'Generating...' : 'Generate Caption'}
                 </button>
                 <button
@@ -235,14 +242,39 @@ const Builder = () => {
           >
             {/* Style Selection */}
             <div className="flex flex-col gap-3">
+              <label className="text-white font-semibold">Platform</label>
+              <div className="grid grid-cols-2 gap-3">
+                {["instagram", "facebook", "twitter", "youtube"].map((item) => (
+                  <motion.button
+                    key={item}
+                    onClick={() => {
+                      setPlatform(item)
+                      const nextStyles = getStylesForPlatform(item)
+                      setCaptionStyle(nextStyles[0].id)
+                      setCaption('')
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`py-2 px-4 rounded-lg font-semibold transition ${
+                      platform === item
+                        ? 'bg-linear-to-r from-cyan-500 to-blue-400 text-white'
+                        : 'bg-white/10 border border-white/30 text-gray-300 hover:bg-white/20'
+                    }`}
+                  >
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </motion.button>
+                ))}
+              </div>
+
               <label className="text-white font-semibold">Caption Style</label>
               <div className="grid grid-cols-2 gap-3">
-                {captionStyles.map((style) => (
+                {filteredStyles.map((style) => (
                   <motion.button
                     key={style.id}
                     onClick={() => {
                       setCaptionStyle(style.id)
                       setCaption('')
+                      setCaptionEmojis([])
                     }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -278,6 +310,12 @@ const Builder = () => {
                       : 'Upload an image to get started'
                     }
                   </p>
+                )}
+
+                {caption && (
+                  <div className="mt-3 text-gray-200 text-lg">
+                    {captionEmojis.length > 0 ? captionEmojis.join(' ') : ''}
+                  </div>
                 )}
 
                 {caption && (
@@ -317,4 +355,4 @@ const Builder = () => {
   )
 }
 
-export default Builder
+export default Builder;

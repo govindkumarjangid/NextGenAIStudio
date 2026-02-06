@@ -265,3 +265,26 @@ export const features = [
     description: "Generate stunning videos in 1 to 2 minutes fast"
   },
 ]
+
+export const platformStyles = {
+  instagram: [
+    { id: 'aesthetic', label: 'Aesthetic', color: 'from-pink-500 to-rose-500' },
+    { id: 'minimal', label: 'Minimal', color: 'from-purple-500 to-indigo-500' },
+    { id: 'trendy', label: 'Trendy', color: 'from-fuchsia-500 to-pink-500' },
+  ],
+  facebook: [
+    { id: 'storytelling', label: 'Storytelling', color: 'from-blue-500 to-sky-500' },
+    { id: 'friendly', label: 'Friendly', color: 'from-cyan-500 to-teal-500' },
+    { id: 'community', label: 'Community', color: 'from-emerald-500 to-green-500' },
+  ],
+  twitter: [
+    { id: 'witty', label: 'Witty', color: 'from-orange-500 to-red-500' },
+    { id: 'punchy', label: 'Punchy', color: 'from-amber-500 to-orange-500' },
+    { id: 'news', label: 'News', color: 'from-slate-500 to-gray-500' },
+  ],
+  youtube: [
+    { id: 'hook', label: 'Hook', color: 'from-red-500 to-rose-500' },
+    { id: 'value', label: 'Value', color: 'from-yellow-500 to-orange-500' },
+    { id: 'cta', label: 'CTA', color: 'from-green-500 to-lime-500' },
+  ],
+};

@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"description": "Modern React frontend for NextGen AI Studio. A responsive dashboard built with Vite and Tailwind CSS to interact with AI Resume Builder, Analyzer, and Image Generation tools.",
 	"dependencies": {
+		"@google/generative-ai": "^0.24.1",
 		"axios": "^1.13.4",
 		"bcrypt": "^6.0.0",
 		"bytez.js": "^3.0.0",

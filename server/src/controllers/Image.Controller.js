@@ -1,6 +1,6 @@
 import Image from "../models/Image.model.js";
 import dotenv from "dotenv";
-import Bytez from "bytez.js"
+import {GoogleGenerativeAI} from "@google/generative-ai";
 dotenv.config();
 
 export const generateImage = async (req, res) => {
@@ -12,29 +12,36 @@ export const generateImage = async (req, res) => {
     if (!prompt || prompt.trim() === "")
       return res.status(400).json({ success: false, message: "Prompt is required" });
 
-    const key = process.env.BYTEZ_API_KEY;
-    const sdk = new Bytez(key);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-flash-image" });
 
-    const model = sdk.model("google/imagen-4.0-ultra-generate-001")
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
 
-    const { error, output } = await model.run(prompt);
+    const imagePart = response.candidates?.[0]?.content?.parts?.[0];
 
-    if (error)
-      return res.status(500).json({ success: false, message: "Error generating image", });
+    if (!imagePart || imagePart.type !== "image") {
+      return res.status(400).json({ success: false, message: "Failed to generate image" });
+    }
 
-    const imageUrl = output;
+    const mimeType = imagePart.inlineData.mimeType || "image/png";
+    const base64Image = `data:${mimeType};base64,${imagePart.inlineData.data}`;
 
-    const newImage = await Image.create({
-      userId: _id,
-      prompt,
-      imageUrl,
-    });
+    // const imageUrl = await uploadBase64ToCloudinary(base64Image);
 
-    res.status(200).json({
-      success: true,
-      message: "Image generated successfully",
-      imageUrl: newImage.imageUrl,
-    });
+    console.log(base64Image);
+
+    // const newImage = await Image.create({
+    //   userId: _id,
+    //   prompt,
+    //   imageUrl,
+    // });
+
+    // res.status(200).json({
+    //   success: true,
+    //   message: "Image generated successfully",
+    //   imageUrl: newImage.imageUrl,
+    // });
   } catch (error) {
     console.log("Error generating image:", error);
     res.status(500).json({

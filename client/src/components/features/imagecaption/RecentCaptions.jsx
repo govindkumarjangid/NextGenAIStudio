@@ -10,13 +10,19 @@ const RecentCaptions = () => {
   const {user} = useAppContext();
   const [captions, setCaptions] = useState([])
   const [loading, setLoading] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
   const [selectedCaption, setSelectedCaption] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(4)
 
   useEffect(() => {
     if(!user) return;
     fetchUserCaptions()
   }, [user]);
+
+  useEffect(() => {
+    setVisibleCount(4)
+  }, [captions.length])
 
   const fetchUserCaptions = async () => {
     try {
@@ -46,6 +52,17 @@ const RecentCaptions = () => {
     link.download = `caption-${selectedCaption._id}.webp`
     link.click()
   }
+
+  const handleLoadMore = () => {
+    if (loadingMore || visibleCount >= captions.length) return
+    setLoadingMore(true)
+    setTimeout(() => {
+      setVisibleCount((prev) => Math.min(prev + 4, captions.length))
+      setLoadingMore(false)
+    }, 500)
+  }
+
+  const visibleCaptions = captions.slice(0, visibleCount)
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -79,9 +96,9 @@ const RecentCaptions = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {captions.map((cap, index) => (
+          {visibleCaptions.map((cap, index) => (
             <motion.div
               key={cap._id}
               initial={{ opacity: 0, y: 20 }}
@@ -110,6 +127,21 @@ const RecentCaptions = () => {
             </motion.div>
           ))}
         </motion.div>
+      )}
+
+      {captions.length > 4 && visibleCount < captions.length && (
+        <div className="flex items-center justify-center mt-8">
+          <button
+            onClick={handleLoadMore} 
+            disabled={loadingMore}
+            className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold py-2 px-6 rounded-xl transition flex items-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {loadingMore && (
+              <span className="h-4 w-4 border-2 border-white/60 border-t-transparent rounded-full animate-spin" />
+            )}
+            {loadingMore ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
       )}
 
       {/* Caption Detail Modal */}
