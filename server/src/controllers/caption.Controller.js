@@ -6,32 +6,23 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const uploadImage = async (req, res) => {
-    try {
-        const { _id } = req.user;
-        if (!req.file) {
-            return res.status(400).json({ success: false, message: "Image file is required." });
-        }
-        const result = await uploadToCloudinary(req.file.buffer);
-        const imageUrl = result?.secure_url;
-        if (!imageUrl) {
-            return res.status(400).json({ success: false, message: "Failed to get image URL from Cloudinary." });
-        }
-        const newImage = await Caption.create({
-            userId: _id,
-            imageUrl: imageUrl,
-            caption: "",
-        });
-        res.status(200).json({
-            success: true,
-            message: "Image uploaded successfully",
-            imageUrl,
-            id: newImage._id,
-        });
+  try {
+    const { _id } = req.user;
+    if (!req.file)
+      return res.status(400).json({ success: false, message: "Image file is required." });
 
-    } catch (error) {
-        console.error("Image Upload Error:", error);
-        res.status(500).json({ success: false, message: "Image upload failed." });
-    }
+    const result = await uploadToCloudinary(req.file.buffer);
+    const imageUrl = result?.secure_url;
+    if (!imageUrl)
+      return res.status(400).json({ success: false, message: "Failed to get image URL from Cloudinary." });
+
+    const newImage = await Caption.create({userId: _id, imageUrl: imageUrl, caption: "" });
+    res.status(200).json({ success: true, message: "Image uploaded successfully", imageUrl, id: newImage._id,});
+    
+  } catch (error) {
+    console.error("Image Upload Error:", error);
+    res.status(500).json({ success: false, message: "Image upload failed." });
+  }
 }
 
 export const genrateCaption = async (req, res) => {
@@ -53,12 +44,7 @@ export const genrateCaption = async (req, res) => {
 
     const normalizedPlatform = (platform || "instagram").toString().trim().toLowerCase();
 
-    const hashtagLimits = {
-      instagram: 3,
-      facebook: 2,
-      twitter: 2,
-      youtube: 2,
-    };
+    const hashtagLimits = { instagram: 3, facebook: 2, twitter: 2, youtube: 2 };
 
     const platformRules = {
       instagram:
@@ -108,11 +94,7 @@ export const genrateCaption = async (req, res) => {
 
     const rawHashtags = Array.isArray(parsedOutput?.hashtags) ? parsedOutput.hashtags : [];
     const normalizedHashtags = uniqueHashtags(
-      rawHashtags
-        .map((tag) => String(tag).trim())
-        .filter((tag) => tag.length > 0)
-        .map(ensureHashtagPrefix)
-    ).slice(0, hashtagCount);
+      rawHashtags.map((tag) => String(tag).trim()).filter((tag) => tag.length > 0).map(ensureHashtagPrefix)).slice(0, hashtagCount);
 
     let captionText = parsedOutput?.caption || rawText;
     if (normalizedHashtags.length > 0) {
@@ -142,42 +124,21 @@ export const genrateCaption = async (req, res) => {
     res.status(200).json({ success: true, caption: captionText, output });
   } catch (error) {
     console.error("Caption Generation Error:", error.message);
-    res.status(500).json({
-      success: false,
-      message: "Caption generation failed.",
-      error: error.message,
-    });
+    res.status(500).json({ success: false, message: "Caption generation failed.", error: error.message });
   }
 };
 
 export const getUserCaptions = async (req, res) => {
   try {
     const { _id } = req.user;
-
-    if (!_id) {
+    if (!_id)
       return res.status(401).json({ success: false, message: "User not authenticated." });
-    }
-
-    const captions = await Caption.find({ userId: _id }).select(
-      "imageUrl caption platform style output createdAt"
-    );
-
-    if (!captions || captions.length === 0) {
-      return res.status(200).json({
-        success: true,
-        message: "No captions found.",
-        captions: []
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "User captions retrieved successfully.",
-      captions
-    });
-
+    const captions = await Caption.find({ userId: _id }).select("imageUrl caption platform style output createdAt").sort({ createdAt: -1 });
+    if (!captions || captions.length === 0)
+      return res.status(200).json({ success: true, message: "No captions found.", captions: [] });
+    res.status(200).json({ success: true, message: "User captions retrieved successfully.", captions });
   } catch (error) {
-    console.error("Get User Captions Error:", error);
+    console.error("Captions Error:", error);
     res.status(500).json({ success: false, message: "Failed to fetch captions." });
   }
 };

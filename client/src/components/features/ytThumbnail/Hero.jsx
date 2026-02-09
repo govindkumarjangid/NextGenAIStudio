@@ -10,6 +10,8 @@ const Hero = () => {
 
   return (
     <>
+      <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
+      <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
       <Navigation />
       <section className="flex flex-col items-center text-center px-4 sm:px-6 lg:px-12 relative z-10 my-10">
 
@@ -18,7 +20,7 @@ const Hero = () => {
 
         {/* Heading */}
         <div className="max-w-3xl w-full px-2">
-            <Heading top="AI Thumbnail Generator for" middle=" Your Videos" bottom="" subTitle="Stop wasting hours on design. Get high-converting thumbnails in seconds with our advanced AI." />
+          <Heading top="AI Thumbnail Generator for" middle=" Your Videos" bottom="" subTitle="Stop wasting hours on design. Get high-converting thumbnails in seconds with our advanced AI." />
         </div>
 
         {/* Action Buttons */}

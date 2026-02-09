@@ -10,7 +10,8 @@ const Builder = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-black text-white">
+        <div className="min-h-screen text-white">
+
             {/* back to landing page  */}
             <button
                 onClick={() => navigate(-1)}

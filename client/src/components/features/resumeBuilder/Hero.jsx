@@ -1,16 +1,17 @@
 import { motion } from "motion/react";
 import { VideoIcon} from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import Label from "../../UI/Label";
 import Heading from "../../UI/Heading";
 import Navigation from "../../UI/Navigation";
 
 const Hero = () => {
 
-    const navigate = useNavigate();
 
     return (
         <>
+          <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
+            <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
+
             <Navigation />
             {/* Hero Section */}
             <section className="flex flex-col items-center text-center px-4 sm:px-6 lg:px-12 relative z-10 my-10">

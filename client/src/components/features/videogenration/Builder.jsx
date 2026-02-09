@@ -99,6 +99,9 @@ const Builder = forwardRef((props, ref) => {
       viewport={{ once: true, amount: 0.2 }}
       className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-280 mx-auto min-h-120"
     >
+
+      <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
+      <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
       {/* Prompt Input and Generate Button */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}

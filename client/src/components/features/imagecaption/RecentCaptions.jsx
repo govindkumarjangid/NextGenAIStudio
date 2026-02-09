@@ -118,8 +118,8 @@ const RecentCaptions = () => {
                 </div>
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-end justify-center">
-                  <div className="text-left p-2 ">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+                  <div className="text-left p-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
                     <p className="text-white text-sm font-semibold line-clamp-1">{cap.caption}</p>
                   </div>
                 </div>
@@ -132,7 +132,7 @@ const RecentCaptions = () => {
       {captions.length > 4 && visibleCount < captions.length && (
         <div className="flex items-center justify-center mt-8">
           <button
-            onClick={handleLoadMore} 
+            onClick={handleLoadMore}
             disabled={loadingMore}
             className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold py-2 px-6 rounded-xl transition flex items-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed"
           >

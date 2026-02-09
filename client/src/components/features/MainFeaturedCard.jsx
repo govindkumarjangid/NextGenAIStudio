@@ -7,14 +7,22 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.97 }}
-       initial={{ y: 150, opacity: 0 }}
+      whileHover={{
+        scale: 1.04,
+        y: -6,
+        transition: { type: "spring", stiffness: 300, damping: 22, mass: 0.7 }
+      }}
+      whileTap={{
+        scale: 0.98,
+        y: -2,
+        transition: { type: "spring", stiffness: 520, damping: 30, mass: 0.6 }
+      }}
+      initial={{ y: 50, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.15, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
       onClick={() => navigate(path)}
-      className="relative cursor-pointer rounded-2xl group overflow-hidden  transition-colors duration-200 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] p-6  border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/20"
+      className="relative cursor-pointer rounded-2xl group overflow-hidden  transition-colors duration-200 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] p-6  border border-white/10 backdrop-blur-3xl shadow-lg hover:border-white/30"
     >
 
         {/* Icon */}

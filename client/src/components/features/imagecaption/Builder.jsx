@@ -16,7 +16,7 @@ const Builder = () => {
   const [imageId, setImageId] = useState('');
   const [caption, setCaption] = useState('');
   const [captionEmojis, setCaptionEmojis] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [captionStyle, setCaptionStyle] = useState(getStylesForPlatform('instagram')[0].id);
@@ -72,10 +72,13 @@ const Builder = () => {
 
   const handleGenerateCaption = async () => {
     if (!uploadedImage) return;
+    if (!imageUrl) {
+      toast.error('Please upload the image first.');
+      return;
+    }
     setLoading(true)
     try {
-
-        const {data} =await axios.post('/caption/generate-caption', {
+        const {data} = await axios.post('/caption/generate-caption', {
             imageUrl,
             id: imageId,
             style: captionStyle,
@@ -202,8 +205,17 @@ const Builder = () => {
                   disabled={loading || !imageUrl}
                   className="flex-1 bg-linear-to-r from-purple-500 to-cyan-400 hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
                 >
-                  <LoaderCircle size={20} className="animate-spin" />
-                  {loading ? 'Generating...' : 'Generate Caption'}
+                  {loading ? (
+                    <>
+                      <LoaderCircle size={20} className="animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={20} />
+                      Generate Caption
+                    </>
+                  )}
                 </button>
                 <button
                   onClick={handleImageUploadOnServer}
