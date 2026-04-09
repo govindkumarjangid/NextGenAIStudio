@@ -1,4 +1,4 @@
-import Caption from "../models/caption.model.js";
+import Caption from "../models/Caption.model.js";
 import axios from "axios";
 import { uploadToCloudinary } from "../configs/multer.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -18,7 +18,7 @@ export const uploadImage = async (req, res) => {
 
     const newImage = await Caption.create({userId: _id, imageUrl: imageUrl, caption: "" });
     res.status(200).json({ success: true, message: "Image uploaded successfully", imageUrl, id: newImage._id,});
-    
+
   } catch (error) {
     console.error("Image Upload Error:", error);
     res.status(500).json({ success: false, message: "Image upload failed." });

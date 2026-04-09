@@ -27,7 +27,42 @@ const App = () => {
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={10}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "linear-gradient(135deg, rgba(22,0,39,0.96), rgba(0,35,45,0.96))",
+            color: "#f8fafc",
+            border: "1px solid rgba(255,255,255,0.14)",
+            borderRadius: "14px",
+            backdropFilter: "blur(10px)",
+            padding: "12px 14px",
+            fontSize: "14px",
+            fontWeight: 500,
+          },
+          success: {
+            iconTheme: {
+              primary: "#22c55e",
+              secondary: "#052e16",
+            },
+            style: {
+              border: "1px solid rgba(34,197,94,0.7)",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#450a0a",
+            },
+            style: {
+              border: "1px solid rgba(239,68,68,0.7)",
+            },
+          },
+        }}
+      />
       {showLogin && <Login />}
       <Navbar />
       <ScrollToTop />

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, LoaderCircle  } from "lucide-react";
+import { X, LoaderCircle } from "lucide-react";
 import axios from "axios";
 import { useAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -8,36 +8,44 @@ import { toast } from "react-hot-toast";
 
 const Login = () => {
 
-  const { showLogin, setShowLogin, setToken,state, setState } = useAppContext();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { showLogin, setShowLogin, setToken, state, setState } = useAppContext();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const {data} = await axios.post(`/user/${state}`, {
-				name,
-				email,
-				password,
-			});
-      if(data?.success){
+      const payload = state === "register" ? { ...formData } : { email: formData.email, password: formData.password };
+      const { data } = await axios.post(`/user/${state}`, payload);
+      if (data?.success) {
         navigate("/");
         setToken(data.token);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         toast.success("Login successful");
         setShowLogin(false);
-      }else{
+      } else {
         toast.error(data?.message);
       }
     } catch (error) {
       console.error("Error during authentication:", error);
-      const message = error?.response?.data?.message || error?.message || "Something went wrong";
-      toast.error(message);
-    }finally{
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
@@ -55,9 +63,9 @@ const Login = () => {
           {/* Modal Box */}
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            initial={{ scale: 0.8, opacity: 0, y: 50 }}
+            initial={{ scale: 0, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.5, opacity: 0 }}
+            exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
             className="w-full max-w-sm rounded-2xl py-8 px-6
             border border-white/15 bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]
@@ -84,18 +92,20 @@ const Login = () => {
 
             {/* Form */}
             <form
-            onSubmit={handleSubmit}
-            className="mt-8 space-y-5"
-            onClick={(e) => e.stopPropagation()}
+              onSubmit={handleSubmit}
+              className="mt-8 space-y-5"
+              onClick={(e) => e.stopPropagation()}
             >
 
               {/* Name Field (Only Register) */}
               {state === "register" && (
                 <input
                   type="text"
+                  id="name"
+                  name="name"
                   placeholder="Full Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={formData.name}
+                  onChange={handleInputChange}
                   className="w-full px-5 py-3 rounded-full bg-white/10
                   border border-cyan-400/40 text-white placeholder-gray-400
                   focus:outline-none focus:border-cyan-400/60
@@ -106,9 +116,11 @@ const Login = () => {
               {/* Email */}
               <input
                 type="email"
+                id="email"
+                name="email"
                 placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleInputChange}
                 className="w-full px-5 py-3 rounded-full bg-white/10
                 border border-cyan-400/40 text-white placeholder-gray-400
                 focus:outline-none focus:border-cyan-400/60
@@ -118,9 +130,11 @@ const Login = () => {
               {/* Password */}
               <input
                 type="password"
+                id="password"
+                name="password"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleInputChange}
                 className="w-full px-5 py-3 rounded-full bg-white/10
                 border border-cyan-400/40 text-white placeholder-gray-400
                 focus:outline-none focus:border-cyan-400/60
@@ -133,8 +147,8 @@ const Login = () => {
                 disabled={loading}
                 className="w-full py-3 rounded-full text-white
                 bg-linear-to-r from-purple-500 to-cyan-400
-                shadow-lg transition flex items-center justify-center gap-2
-                hover:scale-[1.03] disabled:opacity-70 disabled:cursor-not-allowed"
+                shadow-lg transition-all flex items-center justify-center gap-2
+                active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -151,7 +165,7 @@ const Login = () => {
             <p className="text-gray-400 text-sm text-center mt-6">
               {state === "login" ? (
                 <>
-                  Don’t have an account?{" "}
+                  Don’t have an account ? {" "}
                   <span
                     onClick={() => setState("register")}
                     className="text-cyan-400 cursor-pointer hover:underline"
@@ -161,7 +175,7 @@ const Login = () => {
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  Already have an account ? {" "}
                   <span
                     onClick={() => setState("login")}
                     className="text-purple-400 cursor-pointer hover:underline"

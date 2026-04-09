@@ -6,13 +6,19 @@ import { motion, AnimatePresence } from "motion/react";
 import { useAppContext } from "../../context/AppContext";
 
 const Navbar = () => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [showCreditsTooltip, setShowCreditsTooltip] = useState(false);
   const location = useLocation();
-  const { user, setShowLogin, logout, setState } = useAppContext();
+  const { user, setShowLogin, logout, setState, handleGetStarted } = useAppContext();
 
   let isActive = (path) => location.pathname === path;
 
+  const handleLogout = async () => {
+    if (user) await logout();
+    setState("login");
+    setShowLogin(true);
+  }
 
   return (
     <motion.nav
@@ -54,35 +60,24 @@ const Navbar = () => {
             {/* Get Started */}
             <button
               type="button"
-              onClick={() => {
-                setState("register");
-                setShowLogin(true);
-              }}
+              onClick={handleGetStarted}
               className="px-6 py-2 rounded-full text-white
-              bg-linear-to-r from-purple-500 to-cyan-400
-              hover:scale-105 transition-transform active:scale-99
-              disabled:opacity-60 disabled:cursor-not-allowed"
+              bg-linear-to-r from-purple-500 to-cyan-400 transition-transform active:scale-95 "
             >
               Get Started
             </button>
 
-            {/* Login/Logout Button with Tooltip */}
+            {/* Login/Logout Button */}
             <div className="relative">
-              <Link
-                className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-99 cursor-pointer group text-center"
+              <button
+                type="button"
+                className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-95 cursor-pointer group text-center"
                 onMouseEnter={() => user && setShowCreditsTooltip(true)}
                 onMouseLeave={() => setShowCreditsTooltip(false)}
-                onClick={async () => {
-                  if (user) {
-                    await logout();
-                  } else {
-                    setState("login");
-                    setShowLogin(true);
-                  }
-                }}
+                onClick={handleLogout}
               >
                 {user ? "Logout" : "Login"}
-              </Link>
+              </button>
 
               {/* Credits Tooltip */}
               <AnimatePresence>
@@ -99,7 +94,7 @@ const Navbar = () => {
                       <span className="text-cyan-200">{user?.credits || 0}</span>
                     </div>
                     {/* Arrow */}
-                    <div className="absolute -top-1 right-4 w-1.5 h-1.5 bg-linear-to-br from-purple-600 to-cyan-600 rotate-45"></div>
+                    <div className="absolute -top-1 right-4 w-1.5 h-1.5 bg-linear-to-br from-purple-600 to-cyan-600 rotate-45" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -125,9 +120,9 @@ const Navbar = () => {
         {isOpen && (
           <>
             <motion.div
-              initial={{  scaleX: 0 }}
+              initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              exit={{  scaleX: 0 }}
+              exit={{ scaleX: 0 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="fixed inset-0 z-99 w-full h-screen flex flex-col justify-center items-center text-center bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]"
             >

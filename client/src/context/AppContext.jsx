@@ -42,6 +42,12 @@ export const AppProvider = ({ children }) => {
         toast.success("Logged out successfully");
     }
 
+    const handleGetStarted = async () => {
+        if (user) await logout();
+        setState("register");
+        setShowLogin(true);
+    }
+
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
@@ -70,7 +76,8 @@ export const AppProvider = ({ children }) => {
         loading,
         setLoading,
         state,
-        setState
+        setState,
+        handleGetStarted
     }
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

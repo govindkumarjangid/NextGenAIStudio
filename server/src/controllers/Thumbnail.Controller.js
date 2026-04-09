@@ -1,6 +1,6 @@
 import { GenrateContentConfig, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import { GoogleGenAI } from "@google/generative-ai";
-import Thumbnail from "../models/thumbnail.model.js";
+import Thumbnail from "../models/Thumbnail.model.js";
 import dotenv from 'dotenv';
 import Path from 'path';
 import fs from 'fs';

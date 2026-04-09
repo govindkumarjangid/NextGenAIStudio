@@ -2,9 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './src/configs/connectdb.js';
-import imageRoute from './src/routes/Image.Route.js';
-import userRouter from './src/routes/User.Route.js';
-import captionRouter from './src/routes/caption.Route.js';
+import imageRoute from './src/routes/image.routes.js';
+import userRouter from './src/routes/user.routes.js';
+import captionRouter from './src/routes/caption.routes.js';
 dotenv.config();
 
 //app
