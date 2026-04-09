@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navLinks } from "../../assets/assets";
@@ -26,7 +26,8 @@ const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
-      className="sticky top-0 z-50 w-full backdrop-blur-sm">
+      className="sticky top-2 w-full bg-[#00232d]/70 border border-gray-700/50 rounded-full h-18 backdrop-filter backdrop-blur-lg z-99 ">
+
       <div className="relative max-w-350 mx-auto px-4 md:px-16 lg:px-20 xl:px-22">
         <div className="flex justify-between items-center h-18">
 
@@ -107,7 +108,7 @@ const Navbar = () => {
           <div className="md:hidden z-100">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md text-gray-300 cursor-pointer active:scale-95 transition"
+              className="p-2 rounded-md text-gray-300 cursor-pointer active:scale-95 transition z-100"
             > {isOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
@@ -115,25 +116,27 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Full Screen Mobile Menu */}
+      {/* Mobile Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="fixed inset-0 z-99 w-full h-screen flex flex-col justify-center items-center text-center bg-[radial-gradient(circle_at_top_left,#160027,#00232d)]"
-            >
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="md:hidden absolute top-[calc(100%+0.5rem)] left-0 right-0 z-90 px-3"
+          >
+            <div className="bg-[#150227] border border-gray-700/80 rounded-3xl shadow-xl p-5">
               {/* Links */}
-              <div className="flex flex-col space-y-8 text-2xl font-medium text-white ">
+              <div className="flex flex-col space-y-4 text-base font-medium text-white">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`hover:scale-105 transition-transform duration-300 ${isActive(link.path) ? "text-cyan-300" : ""
+                    className={`rounded-xl px-4 py-2 transition ${isActive(link.path)
+                      ? "text-cyan-300 bg-white/8"
+                      : "text-gray-200 hover:bg-white/6"
                       }`}
                   >
                     {link.name}
@@ -142,35 +145,25 @@ const Navbar = () => {
               </div>
 
               {/* Buttons */}
-              <div className="flex flex-col space-y-5 mt-12 w-[80%] max-w-sm">
+              <div className="flex flex-col space-y-3 mt-5">
                 <button
                   type="button"
-                  onClick={() => {
-                    setState("register");
-                    setShowLogin(true);
-                  }}
-                  className="w-full py-3 rounded-full bg-linear-to-r from-purple-500 to-cyan-400 text-white font-semibold
-                    hover:opacity-90 transition"
+                  onClick={handleGetStarted}
+                  className="w-full py-3 rounded-full bg-linear-to-r from-purple-500 to-cyan-400 text-white font-semibold hover:opacity-90 transition"
                 >
                   Get Started
                 </button>
 
                 <button
                   type="button"
-                  onClick={async () => {
-                    if (user) await logout();
-                    else {
-                      setState("login");
-                      setShowLogin(true);
-                    }
-                  }}
+                  onClick={handleLogout}
                   className="w-full py-3 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition"
                 >
                   {user ? "Logout" : "Login"}
                 </button>
               </div>
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 

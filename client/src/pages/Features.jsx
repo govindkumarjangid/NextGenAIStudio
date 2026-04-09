@@ -7,22 +7,14 @@ const Features = () => {
   return (
     <div className="py-10 relative">
 
-     <div className="flex flex-col justify-center items-center text-center gap-4">
-       <Symbol title="FEATURES" />
-      {/* title  */}
-      <Title title="UNLEASH YOUR CREATIVE" subTitle="Everything you need to create, analyze, and optimize your digital presence in one place." />
-     </div>
-
-      {/* Background Glow Effects */}
-
-       <div className="fixed top-0 left-0 w-125 h-125
-      bg-purple-500 opacity-20 blur-[150px] rounded-full" />
-
-      <div className="fixed bottom-0 right-0  w-125 h-125
-      bg-cyan-500 opacity-20 blur-[150px] rounded-full" />
+      <div className="flex flex-col justify-center items-center text-center gap-4">
+        <Symbol title="FEATURES" />
+        {/* title  */}
+        <Title title="UNLEASH YOUR CREATIVE" subTitle="Everything you need to create, analyze, and optimize your digital presence in one place." />
+      </div>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-          gap-6 mt-16 w-full max-w-7xl px-2 sm:px-6 lg:px-20 pb-20 mx-auto">
+          gap-6 w-full max-w-7xl px-2 sm:px-6 lg:px-20 py-10 mx-auto">
         {featuresCardsData.map((card, index) => (
           <MainFeaturedCard
             key={index}

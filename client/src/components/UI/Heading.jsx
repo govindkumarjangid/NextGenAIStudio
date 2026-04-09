@@ -4,13 +4,13 @@ const Heading = ({ top, middle, bottom, subTitle }) => {
     return (
         <>
             <motion.h1
-                className="text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center max-w-3xl text-white font-medium"
+                className="text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center max-w-3xl text-white font-medium mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
             >
                 {top}
-                <span className="move-gradient px-2 sm:px-3 rounded-lg sm:rounded-xl inline-block mx-1 sm:mx-2">
+                <span className="inline-block mx-1 sm:mx-2 bg-linear-to-r from-purple-400 via-pink-400 to-cyan-300 bg-clip-text text-transparent">
                     {middle}
                 </span>
                 {bottom}

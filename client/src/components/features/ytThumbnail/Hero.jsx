@@ -13,27 +13,26 @@ const Hero = () => {
       <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
       <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
       <Navigation />
-      <section className="flex flex-col items-center text-center px-4 sm:px-6 lg:px-12 relative z-10 my-10">
+      <section className="relative z-10 my-8 px-4 sm:px-6 lg:px-12 text-center">
+        <div className="max-w-5xl mx-auto">
 
         {/* label  */}
         <Label title="AI Thumbnail Generator for Your Videos" />
 
         {/* Heading */}
-        <div className="max-w-3xl w-full px-2">
-          <Heading top="AI Thumbnail Generator for" middle=" Your Videos" bottom="" subTitle="Stop wasting hours on design. Get high-converting thumbnails in seconds with our advanced AI." />
-        </div>
+          <Heading top="Create click-worthy thumbnails" middle="in minutes" bottom="" subTitle="Go from rough idea to polished, high-CTR thumbnail concepts with smart AI styling and text direction." />
 
         {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-10 flex flex-row justify-center items-center gap-4"
+          className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-3"
         >
-          <button className="bg-linear-to-r from-pink-500 to-fuchsia-600 hover:scale-105 transition text-white rounded-full px-7 h-11 text-xs sm:text-sm md:text-base active:scale-95">
-            Generate now
+          <button className="bg-linear-to-r from-pink-500 to-fuchsia-600 hover:scale-[1.02] transition text-white rounded-full px-7 py-3.5 text-sm md:text-base active:scale-95 whitespace-nowrap w-full sm:w-auto">
+            Generate Now
           </button>
-          <button className="flex items-center gap-2 border border-pink-400/40 text-white/90 hover:bg-pink-500/10 transition rounded-full px-6 h-11 text-xs sm:text-sm md:text-base active:scale-95">
+          <button className="flex items-center justify-center gap-2 border border-pink-400/40 text-white/90 hover:bg-pink-500/10 transition rounded-full px-6 py-3.5 text-sm md:text-base active:scale-95 whitespace-nowrap w-full sm:w-auto">
             <Eye className="size-4 sm:size-5" />
             View Creations
           </button>
@@ -47,11 +46,12 @@ const Hero = () => {
         >
           {highlights.map((item) => (
             <div key={item.id} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base text-gray-300">
-              <Check className="size-3.5 sm:size-4 text-pink-500 flex-shrink-0" />
+              <Check className="size-3.5 sm:size-4 text-pink-500 shrink-0" />
               <span>{item.label}</span>
             </div>
           ))}
         </motion.div>
+        </div>
       </section>
     </>
   );

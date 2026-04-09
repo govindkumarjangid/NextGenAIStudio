@@ -13,13 +13,7 @@ const Testimonials = () => {
         <Title title="What Our Users Say" subTitle="Hear from our satisfied users who have transformed their digital presence with NextGen AI Studio." />
       </div>
 
-      <div className="relative pt-10">
-        {/* Left blur */}
-        <div className="absolute left-0 top-0 bottom-0 w-5 bg-linear-to-r from-transparent to-transparent z-10 pointer-events-none backdrop-blur-md" />
-
-        {/* Right blur */}
-        <div className="absolute right-0 top-0 bottom-0 w-5 bg-linear-to-l from-transparent   to-transparent z-10 pointer-events-none backdrop-blur-md" />
-
+      <div className="relative pt-10 testimonial-edge-mask overflow-hidden">
         <div className="marquee-inner flex min-w-[200%] pt-10">
           {[...testimonialCardsData, ...testimonialCardsData].map((card, index) => (
             <TestimonialCard key={index} card={card} index={index} />
@@ -27,12 +21,7 @@ const Testimonials = () => {
         </div>
       </div>
 
-      <div className="relative">
-        {/* Left blur */}
-        <div className="absolute left-0 top-0 bottom-0 w-5 bg-linear-to-r from-transparent to-transparent z-10 pointer-events-none backdrop-blur-md" />
-
-        {/* Right blur */}
-        <div className="absolute right-0 top-0 bottom-0 w-5 bg-linear-to-l from-transparent to-transparent z-10 pointer-events-none backdrop-blur-md" />
+      <div className="relative testimonial-edge-mask overflow-hidden">
         <div className="marquee-reverse flex min-w-[200%] pt-10">
           {[...testimonialCardsData, ...testimonialCardsData].map((card, index) => (
             <TestimonialCard key={index} card={card} index={index} />
