@@ -1,14 +1,26 @@
+import { useRef, useState } from 'react'
 import Hero from '../../components/features/resumeAnalysis/Hero'
+import ResumeAnalize from '../../components/features/resumeAnalysis/ResumeAnalize'
 
 const ResumeAnalyzer = () => {
+  const analyzeRef = useRef(null)
+  const [sampleSignal, setSampleSignal] = useState(0)
+
+  const scrollToAnalyzer = () => {
+    analyzeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleLoadSample = () => {
+    setSampleSignal((prev) => prev + 1)
+    scrollToAnalyzer()
+  }
+
   return (
     <div className="relative text-white min-h-screen">
-      <Hero />
+      <Hero onAnalyzeClick={scrollToAnalyzer} onSampleClick={handleLoadSample} />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-12 pb-14">
-        <div className="rounded-3xl border border-white/12 bg-white/6 backdrop-blur-xl p-6 sm:p-8 text-center text-slate-200">
-          Resume analyzer modules are coming next.
-        </div>
+      <div ref={analyzeRef}>
+        <ResumeAnalize sampleSignal={sampleSignal} />
       </div>
     </div>
   )
