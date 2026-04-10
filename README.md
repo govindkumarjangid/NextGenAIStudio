@@ -1,25 +1,18 @@
 # NextGen AI Studio
 
-NextGen AI Studio is a MERN-based AI creator platform with multiple studio-style tools in one app.
+NextGen AI Studio is a MERN-based AI creator platform with multiple studio tools in one app. The client is built with React + Vite + Tailwind CSS v4, and the backend uses Node.js, Express, MongoDB, Cloudinary, and Gemini APIs.
 
-Frontend: React + Vite + Tailwind CSS v4
-Backend: Node.js + Express + MongoDB + Gemini APIs
+## What Is Implemented
 
-## Current Feature Status
+The codebase currently includes:
 
-This table reflects the current codebase implementation.
+- User authentication with register, login, protected profile data, and credit handling
+- Caption Studio for image upload, AI caption generation, and caption history
+- Image Studio for AI image generation and image history
+- Resume Builder with a protected create flow on the backend
+- Resume Analyzer and Video/Thumbnail pages as work-in-progress surfaces in the client
 
-| Feature | Frontend | Backend | Status |
-|---|---|---|---|
-| User Authentication (register/login/protected routes) | Done | Done | Working |
-| Caption Studio (upload image + AI captions + history) | Done | Done | Working |
-| Image Studio | Done | Partial | In progress |
-| Video Studio | Done | Not wired in server entry | In progress |
-| YouTube Thumbnail Studio | UI prototype | Controller exists but not wired | In progress |
-| Resume Builder | UI prototype | Not implemented | In progress |
-| Resume Analyzer | Placeholder page | Not implemented | In progress |
-
-## Project Structure
+## Repo Layout
 
 ```text
 NextGenAIStudio/
@@ -60,33 +53,35 @@ NextGenAIStudio/
 - React Router, Axios, Motion, React Hot Toast
 - Node.js, Express 5
 - MongoDB + Mongoose
-- Cloudinary (media upload)
-- Gemini APIs (image/caption generation)
+- Cloudinary for media upload
+- Gemini APIs for AI generation
 
-## API Routes (Currently Mounted)
+## Mounted API Routes
 
-Base prefix from server: `/api`
+Base prefix: `/api`
 
-### User Routes
+### User
 
 - `POST /api/user/register`
 - `POST /api/user/login`
-- `POST /api/user/handlecredit` (protected)
-- `GET /api/user/data` (protected)
+- `POST /api/user/handlecredit` - protected
+- `GET /api/user/data` - protected
 
-### Image Routes
+### Image
 
-- `POST /api/image/generate-image` (protected)
-- `GET /api/image/get-images` (protected)
+- `POST /api/image/generate-image` - protected
+- `GET /api/image/get-images` - protected
 - `GET /api/image/default-images`
 
-### Caption Routes
+### Caption
 
-- `POST /api/caption/upload` (protected, multipart image upload)
-- `POST /api/caption/generate-caption` (protected)
-- `GET /api/caption/user-captions` (protected)
+- `POST /api/caption/upload` - protected, multipart image upload
+- `POST /api/caption/generate-caption` - protected
+- `GET /api/caption/user-captions` - protected
 
-Note: Video and thumbnail-related routes/controllers exist in the codebase but are not currently mounted in `server/index.js`.
+### Resume
+
+- `POST /api/resume` - protected
 
 ## Environment Variables
 
@@ -105,40 +100,38 @@ JWT_SECRET=your_jwt_secret
 GEMINI_API_KEY=your_gemini_api_key
 
 CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
+CLOUDINARY_API_KEY=your_cloud_key
+CLOUDINARY_API_SECRET=your_cloud_secret
 ```
 
 ## Local Setup
 
-### 1) Install dependencies
+1. Install dependencies
 
 ```bash
 cd client && npm install
 cd ../server && npm install
 ```
 
-### 2) Configure environment files
+2. Create the environment files shown above.
 
-- Create `client/.env` and `server/.env` using the templates above.
-
-### 3) Run backend
+3. Start the backend
 
 ```bash
 cd server
 npm run dev
 ```
 
-### 4) Run frontend
+4. Start the frontend
 
 ```bash
 cd client
 npm run dev
 ```
 
-Frontend defaults to Vite dev server and backend runs on port `5000` unless overridden.
+The frontend runs on the Vite dev server, and the backend listens on port `5000` unless overridden.
 
-## Available Scripts
+## Scripts
 
 ### Client
 
@@ -154,5 +147,6 @@ Frontend defaults to Vite dev server and backend runs on port `5000` unless over
 
 ## Notes
 
-- `server/server.js` and some route/controller files are currently empty placeholders.
-- For production hardening, add centralized validation, rate limiting, and stronger error handling across all routes.
+- `server/index.js` is the active server entry point.
+- `server/src/routes/video.routes.js` is currently empty, and thumbnail functionality is not mounted yet.
+- The project is functional, but production hardening still needs centralized validation, rate limiting, and stronger error handling.
