@@ -201,23 +201,95 @@ export const processData = [
   }
 ]
 
-export const dummyResumeData = [
-  {
-    personal_info: {
-      full_name: "John Doe",
-      email: "john.doe@example.com",
-      Phone: "+1 234 567 8901",
-      location: "New York, USA",
-      linkedin: "linkedin.com/in/johndoe",
-      website: "johndoe.com",
-      profession: "Software Engineer"
+export const dummyResumeData = [{
+  _id: "65b9d3f4e2a1c7b8d9f0e123",
+  title: "Frontend Developer Resume",
+  personal_info: {
+    image: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=200",
+    full_name: "Rahul Sharma",
+    email: "rahul.sharma@example.com",
+    phone: "+91-9876543210",
+    location: "Jaipur, Rajasthan, India",
+    profession: "Frontend Developer",
+    linkedin: "linkedin.com/in/rahulsharma",
+    github: "github.com/rahulsharma",
+    website: "https://rahulsharma.dev"
+  },
+  professional_summary: "Passionate Frontend Developer with 3+ years of experience in building scalable web applications using React.js and Next.js. Adept at creating responsive, user-friendly interfaces and collaborating with cross-functional teams.",
+  experience: [
+    {
+      id: "exp_1",
+      job_title: "Software Engineer",
+      company_name: "Tech Innovators Ltd.",
+      location: "Bengaluru, India",
+      start_date: "2023-02",
+      end_date: "Present",
+      description: "Developed and maintained user-facing features using React.js. Improved website performance by 25% through code optimization."
     },
-    _id: "64f0c8e2b4f5a2d3c4e5f678",
-    userId: "8uhu23rh9huhe89er89he8",
-    title: "Modern Resume",
-    updatedAt: "2024-06-15T10:20:30Z"
-  }
+    {
+      id: "exp_2",
+      job_title: "Junior Web Developer",
+      company_name: "Creative Solutions",
+      location: "Jaipur, India",
+      start_date: "2021-06",
+      end_date: "2023-01",
+      description: "Collaborated with designers to implement pixel-perfect UI. Built reusable components and managed application state using Redux."
+    },
+
+  ],
+  education: [
+    {
+      id: "edu_1",
+      degree: "Bachelor of Technology in Computer Science",
+      institution: "Rajasthan Technical University",
+      location: "Kota, India",
+      start_date: "2017-08",
+      end_date: "2021-05",
+      score: "8.5 CGPA"
+    },
+    {
+      id: "edu_2",
+      degree: "Bachelor of Technology in Computer Science",
+      institution: "Rajasthan Technical University",
+      location: "Kota, India",
+      start_date: "2017-08",
+      end_date: "2021-05",
+      score: "8.5 CGPA"
+    },
+
+  ],
+  project: [
+    {
+      id: "proj_1",
+      title: "E-commerce Admin Dashboard",
+      tech_stack: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
+      link: "https://github.com/rahulsharma/ecom-dash",
+      description: "Built a full-stack admin dashboard for managing products, orders, and users with real-time analytics."
+    },
+    {
+      id: "proj_2",
+      title: "Weather Tracking App",
+      tech_stack: ["JavaScript", "OpenWeather API", "CSS"],
+      link: "https://weather-app-rahul.vercel.app",
+      description: "Created a responsive weather application that provides real-time forecasts based on user location."
+    },
+
+  ],
+  skills: [
+    "React.js",
+    "JavaScript (ES6+)",
+    "HTML5",
+    "CSS3",
+    "Tailwind CSS",
+    "Node.js",
+    "Git"
+  ],
+  template: "minimal",
+  accent_color: "#3B82F6",
+  public: false,
+},
 ]
+
 
 export const recentImages = [
   { id: 1, src: "https://images.unsplash.com/photo-1542751110-97427bbecf20", title: "AI Robot" },

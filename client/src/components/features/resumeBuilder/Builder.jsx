@@ -1,153 +1,174 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+    ChevronLeft,
+    Sparkles,
+    User,
+    GraduationCap,
+    FileText,
+    Briefcase,
+    FolderIcon,
+    ChevronRight,
+} from "lucide-react";
+import { dummyResumeData } from "../../../assets/assets";
+import PersonalInfoForm from "./PersonalInfoForm";
+import ResumePreview from "./ResumePreview";
 
 const Builder = () => {
 
-    const [tab, setTab] = useState("Personal Info");
-    const tabs = ["Personal Info", "Education", "Experience", "Skills"];
+    const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+    const [removeBackground, setRemoveBackground] = useState(false);
+
+    const { resumeId } = useParams();
     const navigate = useNavigate();
 
-    return (
-        <div className="min-h-screen text-white">
+    const [resumeData, setResumeData] = useState({
+        _id: "",
+        title: "",
+        personal_info: {},
+        professional_summary: "",
+        experience: [],
+        education: [],
+        project: [],
+        skills: [],
+        template: "classic",
+        accent_color: "#3B82F6",
+        public: false,
+    });
 
-            {/* back to landing page  */}
+    const loadExitingResume = async () => {
+        const resume = dummyResumeData.find((resume) => resume._id === resumeId);
+        if (resume) {
+            setResumeData(resume);
+            document.title = resume.title + " - NextGen AI Studio";
+        }
+    }
+
+
+    const sections = [
+        { id: "personal", name: "Personal Info", icon: User },
+        { id: "summary", name: "Summary", icon: FileText },
+        { id: "experience", name: "Experience", icon: Briefcase },
+        { id: "education", name: "Education", icon: GraduationCap },
+        { id: "projects", name: "Projects", icon: FolderIcon },
+        { id: "skills", name: "Skills", icon: Sparkles },
+    ]
+
+    const activeSection = sections[activeSectionIndex];
+
+    useEffect(() => {
+        if (resumeId) loadExitingResume();
+    }, []);
+
+
+    return (
+        <div className="relative min-h-screen max-w-7xl mx-auto overflow-hidden text-white px-4 sm:px-8 lg:px-10 pb-10">
+
             <button
                 onClick={() => navigate(-1)}
-                className="absolute top-6 left-6  text-gray-300 hover:text-white px-4 py-2 rounded-full
-                 flex items-center gap-2 transition-colors z-50 cursor-pointer"
+                className="mt-10 inline-flex items-center gap-2  text-gray-200 backdrop-blur-md hover:text-white"
             >
-                <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform duration-200" />
-                Back
+                <ChevronLeft className="size-5" />
+                Back to Dashboard
             </button>
 
-            {/* Page Title */}
-            <motion.h2
-                initial={{ opacity: 0, y: -20 }}
+            <motion.div
+                initial={{ opacity: 0, y: -15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="text-3xl font-bold px-10 my-6"
+                transition={{ duration: 0.6 }}
+                className="mt-6 mb-7 flex flex-wrap items-center justify-between gap-4"
             >
-                AI Resume Builder
-            </motion.h2>
+                <div>
+                    <h2 className="bg-linear-to-r from-purple-400 via-cyan-300 to-cyan-400 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl">
+                        AI Resume Builder
+                    </h2>
+                    <p className="mt-2 text-sm text-gray-300/85">
+                        Fill details tab by tab and get an instant live resume preview.
+                    </p>
+                </div>
+
+                <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs text-cyan-200">
+                    Auto-save draft enabled
+                </div>
+            </motion.div>
 
 
-            {/* Main Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-10 pb-10">
-                {/* Form Section */}
+            <div className="flex gap-6" >
+                {/* left side form */}
                 <motion.div
                     initial={{ opacity: 0, x: -40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl shadow-xl max-w-xl"
+                    className="relative rounded-lg overflow-hidden w-full max-w-md shrink-0"
                 >
-                    {/* Tabs */}
-                    <div className="flex gap-6 border-b border-white/10 pb-3 mb-6">
-                        {tabs.map((t) => (
-                            <button
-                                key={t}
-                                onClick={() => setTab(t)}
-                                className={`text-sm font-medium pb-2 transition ${tab === t
-                                    ? "text-blue-400 border-b-2 border-blue-500"
-                                    : "text-gray-400 hover:text-white"
-                                    }`}
-                            >
-                                {t}
-                            </button>
-                        ))}
+                    <div className="bg-[#0f1f33]/50 p-5 pt-1 rounded-lg shadow-sm border border-white/10 backdrop-blur-xl">
+
+                        {/* progress bar  */}
+                        <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
+                        <hr className="absolute top-0 left-0 h-1 bg-linear-to-r from-[#160027] to-[#00232d] border-none transition-all duration-2000"
+                            style={{ width: `${activeSectionIndex * 100 / (sections.length - 1)}% ` }}
+                        />
+
+                        {/* navigation tabs */}
+                        <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
+
+                            <div></div>
+
+                            <div className='flex items-center justify-between'>
+                                {activeSectionIndex !== 0 && (
+                                    <button onClick={() => setActiveSectionIndex((prevIndex) => Math.
+                                        max(prevIndex - 1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all' disabled={activeSectionIndex === 0}>
+                                        <ChevronLeft className="size-4" /> Previous
+                                    </button>
+                                )}
+
+                                <button onClick={() => setActiveSectionIndex((prevIndex) => Math.
+                                    min(prevIndex + 1, sections.length - 1))} className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex == sections.length - 1 && 'opcity-50'}`} disabled={activeSectionIndex === sections.length - 1}>
+                                    Next  <ChevronRight className="size-4" />
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        {/* form sections  */}
+                        <div className="space-y-6">
+                            {activeSection.id === "personal" && (
+                                <PersonalInfoForm
+                                    data={resumeData.personal_info}
+                                    onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))}
+                                    removeBackground={removeBackground} setRemoveBackground={setRemoveBackground}
+                                />
+                            )}
+                        </div>
+
                     </div>
 
 
-                    {/* Form Fields */}
-                    <div className="space-y-5">
-                        <div>
-                            <label className="block text-sm text-gray-300 mb-2">Full Name</label>
-                            <input
-                                placeholder="John Full Name"
-                                className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-gray-300 mb-2">Job Title</label>
-                            <input
-                                placeholder="Job Title Template"
-                                className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-gray-300 mb-2">Summary</label>
-                            <textarea
-                                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
-                                className="w-full h-32 rounded-xl bg-black/30 border border-white/10 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-                        </div>
-                    </div>
 
-                    {/* Button */}
-                    < motion.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-8 w-full py-4 rounded-xl bg-linear-to-r from-blue-500 to-indigo-600 font-semibold text-lg shadow-lg"
-                    >
-                        Generate with AI
-                    </motion.button >
                 </motion.div >
 
-
-                {/* Preview Section */}
-                < motion.div
+                {/* right side preview */}
+                <motion.div
                     initial={{ opacity: 0, x: 40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-xl flex-1"
+                    className="w-full"
                 >
-                    <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
-                    {/* Resume Preview Mock */}
-                    <div className="bg-white rounded-xl overflow-hidden shadow-2xl flex">
-                        {/* Left Sidebar */}
-                        <div className="w-1/3 bg-slate-700 text-white p-4 space-y-4">
-                            <div className="w-20 h-20 rounded-full bg-gray-300 mx-auto" />
-                            <div>
-                                <h4 className="text-xs font-bold">CONTACT</h4>
-                                <p className="text-[10px] text-gray-200 mt-2">info@email.com</p>
-                                <p className="text-[10px] text-gray-200">+91 12345 67890</p>
-                            </div>
-                            <div>
-                                <h4 className="text-xs font-bold">SKILLS</h4>
-                                <div className="h-1 bg-white/30 rounded-full mt-2">
-                                    <div className="h-1 w-3/4 bg-white rounded-full" />
-                                </div>
-                            </div>
-                        </div>
 
-
-                        {/* Main Content */}
-                        <div className="flex-1 p-6 text-black">
-                            <h2 className="text-2xl font-bold">Johnson Smith</h2>
-                            <p className="text-sm text-gray-600">Modern Template</p>
-
-
-                            <div className="mt-4">
-                                <h3 className="font-semibold text-sm border-b pb-1">EXPERIENCE</h3>
-                                <ul className="text-xs text-gray-700 mt-2 space-y-2">
-                                    <li>• Lorem ipsum job title - Aug 2023</li>
-                                    <li>• Lorem ipsum dolor sit amet...</li>
-                                    <li>• Consectetur adipiscing elit...</li>
-                                </ul>
-                            </div>
-
-
-                            <div className="mt-4">
-                                <h3 className="font-semibold text-sm border-b pb-1">EDUCATION</h3>
-                                <p className="text-xs text-gray-700 mt-2">BCA - 2021</p>
-                            </div>
-                        </div>
+                    <div>
+                        {/* buttons  */}
                     </div>
-                </motion.div >
-            </div >
-        </ div >
-    )
-}
+
+                    {/* resume preview  */}
+                    <ResumePreview data={resumeData} template={resumeData.template} accentColor={resumeData.accent_color} />
+
+                </motion.div>
+
+            </div>
+        </div>
+    );
+};
 
 export default Builder;

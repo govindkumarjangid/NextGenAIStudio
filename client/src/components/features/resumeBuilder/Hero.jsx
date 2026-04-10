@@ -9,9 +9,6 @@ const Hero = () => {
 
     return (
         <>
-          <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
-            <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
-
             <Navigation />
             {/* Hero Section */}
             <section className="relative z-10 my-8 px-4 sm:px-6 lg:px-12 text-center">
