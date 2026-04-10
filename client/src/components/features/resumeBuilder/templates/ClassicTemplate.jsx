@@ -1,16 +1,20 @@
 import React from 'react';
+import { Phone, Mail, MapPin, Globe, Linkedin, CheckCircle2, Github } from 'lucide-react';
 
 const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
+
   const personal = data?.personal_info || {};
   const experience = data?.experience || [];
   const education = data?.education || [];
   const skills = data?.skills || [];
   const projects = data?.project || [];
+
   const profileImage = personal.image
     ? typeof personal.image === 'string'
       ? personal.image
       : URL.createObjectURL(personal.image)
     : '';
+
 
   return (
     <div className="mx-auto h-full w-full max-w-205 overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-800">
@@ -41,22 +45,50 @@ const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
             <section>
               <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Contact</h2>
               <div className="mt-4 space-y-3 text-sm text-slate-700">
-                <p className="wrap-break-word">{personal.phone || '0123456789'}</p>
-                <p className="wrap-break-word">{personal.email || 'alex@example.com'}</p>
-                <p className="wrap-break-word">{personal.location || 'NY, USA'}</p>
-                {personal.website && <p className="wrap-break-word">{personal.website}</p>}
-                {personal.linkedin && <p className="wrap-break-word">{personal.linkedin}</p>}
+                <div className="wrap-break-word flex items-center gap-2">
+                  <Phone size={14} className="shrink-0" style={{ color: accentColor }} />
+                  <span>{personal.phone || '0123456789'}</span>
+                </div>
+                <div className="wrap-break-word flex items-center gap-2">
+                  <Mail size={14} className="shrink-0" style={{ color: accentColor }} />
+                  <span>{personal.email || 'alex@example.com'}</span>
+                </div>
+                <div className="wrap-break-word flex items-center gap-2">
+                  <MapPin size={14} className="shrink-0" style={{ color: accentColor }} />
+                  <span>{personal.location || 'NY, USA'}</span>
+                </div>
+                {personal.website && (
+                  <div className="wrap-break-word flex items-center gap-2">
+                    <Globe size={14} className="shrink-0" style={{ color: accentColor }} />
+                    <span>{personal.website}</span>
+                  </div>
+                )}
+                {personal.linkedin && (
+                  <div className="wrap-break-word flex items-center gap-2">
+                    <Linkedin size={14} className="shrink-0" style={{ color: accentColor }} />
+                    <span>{personal.linkedin}</span>
+                  </div>
+                )}
+                {personal.github && (
+                  <div className="wrap-break-word flex items-center gap-2">
+                    <Github size={14} className="shrink-0" style={{ color: accentColor }} />
+                    <span>{personal.github}</span>
+                  </div>
+                )}
               </div>
             </section>
 
             <section className="mt-8">
               <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Education</h2>
               <div className="mt-4 space-y-5">
-                {(education.length ? education : [{ degree: '', school: '', year: '' }]).map((item, index) => (
+                {(education.length ? education : [{ degree: '', institution: '', location: '', start_date: '', end_date: '', score: '' }]).map((item, index) => (
                   <div key={index}>
-                    <p className="wrap-break-word text-sm font-semibold text-slate-700">{item.degree || 'Degree'}</p>
-                    <p className="wrap-break-word text-sm text-slate-600">{item.school || 'Institution'}</p>
-                    <p className="text-xs text-slate-500">{item.year || 'Year'}</p>
+                    <div className="flex justify-between items-baseline gap-2">
+                      <p className="wrap-break-word text-sm font-semibold text-slate-700">{item.degree || 'Degree/Course'}</p>
+                      {item.score && <p className="text-xs font-medium text-slate-600 shrink-0">{item.score}</p>}
+                    </div>
+                    <p className="wrap-break-word text-sm text-slate-600">{item.institution || 'Institution'}{item.location ? `, ${item.location}` : ''}</p>
+                    <p className="text-xs text-slate-500">{(item.start_date || item.end_date) ? `${item.start_date || ''} - ${item.end_date || ''}` : 'Year'}</p>
                   </div>
                 ))}
               </div>
@@ -66,7 +98,10 @@ const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
               <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Skills</h2>
               <div className="mt-4 space-y-2 text-sm text-slate-700">
                 {(skills.length ? skills : ['JavaScript', 'React JS', 'Full Stack Development']).map((skill, index) => (
-                  <p key={index} className="wrap-break-word">{skill}</p>
+                  <div key={index} className="wrap-break-word flex items-start gap-2">
+                    <CheckCircle2 size={14} className="mt-0.5 shrink-0" style={{ color: accentColor }} />
+                    <span>{skill}</span>
+                  </div>
                 ))}
               </div>
             </section>
@@ -83,16 +118,16 @@ const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
             <section className="mt-8">
               <h2 className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: accentColor }}>Experience</h2>
               <div className="mt-4 space-y-6">
-                {(experience.length ? experience : [{ role: '', company: '', duration: '', description: '' }]).map((item, index) => (
+                {(experience.length ? experience : [{ job_title: '', company_name: '', location: '', start_date: '', end_date: '', description: '' }]).map((item, index) => (
                   <div key={index}>
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.role || 'Role'}</p>
-                        <p className="wrap-break-word text-sm text-slate-600">{item.company || 'Company'}</p>
+                        <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.job_title || 'Role'}</p>
+                        <p className="wrap-break-word text-sm text-slate-600">{item.company_name || 'Company'}{item.location ? `, ${item.location}` : ''}</p>
                       </div>
-                      <p className="text-xs text-slate-500">{item.duration || 'Duration'}</p>
+                      <p className="text-xs text-slate-500 shrink-0">{(item.start_date || item.end_date) ? `${item.start_date || ''} - ${item.end_date || ''}` : 'Duration'}</p>
                     </div>
-                    <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700">
+                    <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700 whitespace-pre-wrap">
                       {item.description || 'Your key impact and responsibilities.'}
                     </p>
                   </div>
@@ -103,10 +138,18 @@ const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
             <section className="mt-8">
               <h2 className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: accentColor }}>Projects</h2>
               <div className="mt-4 space-y-5">
-                {(projects.length ? projects : [{ name: '', title: '', description: '' }]).map((item, index) => (
-                  <div key={index} className="border-l-2 pl-4" style={{ borderColor: `${accentColor}66` }}>
-                    <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.name || item.title || 'Project'}</p>
-                    <p className="mt-1 wrap-break-word text-sm leading-6 text-slate-700">
+                {(projects.length ? projects : [{ title: '', tech_stack: [], link: '', description: '' }]).map((item, index) => (
+                  <div key={index} className="border-l-2 pl-4 flex flex-col gap-1" style={{ borderColor: `${accentColor}66` }}>
+                    <div className="flex items-center justify-between">
+                      <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.title || 'Project Name'}</p>
+                      {item.link && (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">Link</a>
+                      )}
+                    </div>
+                    {item.tech_stack && item.tech_stack.length > 0 && (
+                      <p className="text-xs font-medium text-slate-500">{item.tech_stack.join(' • ')}</p>
+                    )}
+                    <p className="mt-1 wrap-break-word text-sm leading-6 text-slate-700 whitespace-pre-wrap">
                       {item.description || 'Project highlights will appear here.'}
                     </p>
                   </div>

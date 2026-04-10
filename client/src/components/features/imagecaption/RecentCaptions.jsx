@@ -82,13 +82,13 @@ const RecentCaptions = () => {
       {/* Captions Grid */}
       {loading ? (
         <div className="flex items-center justify-center min-h-96">
-          <div className="h-12 w-12 border-4 border-purple-500/50 border-t-purple-500 rounded-full animate-spin" />
+          <div className="h-12 w-12 border-4 border-cyan-500/50 border-t-cyan-400 rounded-full animate-spin" />
         </div>
       ) : captions.length === 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-linear-to-br from-purple-500/10 to-cyan-500/10 border border-purple-400/30 rounded-2xl p-12 text-center"
+          className="bg-[#150227] border border-white/10 rounded-2xl p-12 text-center backdrop-blur-xl"
         >
           <p className="text-gray-400 text-lg">No captions yet. Upload an image and generate your first caption!</p>
         </motion.div>
@@ -107,21 +107,20 @@ const RecentCaptions = () => {
               onClick={() => setSelectedCaption(cap)}
               className="group cursor-pointer w-full h-full"
             >
-              <div className="relative h-full w-full bg-linear-to-br from-purple-500/10 to-cyan-500/10 border border-purple-400/30 rounded-2xl overflow-hidden hover:border-cyan-400/50 transition">
+              <div className="relative h-full w-full bg-[#19193D] border border-white/10 rounded-xl overflow-hidden  transition-all duration-300">
                 {/* Image */}
-                <div className="aspect-square overflow-hidden bg-black">
+                <div className="aspect-square overflow-hidden bg-[#19193D]">
                   <img
                     src={cap.imageUrl}
                     alt="caption"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                    className="w-full h-full object-cover group-hover:scale-115 transition-transform duration-500"
                   />
                 </div>
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
-                  <div className="text-left p-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
-                    <p className="text-white text-sm font-semibold line-clamp-1">{cap.caption}</p>
-                  </div>
+                {/* Overlay Area below Image */}
+                <div className="p-4 border-t border-white/5 bg-[#19193D]">
+                   <p className="text-gray-300 text-sm font-medium line-clamp-2 leading-relaxed">{cap.caption}</p>
+                   <p className="text-cyan-400/60 text-xs mt-2 uppercase tracking-wider">{cap.platform || 'Platform'}</p>
                 </div>
               </div>
             </motion.div>
@@ -162,57 +161,70 @@ const RecentCaptions = () => {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed inset-0 flex items-center justify-center z-50 p-4"
             >
-              <div className="bg-linear-to-br from-slate-900 to-slate-800 border border-purple-400/30 rounded-2xl sm:rounded-3xl max-w-3xl w-full overflow-hidden relative">
+              <div className="bg-[#19193D] border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.1)] rounded-2xl max-w-3xl w-full overflow-hidden relative backdrop-blur-2xl">
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedCaption(null)}
-                  className="absolute top-2 right-3 sm:top-2 sm:right-6 bg-red-500/80 hover:bg-red-600 p-1.5 sm:p-2 rounded-full transition z-20"
+                  className="absolute top-0 right-0 bg-white/10 hover:bg-white/20 border border-white/10 p-1 rounded-full transition z-20"
                 >
-                  <X size={23} className="sm:w-8 sm:h-8 text-white" />
+                  <X size={20} className="text-white" />
                 </button>
 
-                {/* Image with Overlay */}
-                <div className="relative group">
-                  <img
-                    src={selectedCaption.imageUrl}
-                    alt="caption"
-                    className="w-full h-[50vh] sm:h-[70vh] object-cover"
-                  />
+                {/* Image with Details layout */}
+                <div className="flex flex-col md:flex-row h-full max-h-[85vh]">
+                  {/* Left: Image Container */}
+                  <div className="relative group w-full p-4 md:w-1/2 bg-[#19193D] border-r border-white/5">
+                    <img
+                      src={selectedCaption.imageUrl}
+                      alt="caption"
+                      className="w-full h-64 md:h-full object-contain"
+                    />
 
-                  <div className="absolute top-2 right-14 sm:right-20 flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleCopyCaption();
-                      }}
-                      className="bg-black/60 hover:bg-black/80 backdrop-blur-sm p-2 sm:p-3 rounded-full transition"
-                      title="Copy Caption"
-                    >
-                      {copied ? (
-                        <Check size={20} className="text-green-400 sm:w-6 sm:h-6" />
-                      ) : (
-                        <Copy size={20} className="text-white sm:w-6 sm:h-6" />
-                      )}
-                    </button>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDownloadImage();
-                      }}
-                      className="bg-black/60 hover:bg-black/80 backdrop-blur-sm p-2 sm:p-3 rounded-full transition"
-                      title="Download Image"
-                    >
-                      <Download size={20} className="text-white sm:w-6 sm:h-6" />
-                    </button>
+                    <div className="absolute top-4 left-4 flex gap-2 z-10">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownloadImage();
+                        }}
+                        className="bg-black/60 hover:bg-black/80 backdrop-blur-sm p-2.5 rounded-full transition border border-white/10"
+                        title="Download Image"
+                      >
+                        <Download size={18} className="text-white" />
+                      </button>
+                    </div>
                   </div>
 
+                  {/* Right: Info Container */}
+                  <div className="w-full md:w-1/2 p-6 md:p-6 flex flex-col justify-between overflow-y-auto">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 uppercase tracking-widest">
+                          {selectedCaption.platform || 'General'}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopyCaption();
+                          }}
+                          className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-lg transition"
+                          title="Copy Caption"
+                        >
+                          {copied ? (
+                            <><Check size={16} className="text-green-400" /> <span className="text-xs text-green-400 font-medium">Copied</span></>
+                          ) : (
+                            <><Copy size={16} className="text-gray-300" /> <span className="text-xs text-gray-300 font-medium">Copy</span></>
+                          )}
+                        </button>
+                      </div>
 
-                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black via-black/80 to-transparent p-4 sm:p-6 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white text-sm sm:text-base lg:text-lg leading-relaxed">
-                      {selectedCaption.caption}
-                    </p>
-                    <p className="text-gray-400 text-xs sm:text-sm mt-3">
+                      <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                        <p className="text-gray-200 text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                          {selectedCaption.caption}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-500 text-xs mt-6">
                       Created on {new Date(selectedCaption.createdAt).toLocaleDateString()}
                     </p>
                   </div>

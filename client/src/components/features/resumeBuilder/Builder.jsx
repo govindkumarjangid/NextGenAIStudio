@@ -13,7 +13,13 @@ import {
 } from "lucide-react";
 import { dummyResumeData } from "../../../assets/assets";
 import PersonalInfoForm from "./PersonalInfoForm";
+import SummaryForm from "./SummaryForm";
+import ExperienceForm from "./ExperienceForm";
+import EducationForm from "./EducationForm";
+import ProjectForm from "./ProjectForm";
+import SkillsForm from "./SkillsForm";
 import ResumePreview from "./ResumePreview";
+import TemplateSelector from "./templates/TemplateSelector";
 
 const Builder = () => {
 
@@ -44,6 +50,7 @@ const Builder = () => {
             document.title = resume.title + " - NextGen AI Studio";
         }
     }
+    console.log(resumeData);
 
 
     const sections = [
@@ -105,26 +112,28 @@ const Builder = () => {
                     <div className="bg-[#0f1f33]/50 p-5 pt-1 rounded-lg shadow-sm border border-white/10 backdrop-blur-xl">
 
                         {/* progress bar  */}
-                        <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
-                        <hr className="absolute top-0 left-0 h-1 bg-linear-to-r from-[#160027] to-[#00232d] border-none transition-all duration-2000"
+                        <hr className="absolute top-0 left-0 right-0 border-2 border-gray-700/50" />
+                        <hr className="absolute top-0 left-0 h-1 bg-linear-to-r from-purple-500 to-cyan-400 border-none transition-all duration-1000"
                             style={{ width: `${activeSectionIndex * 100 / (sections.length - 1)}% ` }}
                         />
 
                         {/* navigation tabs */}
                         <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
 
-                            <div></div>
+                            <div className="flex items-center gap-3">
+                                <TemplateSelector selectedTemplate={resumeData.template} onChange={(template) => setResumeData(prev => ({ ...prev, template }))} />
+                            </div>
 
-                            <div className='flex items-center justify-between'>
+                            <div className='flex items-center gap-2'>
                                 {activeSectionIndex !== 0 && (
                                     <button onClick={() => setActiveSectionIndex((prevIndex) => Math.
-                                        max(prevIndex - 1, 0))} className='flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all' disabled={activeSectionIndex === 0}>
+                                        max(prevIndex - 1, 0))} className='flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 border border-gray-700 hover:bg-white/10 hover:text-white transition-all active:scale-95 cursor-pointer' disabled={activeSectionIndex === 0}>
                                         <ChevronLeft className="size-4" /> Previous
                                     </button>
                                 )}
 
                                 <button onClick={() => setActiveSectionIndex((prevIndex) => Math.
-                                    min(prevIndex + 1, sections.length - 1))} className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex == sections.length - 1 && 'opcity-50'}`} disabled={activeSectionIndex === sections.length - 1}>
+                                    min(prevIndex + 1, sections.length - 1))} className={`flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-medium text-white bg-linear-to-r from-purple-500 to-cyan-400 hover:opacity-90 transition-all active:scale-95 cursor-pointer ${activeSectionIndex == sections.length - 1 && 'opacity-50 cursor-not-allowed!'}`} disabled={activeSectionIndex === sections.length - 1}>
                                     Next  <ChevronRight className="size-4" />
                                 </button>
 
@@ -138,9 +147,61 @@ const Builder = () => {
                                 <PersonalInfoForm
                                     data={resumeData.personal_info}
                                     onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))}
-                                    removeBackground={removeBackground} setRemoveBackground={setRemoveBackground}
+                                    removeBackground={removeBackground}
+                                    setRemoveBackground={setRemoveBackground}
                                 />
                             )}
+
+                            {activeSection.id === "experience" && (
+                                <ExperienceForm
+                                    data={resumeData.experience}
+                                    onChange={(data) => setResumeData(prev => ({ ...prev, experience: data }))}
+                                />
+                            )}
+
+                            {
+                                activeSection.id === "summary" && (
+                                    <SummaryForm
+                                        data={resumeData.professional_summary}
+                                        onChange={(data) => setResumeData(prev => ({ ...prev, professional_summary: data }))}
+                                    />
+                                )
+                            }
+
+                            {activeSection.id === "education" && (
+                                <EducationForm
+                                    data={resumeData.education}
+                                    onChange={(data) => setResumeData(prev => ({ ...prev, education: data }))}
+                                />
+                            )}
+
+                            {activeSection.id === "projects" && (
+                                <ProjectForm
+                                    data={resumeData.project}
+                                    onChange={(data) => setResumeData(prev => ({ ...prev, project: data }))}
+                                />
+                            )}
+
+
+                            {
+                                activeSection.id === "skills" && (
+                                    <SkillsForm
+                                        data={resumeData.skills}
+                                        onChange={(data) => setResumeData(prev => ({ ...prev, skills: data }))}
+                                    />
+                                )
+                            }
+                        </div>
+
+                        {/* submit buttom  */}
+
+                        <div className="pt-6 border-t border-gray-700/30">
+                            <button
+                                onClick={() => alert("Resume saved! (This is a demo, so data won't persist)")}
+                                className="mt-6 w-full rounded-xl bg-linear-to-r from-purple-500 to-cyan-400 px-4 py-3 text-sm font-medium text-white hover:opacity-90 transition-all active:scale-95"
+                            >
+                                Save Resume
+                            </button>
                         </div>
 
                     </div>

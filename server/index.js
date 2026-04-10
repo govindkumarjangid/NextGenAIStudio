@@ -5,6 +5,7 @@ import connectDB from './src/configs/connectdb.js';
 import imageRoute from './src/routes/image.routes.js';
 import userRouter from './src/routes/user.routes.js';
 import captionRouter from './src/routes/caption.routes.js';
+import resumeRouter from './src/routes/resume.routes.js';
 dotenv.config();
 
 //app
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRoute);
 app.use('/api/caption', captionRouter);
+app.use('/api/resume', resumeRouter);
 
 
 // Server Start

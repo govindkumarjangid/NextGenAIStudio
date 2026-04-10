@@ -57,51 +57,60 @@ const Navbar = () => {
 
           {/* Desktop Button */}
           <div className="hidden md:flex items-center space-x-4">
-
-            {/* Get Started */}
-            <button
-              type="button"
-              onClick={handleGetStarted}
-              className="px-6 py-2 rounded-full text-white
-              bg-linear-to-r from-purple-500 to-cyan-400 transition-transform active:scale-95 "
-            >
-              Get Started
-            </button>
-
-            {/* Login/Logout Button */}
-            <div className="relative">
-              <button
-                type="button"
-                className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-95 cursor-pointer group text-center"
-                onMouseEnter={() => user && setShowCreditsTooltip(true)}
-                onMouseLeave={() => setShowCreditsTooltip(false)}
-                onClick={handleLogout}
-              >
-                {user ? "Logout" : "Login"}
-              </button>
-
-              {/* Credits Tooltip */}
-              <AnimatePresence>
-                {showCreditsTooltip && user && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full right-0 mt-4 bg-linear-to-br from-purple-600 to-cyan-600 text-white px-2 py-1 rounded-lg text-[11px] font-medium whitespace-nowrap shadow-lg border border-purple-400/50 pointer-events-none"
+            {user ? (
+              <>
+                <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-900/20 text-cyan-50">
+                  <span className="text-sm font-medium">Hey, {user.name?.split(' ')[0] || 'User'}</span>
+                </div>
+                <div className="relative">
+                  <button
+                    type="button"
+                    className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-95 cursor-pointer group text-center"
+                    onMouseEnter={() => setShowCreditsTooltip(true)}
+                    onMouseLeave={() => setShowCreditsTooltip(false)}
+                    onClick={handleLogout}
                   >
-                    <div className="flex items-center gap-1">
-                      <span>💳 Credits:</span>
-                      <span className="text-cyan-200">{user?.credits || 0}</span>
-                    </div>
-                    {/* Arrow */}
-                    <div className="absolute -top-1 right-4 w-1.5 h-1.5 bg-linear-to-br from-purple-600 to-cyan-600 rotate-45" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    Logout
+                  </button>
 
-            </div>
-
+                  <AnimatePresence>
+                    {showCreditsTooltip && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full right-0 mt-4 bg-linear-to-br from-purple-600 to-cyan-600 text-white px-2 py-1 rounded-lg text-[11px] font-medium whitespace-nowrap shadow-lg border border-purple-400/50 pointer-events-none"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>💳 Credits:</span>
+                          <span className="text-cyan-200">{user?.credits || 0}</span>
+                        </div>
+                        {/* Arrow */}
+                        <div className="absolute -top-1 right-4 w-1.5 h-1.5 bg-linear-to-br from-purple-600 to-cyan-600 rotate-45" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={handleGetStarted}
+                  className="px-6 py-2 rounded-full text-white bg-linear-to-r from-purple-500 to-cyan-400 transition-transform active:scale-95"
+                >
+                  Get Started
+                </button>
+                <button
+                  type="button"
+                  className="px-6 py-2 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition-transform active:scale-95 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Login
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -146,21 +155,48 @@ const Navbar = () => {
 
               {/* Buttons */}
               <div className="flex flex-col space-y-3 mt-5">
-                <button
-                  type="button"
-                  onClick={handleGetStarted}
-                  className="w-full py-3 rounded-full bg-linear-to-r from-purple-500 to-cyan-400 text-white font-semibold hover:opacity-90 transition"
-                >
-                  Get Started
-                </button>
+                {user ? (
+                  <>
+                    <div className="flex items-center justify-between px-4 py-3 rounded-full border border-cyan-400/30 bg-cyan-900/20 text-cyan-50">
+                      <span className="text-sm font-medium">Hey, {user.name?.split(' ')[0] || 'User'}</span>
+                      <span className="text-xs font-semibold text-cyan-200">💳 {user?.credits || 0} Credits</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleLogout();
+                      }}
+                      className="w-full py-3 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleGetStarted();
+                      }}
+                      className="w-full py-3 rounded-full bg-linear-to-r from-purple-500 to-cyan-400 text-white font-semibold hover:opacity-90 transition cursor-pointer"
+                    >
+                      Get Started
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="w-full py-3 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition"
-                >
-                  {user ? "Logout" : "Login"}
-                </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleLogout();
+                      }}
+                      className="w-full py-3 rounded-full border border-purple-400/60 text-white hover:bg-purple-500/20 transition cursor-pointer"
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

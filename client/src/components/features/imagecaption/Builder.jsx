@@ -121,11 +121,6 @@ const Builder = () => {
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
-
-      {/* Background Effects */}
-      <div className="fixed top-0 left-0 w-125 h-125 bg-purple-500 opacity-20 blur-[150px] rounded-full pointer-events-none" />
-      <div className="fixed bottom-0 right-0 w-125 h-125 bg-cyan-400 opacity-20 blur-[150px] rounded-full pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
 
         {/* Header */}
@@ -254,49 +249,27 @@ const Builder = () => {
           >
             {/* Style Selection */}
             <div className="flex flex-col gap-3">
-              <label className="text-white font-semibold">Platform</label>
-              <div className="grid grid-cols-2 gap-3">
+              <label className="text-white font-semibold flex items-center gap-2">
+                <Sparkles size={18} className="text-cyan-400" />
+                Select Platform
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {["instagram", "facebook", "twitter", "youtube"].map((item) => (
                   <motion.button
                     key={item}
                     onClick={() => {
                       setPlatform(item)
-                      const nextStyles = getStylesForPlatform(item)
-                      setCaptionStyle(nextStyles[0].id)
                       setCaption('')
                     }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`py-2 px-4 rounded-lg font-semibold transition ${
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 border ${
                       platform === item
-                        ? 'bg-linear-to-r from-cyan-500 to-blue-400 text-white'
-                        : 'bg-white/10 border border-white/30 text-gray-300 hover:bg-white/20'
+                        ? 'bg-linear-to-r from-purple-500/20 to-cyan-500/20 border-cyan-400/50 text-white shadow-[0_0_15px_rgba(34,211,238,0.15)]'
+                        : 'bg-black/20 border-white/10 text-gray-400 hover:bg-white/5 hover:border-white/20 hover:text-gray-200'
                     }`}
                   >
                     {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </motion.button>
-                ))}
-              </div>
-
-              <label className="text-white font-semibold">Caption Style</label>
-              <div className="grid grid-cols-2 gap-3">
-                {filteredStyles.map((style) => (
-                  <motion.button
-                    key={style.id}
-                    onClick={() => {
-                      setCaptionStyle(style.id)
-                      setCaption('')
-                      setCaptionEmojis([])
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`py-2 px-4 rounded-lg font-semibold transition ${
-                      captionStyle === style.id
-                        ? `bg-linear-to-r ${style.color} text-white`
-                        : 'bg-white/10 border border-white/30 text-gray-300 hover:bg-white/20'
-                    }`}
-                  >
-                    {style.label}
                   </motion.button>
                 ))}
               </div>
