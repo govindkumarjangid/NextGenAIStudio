@@ -102,7 +102,7 @@ const Builder = () => {
 
 
     return (
-        <div className="relative min-h-screen max-w-7xl mx-auto overflow-hidden text-white px-4 sm:px-8 lg:px-10 pb-10">
+        <div className="relative min-h-screen max-w-8xl mx-auto overflow-hidden text-white px-4 sm:px-8 lg:px-10 pb-10">
 
             <button
                 onClick={() => navigate(-1)}

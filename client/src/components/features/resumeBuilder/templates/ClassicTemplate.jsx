@@ -9,7 +9,7 @@ const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
   const projects = data?.project || [];
 
   return (
-    <div className="mx-auto h-[11in] min-w-[8.5in] w-[8.5in] overflow-hidden bg-white text-slate-800 flex flex-col p-8 text-sm leading-normal box-border printable-page">
+    <div className="mx-auto h-[11in] min-min-min-w-[8.5in] w-[8.5in] min-w-[8.5in] w-[8.5in] min-min-w-[8.5in] w-[8.5in] min-w-[8.5in] w-[8.5in] overflow-hidden bg-white text-slate-800 flex flex-col p-8 text-sm leading-normal box-border printable-page">
       <header className="flex flex-col items-center text-center pb-4 shrink-0">
         <h1 className="wrap-break-word text-3xl font-extrabold tracking-widest" style={{ color: accentColor }}>
           {personal.full_name || 'Your Name'}

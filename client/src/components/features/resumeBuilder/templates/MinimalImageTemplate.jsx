@@ -15,7 +15,7 @@ const MinimalImageTemplate = ({ data, accentColor = '#3B82F6' }) => {
     : '';
 
   return (
-    <div className="mx-auto h-[297mm] w-[210mm] bg-white text-slate-800 flex flex-col p-6 text-xs leading-snug overflow-hidden box-border printable-page">
+    <div className="mx-auto h-[297mm] min-min-w-[210mm] w-[210mm] min-w-[210mm] w-[210mm] bg-white text-slate-800 flex flex-col p-6 text-xs leading-snug overflow-hidden box-border printable-page">
       
       <header className="grid grid-cols-[180px_1fr] gap-4 mb-4 shrink-0">
         <div className="flex justify-center items-center">
