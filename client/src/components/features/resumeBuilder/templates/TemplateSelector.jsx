@@ -33,7 +33,7 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
     <div className='relative'>
       <button onClick={() => setIsOpen(!isOpen)} className='flex items-center gap-1
   text-sm text-cyan-300 bg-linear-to-br from-cyan-900/20 to-purple-900/20
-  border border-cyan-400/30 hover:border-cyan-400/60 transition-all px-4 py-2.5 rounded-2xl active:scale-95'>
+  border border-cyan-400/30 hover:border-cyan-400/60 transition-all px-4 py-2.5 rounded-xl active:scale-95'>
         <Layout size={16} /> <span className='max-sm:hidden'>Template</span>
       </button>
       <AnimatePresence>

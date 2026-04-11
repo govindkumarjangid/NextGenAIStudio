@@ -1,4 +1,5 @@
 import Resume from "../models/Resume.model.js";
+import wrapasync from "../utils/wrapasync.js";
 
 export const createResume = async (req, res) => {
     try {
@@ -48,6 +49,7 @@ export const createResume = async (req, res) => {
 
         // Create new resume
         const newResume = new Resume({
+            userId: req.user._id,
             title: title || "Untitled Resume",
             personal_info,
             professional_summary,
@@ -62,10 +64,10 @@ export const createResume = async (req, res) => {
 
         const savedResume = await newResume.save();
 
-        res.status(201).json({ 
-            success: true, 
-            message: "Resume created successfully", 
-            resume: savedResume 
+        res.status(201).json({
+            success: true,
+            message: "Resume created successfully",
+            resume: savedResume
         });
 
     } catch (error) {
@@ -73,3 +75,12 @@ export const createResume = async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to create resume", error: error.message });
     }
 }
+
+
+export const getResumes = wrapasync(async (req, res) => {
+    const userId = req.user._id;
+    if (!userId) return res.status(400).json({ success: false, message: "User ID is required" });
+    const resumes = await Resume.find({ userId });
+    console.log(resumes)
+    res.status(200).json({ success: true, resumes });
+})

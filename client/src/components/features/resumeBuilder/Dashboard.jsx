@@ -61,19 +61,23 @@ const Dashboard = () => {
 
   const createResume = async (e) => {
     e.preventDefault();
+    const resumeId = Date.now().toString();
+    const resumeTitle = title.trim();
     closeCreateModal();
-    navigate("/resume-builder/builder/23424");
+    navigate(`/resume-builder/builder/${resumeId}`, {
+      state: { title: resumeTitle },
+    });
   };
 
   const uploadResume = async (e) => {
     e.preventDefault();
+    const resumeId = Date.now().toString();
+    const resumeTitle = title.trim();
     closeUploadModal();
-    navigate("/resume-builder/builder/23424");
+    navigate(`/resume-builder/builder/${resumeId}`, {
+      state: { title: resumeTitle },
+    });
   };
-
-  const editTitle = async (event) => {
-    event.preventDefault();
-  }
 
   const handleDeleteResume = async (id) => {
     const confirm = window.confirm("Are you sure you want to delete this resume?");

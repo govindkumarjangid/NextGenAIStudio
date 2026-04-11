@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState, useRef, use } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ export const AppProvider = ({ children }) => {
     const [showLogin, setShowLogin] = useState(false);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState("login");
+    const [allResumes, setAllResumes] = useState([]);
 
     // Check user login status
     const fetchUser = async () => {
@@ -29,7 +30,21 @@ export const AppProvider = ({ children }) => {
                 navigate("/");
             }
         } catch (error) {
-            toast.error(error.message);
+            console.log(error);
+        }
+    }
+
+
+    const fetchResumeData = async () => {
+        try {
+            const { data } = await axios.get('/resume/get-resumes');
+            if (data.success) {
+                console.log(data)
+                setAllResumes(data.resumes);
+                toast.success("Resumes fetched successfully");
+            }
+        } catch (error) {
+            toast.error("Error fetching resumes: " + error.message);
         }
     }
 
@@ -42,8 +57,8 @@ export const AppProvider = ({ children }) => {
         toast.success("Logged out successfully");
     }
 
-    const handleGetStarted = async () => {
-        if (user) await logout();
+    const handleGetStarted =  () => {
+        if (user) logout();
         setState("register");
         setShowLogin(true);
     }
@@ -77,7 +92,10 @@ export const AppProvider = ({ children }) => {
         setLoading,
         state,
         setState,
-        handleGetStarted
+        handleGetStarted,
+        fetchResumeData,
+        allResumes,
+        setAllResumes
     }
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

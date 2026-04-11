@@ -235,7 +235,7 @@ const ResumeAnalize = ({ sampleSignal = 0 }) => {
 					</div>
 
 					{!report ? (
-						<div className="h-[470px] rounded-2xl border border-dashed border-white/20 grid place-items-center text-slate-300 text-center px-6">
+						<div className="h-177.5 rounded-2xl border border-dashed border-white/20 grid place-items-center text-slate-300 text-center px-6">
 							Paste your resume + target job description and click Analyze to generate ATS insights.
 						</div>
 					) : (

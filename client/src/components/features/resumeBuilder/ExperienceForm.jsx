@@ -6,7 +6,15 @@ const ExperienceForm = ({ data = [], onChange }) => {
     const handleAdd = () => {
         onChange([
             ...data,
-            { id: Date.now().toString(), job_title: "", company_name: "", location: "", start_date: "", end_date: "", description: "" }
+            {
+                id: Date.now().toString(),
+                job_title: "",
+                company_name: "",
+                location: "",
+                start_date: "",
+                end_date: "",
+                description: ""
+            }
         ]);
     };
 

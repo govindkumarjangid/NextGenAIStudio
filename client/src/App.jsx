@@ -1,5 +1,5 @@
 import { useAppContext } from "./context/AppContext";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/UI/Header";
 import Home from "./pages/Home";
@@ -20,10 +20,13 @@ import Builder from "./components/features/resumeBuilder/Builder";
 import ResumeLanding from "./components/features/resumeBuilder/ResumeLanding";
 import Dashboard from "./components/features/resumeBuilder/Dashboard";
 import ProtectRoute from "./context/ProtectRoute";
+import PreviewPage from "./components/features/resumeBuilder/templates/PreviewPage";
 
 const App = () => {
 
   const { showLogin } = useAppContext();
+  const location = useLocation();
+  const isViewRoute = location.pathname.startsWith('/view/');
 
   return (
     <>
@@ -64,13 +67,14 @@ const App = () => {
         }}
       />
       {showLogin && <Login />}
-      <Navbar />
+      {!isViewRoute && <Navbar />}
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/view/:resumeId" element={<PreviewPage />} />
         <Route path="/resume-builder" element={
           <ProtectRoute>
             <ResumeBuilder />
@@ -101,7 +105,7 @@ const App = () => {
           </ProtectRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isViewRoute && <Footer />}
     </>
   );
 };

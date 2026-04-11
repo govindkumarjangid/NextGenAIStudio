@@ -1,164 +1,154 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Globe, Linkedin, CheckCircle2, Github } from 'lucide-react';
+import { Phone, Mail, MapPin, Globe, Linkedin, Github } from 'lucide-react';
 
 const ClassicTemplate = ({ data, accentColor = '#3B82F6' }) => {
-
   const personal = data?.personal_info || {};
   const experience = data?.experience || [];
   const education = data?.education || [];
   const skills = data?.skills || [];
   const projects = data?.project || [];
 
-  const profileImage = personal.image
-    ? typeof personal.image === 'string'
-      ? personal.image
-      : URL.createObjectURL(personal.image)
-    : '';
-
-
   return (
-    <div className="mx-auto h-full w-full max-w-205 overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-800">
-      <div className="p-5 sm:p-6">
-        <header className="flex flex-col items-center gap-4 pb-5 text-center sm:flex-row sm:items-center sm:text-left">
-          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full bg-slate-200 ring-4 ring-[#6fd2d0]/35 sm:h-24 sm:w-24" style={{ backgroundColor: `${accentColor}1f` }}>
-            {profileImage ? (
-              <img src={profileImage} alt="profile" className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-xl font-bold text-slate-600">
-                {(personal.full_name || 'Y').charAt(0)}
-              </div>
-            )}
-          </div>
-
-          <div className="flex-1">
-            <h1 className="wrap-break-word text-3xl font-semibold tracking-[0.18em] text-slate-700 sm:text-4xl">
-              {personal.full_name || 'Your Name'}
-            </h1>
-            <p className="mt-2 wrap-break-word text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 sm:text-sm">
-              {personal.profession || 'Professional Title'}
-            </p>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 gap-0 border-t border-slate-200 md:grid-cols-[280px_1fr]">
-          <aside className="border-b border-slate-200 bg-white py-5 pr-0 md:border-b-0 md:border-r md:pr-6">
-            <section>
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Contact</h2>
-              <div className="mt-4 space-y-3 text-sm text-slate-700">
-                <div className="wrap-break-word flex items-center gap-2">
-                  <Phone size={14} className="shrink-0" style={{ color: accentColor }} />
-                  <span>{personal.phone || '0123456789'}</span>
-                </div>
-                <div className="wrap-break-word flex items-center gap-2">
-                  <Mail size={14} className="shrink-0" style={{ color: accentColor }} />
-                  <span>{personal.email || 'alex@example.com'}</span>
-                </div>
-                <div className="wrap-break-word flex items-center gap-2">
-                  <MapPin size={14} className="shrink-0" style={{ color: accentColor }} />
-                  <span>{personal.location || 'NY, USA'}</span>
-                </div>
-                {personal.website && (
-                  <div className="wrap-break-word flex items-center gap-2">
-                    <Globe size={14} className="shrink-0" style={{ color: accentColor }} />
-                    <span>{personal.website}</span>
-                  </div>
-                )}
-                {personal.linkedin && (
-                  <div className="wrap-break-word flex items-center gap-2">
-                    <Linkedin size={14} className="shrink-0" style={{ color: accentColor }} />
-                    <span>{personal.linkedin}</span>
-                  </div>
-                )}
-                {personal.github && (
-                  <div className="wrap-break-word flex items-center gap-2">
-                    <Github size={14} className="shrink-0" style={{ color: accentColor }} />
-                    <span>{personal.github}</span>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            <section className="mt-8">
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Education</h2>
-              <div className="mt-4 space-y-5">
-                {(education.length ? education : [{ degree: '', institution: '', location: '', start_date: '', end_date: '', score: '' }]).map((item, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between items-baseline gap-2">
-                      <p className="wrap-break-word text-sm font-semibold text-slate-700">{item.degree || 'Degree/Course'}</p>
-                      {item.score && <p className="text-xs font-medium text-slate-600 shrink-0">{item.score}</p>}
-                    </div>
-                    <p className="wrap-break-word text-sm text-slate-600">{item.institution || 'Institution'}{item.location ? `, ${item.location}` : ''}</p>
-                    <p className="text-xs text-slate-500">{(item.start_date || item.end_date) ? `${item.start_date || ''} - ${item.end_date || ''}` : 'Year'}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="mt-8">
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">Skills</h2>
-              <div className="mt-4 space-y-2 text-sm text-slate-700">
-                {(skills.length ? skills : ['JavaScript', 'React JS', 'Full Stack Development']).map((skill, index) => (
-                  <div key={index} className="wrap-break-word flex items-start gap-2">
-                    <CheckCircle2 size={14} className="mt-0.5 shrink-0" style={{ color: accentColor }} />
-                    <span>{skill}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </aside>
-
-          <main className="py-5 md:pl-6">
-            <section>
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: accentColor }}>Summary</h2>
-              <p className="mt-3 wrap-break-word text-sm leading-7 text-slate-700">
-                {data?.professional_summary || 'Write a short professional summary here.'}
-              </p>
-            </section>
-
-            <section className="mt-8">
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: accentColor }}>Experience</h2>
-              <div className="mt-4 space-y-6">
-                {(experience.length ? experience : [{ job_title: '', company_name: '', location: '', start_date: '', end_date: '', description: '' }]).map((item, index) => (
-                  <div key={index}>
-                    <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.job_title || 'Role'}</p>
-                        <p className="wrap-break-word text-sm text-slate-600">{item.company_name || 'Company'}{item.location ? `, ${item.location}` : ''}</p>
-                      </div>
-                      <p className="text-xs text-slate-500 shrink-0">{(item.start_date || item.end_date) ? `${item.start_date || ''} - ${item.end_date || ''}` : 'Duration'}</p>
-                    </div>
-                    <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700 whitespace-pre-wrap">
-                      {item.description || 'Your key impact and responsibilities.'}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="mt-8">
-              <h2 className="text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: accentColor }}>Projects</h2>
-              <div className="mt-4 space-y-5">
-                {(projects.length ? projects : [{ title: '', tech_stack: [], link: '', description: '' }]).map((item, index) => (
-                  <div key={index} className="border-l-2 pl-4 flex flex-col gap-1" style={{ borderColor: `${accentColor}66` }}>
-                    <div className="flex items-center justify-between">
-                      <p className="wrap-break-word text-sm font-semibold text-slate-800">{item.title || 'Project Name'}</p>
-                      {item.link && (
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">Link</a>
-                      )}
-                    </div>
-                    {item.tech_stack && item.tech_stack.length > 0 && (
-                      <p className="text-xs font-medium text-slate-500">{item.tech_stack.join(' • ')}</p>
-                    )}
-                    <p className="mt-1 wrap-break-word text-sm leading-6 text-slate-700 whitespace-pre-wrap">
-                      {item.description || 'Project highlights will appear here.'}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </main>
+    <div className="mx-auto h-[11in] min-w-[8.5in] w-[8.5in] overflow-hidden bg-white text-slate-800 flex flex-col p-8 text-sm leading-normal box-border printable-page">
+      <header className="flex flex-col items-center text-center pb-4 shrink-0">
+        <h1 className="wrap-break-word text-3xl font-extrabold tracking-widest" style={{ color: accentColor }}>
+          {personal.full_name || 'Your Name'}
+        </h1>
+        
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] text-slate-700 font-semibold">
+           {personal.email && (
+             <div className="flex items-center gap-1">
+               <Mail size={12} className="text-slate-500" />
+               <span>{personal.email}</span>
+             </div>
+           )}
+           {personal.phone && (
+             <div className="flex items-center gap-1">
+               <Phone size={12} className="text-slate-500" />
+               <span>{personal.phone}</span>
+             </div>
+           )}
+           {personal.location && (
+             <div className="flex items-center gap-1">
+               <MapPin size={12} className="text-slate-500" />
+               <span>{personal.location}</span>
+             </div>
+           )}
+           {personal.linkedin && (
+             <div className="flex items-center gap-1">
+               <Linkedin size={12} className="text-slate-500" />
+               <span>{personal.linkedin}</span>
+             </div>
+           )}
+           {personal.website && (
+             <div className="flex items-center gap-1">
+               <Globe size={12} className="text-slate-500" />
+               <span>{personal.website}</span>
+             </div>
+           )}
+           {personal.github && (
+             <div className="flex items-center gap-1">
+               <Github size={12} className="text-slate-500" />
+               <span>{personal.github}</span>
+             </div>
+           )}
         </div>
-      </div>
+      </header>
+
+      <div className="w-full border-t-[2px] mb-4 shrink-0" style={{ borderColor: accentColor }} />
+
+      <main className="flex-1 flex flex-col gap-4">
+        <section>
+          <h2 className="text-[13px] font-bold uppercase tracking-widest mb-1.5" style={{ color: accentColor }}>
+            Professional Summary
+          </h2>
+          <p className="wrap-break-word text-[12px] leading-relaxed text-slate-800 font-medium">
+            {data?.professional_summary || 'Write a short professional summary here.'}
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[13px] font-bold uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+            Professional Experience
+          </h2>
+          <div className="space-y-3">
+            {(experience.length ? experience : [{ job_title: 'Senior Full Stack Developer', company_name: 'Example Technologies.', location: '', start_date: 'Jun 2023', end_date: 'Present', description: 'Architected, developed, and deployed innovative full-stack applications at Example Technologies, creating robust back-end systems and intuitive front-end interfaces to deliver meaningful digital experiences' }]).map((item, index) => (
+              <div key={index} className="border-l-[3px] pl-3" style={{ borderColor: accentColor }}>
+                <div className="flex justify-between items-baseline">
+                  <p className="wrap-break-word text-[13px] font-bold text-slate-900">{item.job_title}</p>
+                  <p className="text-[10px] text-slate-600 font-bold shrink-0 uppercase tracking-wide">
+                    {(item.start_date || item.end_date) ? `${item.start_date || ''} - ${item.end_date || ''}` : 'Duration'}
+                  </p>
+                </div>
+                <p className="wrap-break-word text-[12px] text-slate-700 font-bold mt-0.5">{item.company_name}</p>
+                <p className="mt-1 wrap-break-word text-[12px] leading-relaxed text-slate-700 whitespace-pre-wrap font-medium">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-[13px] font-bold uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+            Education
+          </h2>
+          <div className="space-y-2">
+            {(education.length ? education : [{ degree: 'B.TECH in CSE', institution: 'Example Institute of Technology', start_date: 'Mar 2023', end_date: '', score: '8.7' }]).map((item, index) => (
+              <div key={index}>
+                <div className="flex justify-between items-baseline">
+                  <p className="wrap-break-word text-[13px] font-bold uppercase text-slate-900">{item.degree}</p>
+                  <p className="text-[10px] text-slate-600 font-bold shrink-0 uppercase tracking-wide">
+                    {(item.start_date || item.end_date) ? `${item.start_date || ''}${item.end_date ? ' - ' + item.end_date : ''}` : 'Duration'}
+                  </p>
+                </div>
+                <p className="wrap-break-word text-[12px] text-slate-700 mt-0.5 font-medium">{item.institution}</p>
+                {item.score && <p className="wrap-break-word text-[11px] text-slate-600 mt-0.5 font-medium">GPA: {item.score}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {projects && projects.length > 0 && (
+          <section>
+            <h2 className="text-[13px] font-bold uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+              Projects
+            </h2>
+            <div className="space-y-3">
+              {projects.map((item, index) => (
+                <div key={index}>
+                  <div className="flex justify-between items-baseline">
+                    <p className="wrap-break-word text-[13px] font-bold text-slate-900">{item.title}</p>
+                    {item.link && (
+                       <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-500 hover:underline">Link</a>
+                    )}
+                  </div>
+                  {item.tech_stack && item.tech_stack.length > 0 && (
+                    <p className="text-[10px] font-semibold text-slate-500 mt-0.5">{item.tech_stack.join(' • ')}</p>
+                  )}
+                  <p className="mt-1 wrap-break-word text-[12px] leading-relaxed text-slate-700 whitespace-pre-wrap font-medium">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section>
+          <h2 className="text-[13px] font-bold uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+            Core Skills
+          </h2>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-[12px] font-medium text-slate-800">
+            {(skills.length ? skills : ['JavaScript', 'React JS', 'Full Stack Development', 'Git', 'GitHub', 'NextJS', 'Express', 'NodeJS']).map((skill, index) => (
+              <span key={index} className="flex items-center">
+                <span className="mr-2 text-slate-400 font-bold text-[16px] leading-none">•</span>
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
