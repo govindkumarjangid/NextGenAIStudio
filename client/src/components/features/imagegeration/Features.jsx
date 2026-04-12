@@ -21,8 +21,9 @@ const Features = () => {
     ]
 
     return (
-        <section className="my-30 max-w-5xl mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="my-30 max-w-5xl mx-auto px-4 relative">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                 {features.map((feature, index) => (
                     <motion.div
                         key={index}
@@ -33,24 +34,24 @@ const Features = () => {
                         className="relative group"
                     >
                         {/* Card */}
-                        <div className="relative bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] rounded-2xl p-8 text-center overflow-hidden backdrop-blur-sm border border-white/10 shadow-lg hover:border-white/20 transition">
+                        <div className="relative bg-[radial-gradient(circle_at_top_left,#160027,#00232d)] rounded-2xl p-8 text-center overflow-hidden backdrop-blur-xl border border-white/5 shadow-2xl hover:border-cyan-400/30  transition-all duration-500 hover:-translate-y-2">
                             {/* Background glow effect */}
-                            <div className="absolute inset-0 bg-linear-to-br from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-br from-purple-500/10 to-cyan-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                             {/* Content */}
-                            <div className="relative z-10">
+                            <div className="relative z-10 flex flex-col items-center">
                                 {/* Icon */}
-                                <div className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-linear-to-br from-purple-500 to-pink-500 text-white">
+                                <div className="inline-flex items-center justify-center w-16 h-16 mb-5 rounded-2xl bg-white/5  transition-all duration-500">
                                     {feature.icon}
                                 </div>
 
                                 {/* Title */}
-                                <h3 className="text-xl font-semibold text-white mb-2">
+                                <h3 className="text-xl font-bold text-white mb-3 tracking-wide group-hover:text-cyan-300 transition-colors duration-300">
                                     {feature.title}
                                 </h3>
 
                                 {/* Description */}
-                                <p className="text-gray-300 text-sm">
+                                <p className="text-gray-400 text-sm leading-relaxed">
                                     {feature.description}
                                 </p>
                             </div>
@@ -58,19 +59,6 @@ const Features = () => {
                     </motion.div>
                 ))}
             </div>
-
-            {/* Get Started Button */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex justify-center my-12"
-            >
-                <button className="px-7 py-3 rounded-full bg-linear-to-r from-purple-500 via-pink-500 to-purple-600 text-white text-base md:text-lg hover:scale-105 transition-transform ">
-                    Get Started For Free
-                </button>
-            </motion.div>
         </section>
     )
 }

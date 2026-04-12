@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../../context/AppContext'
 import { Copy, Download, X, Image } from 'lucide-react'
+import axiosInstance from '../../../utils/axiosInstance.js'
 
 const RecentImages = () => {
 
-  const { axios } = useAppContext();
   const [images, setImages] = useState([]);
   const [userImages, setUserImages] = useState([]);
   const [loadingImages, setLoadingImages] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [displayUserCount, setDisplayUserCount] = useState(4);
+
   const token = localStorage.getItem("token");
 
 
   const fetchUserImages = async () => {
     setLoadingImages(true);
     try {
-      const { data } = await axios.get('/image/get-images');
+      const { data } = await axiosInstance.get('/image/get-images');
       if (data?.success) setUserImages(data?.images);
       else toast.error("Could not fetch user images");
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching user images:", error);
       toast.error("Could not fetch user images");
     } finally {
       setLoadingImages(false);
@@ -33,28 +33,24 @@ const RecentImages = () => {
   const fetchRecentImages = async () => {
     setLoadingImages(true);
     try {
-      const { data } = await axios.get('/image/default-images');
-      if (data?.success) console.log(data);
+      const { data } = await axiosInstance.get('/image/default-images');
       if (data?.success) setImages(data?.images);
       else toast.error("Could not fetch recent images");
     } catch (error) {
-      console.log(error);
-      toast.error("Could not fetch recent images");
+      console.log("Error fetching recent images:", error);
+      toast.error(error?.respose?.data?.message || "Could not fetch recent images");
     } finally {
       setLoadingImages(false);
     }
   }
 
   useEffect(() => {
-    if (token && !axios.defaults.headers.common["Authorization"]) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    }
     fetchRecentImages();
-  }, [axios, token]);
+  }, []);
 
   useEffect(() => {
     if (token) fetchUserImages();
-  }, []);
+  }, [token]);
 
 
   const handleCopyLink = async () => {
@@ -103,7 +99,7 @@ const RecentImages = () => {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-40 md:h-52 rounded-2xl bg-linear-to-r from-gray-700 to-gray-600 animate-pulse"
+                className="h-40 md:h-52 rounded-2xl bg-linear-to-r from-gray-400 to-gray-500 animate-pulse"
               />
             ))}
           </div>
@@ -120,26 +116,26 @@ const RecentImages = () => {
                 {/* images grid  */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
                   {userImages.slice(0, displayUserCount).map((img, i) => (
-                <motion.div
-                  key={img._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
-                  onClick={() => handleImageClick(img)}
-                >
-                  <img
-                    src={img.imageUrl}
-                    alt={img.prompt}
-                    className="h-40 md:h-52 w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 translate-y-3 hover:opacity-100 hover:translate-y-0 transition-all duration-300 ease-out flex items-end p-3 text-sm font-medium line-clamp-1">
-                    <p className="line-clamp-1">{img.prompt}</p>
-                  </div>
-                </motion.div>
-              ))}
-             </div>
+                    <motion.div
+                      key={img._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-lg cursor-pointer"
+                      onClick={() => handleImageClick(img)}
+                    >
+                      <img
+                        src={img.imageUrl}
+                        alt={img.prompt}
+                        className="h-40 md:h-52 w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 translate-y-3 hover:opacity-100 hover:translate-y-0 transition-all duration-300 ease-out flex items-end p-3 text-sm font-medium line-clamp-1">
+                        <p className="line-clamp-1">{img.prompt}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
 
                 {/* load more button  */}
                 {userImages.length > displayUserCount && (
@@ -204,7 +200,7 @@ const RecentImages = () => {
         {selectedImage && (
           <motion.div
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            className="fixed inset-0 top-10 z-50 flex items-center justify-center backdrop-blur-sm p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

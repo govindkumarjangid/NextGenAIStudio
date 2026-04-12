@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
 
@@ -40,7 +41,7 @@ const MainFeaturedCard = ({ icon, title, desc, color, path, index }) => {
 
         <div className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-cyan-200/90 group-hover:text-cyan-100 transition-colors">
           <span>Explore Tool</span>
-          <span className="transition-transform duration-300 group-hover:translate-x-1">{"->"}</span>
+          <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
         </div>
       </div>
     </motion.div>
