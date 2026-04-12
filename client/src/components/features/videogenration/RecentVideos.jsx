@@ -46,7 +46,6 @@ const RecentVideos = () => {
       if (data?.success) setUserVideos(data?.videos || []);
     } catch (error) {
       console.log(error);
-      // Don't show error for user videos as they might not have any yet
       setUserVideos([]);
     } finally {
       setLoadingVideos(false);
@@ -58,15 +57,12 @@ const RecentVideos = () => {
     try {
       const { data } = await axios.get('/video/default-videos');
       if (data?.success && data?.videos?.length > 0) {
-        console.log(data);
         setVideos(data?.videos);
       } else {
-        // Use default placeholder videos if API fails
         setVideos(defaultVideos);
       }
     } catch (error) {
       console.log(error);
-      // Use default placeholder videos on error
       setVideos(defaultVideos);
     } finally {
       setLoadingVideos(false);
@@ -74,15 +70,12 @@ const RecentVideos = () => {
   }
 
   useEffect(() => {
-    if (token && !axios.defaults.headers.common["Authorization"]) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    }
     fetchRecentVideos();
-  }, [axios, token]);
+  }, []);
 
   useEffect(() => {
     if (token) fetchUserVideos();
-  }, []);
+  }, [token]);
 
 
   const handleCopyLink = async () => {
