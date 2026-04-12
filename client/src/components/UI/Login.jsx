@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, LoaderCircle } from "lucide-react";
-import axios from "axios";
 import { useAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import axiosInstance from "../../utils/axiosInstance.js";
 
 const Login = () => {
 
-  const { showLogin, setShowLogin, setToken, state, setState } = useAppContext();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+  const { showLogin, setShowLogin, state, setState, setUser } = useAppContext();
 
 
   const handleInputChange = (e) => {
@@ -26,17 +27,17 @@ const Login = () => {
     }));
   }
 
-  const handleSubmit = async (e) => {
+    const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       const payload = state === "register" ? { ...formData } : { email: formData.email, password: formData.password };
-      const { data } = await axios.post(`/user/${state}`, payload);
+      const { data } = await axiosInstance.post(`/user/${state}`, payload);
       if (data?.success) {
         navigate("/");
-        setToken(data.token);
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
         toast.success("Login successful");
         setShowLogin(false);
       } else {
@@ -58,7 +59,7 @@ const Login = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-99 flex items-center justify-center backdrop-blur-xl px-4"
+          className="fixed inset-2 z-99 flex items-center justify-center backdrop-blur-xl px-4"
         >
           {/* Modal Box */}
           <motion.div
@@ -92,12 +93,12 @@ const Login = () => {
 
             {/* Form */}
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleFormSubmit}
               className="mt-8 space-y-5"
               onClick={(e) => e.stopPropagation()}
             >
 
-              {/* Name Field (Only Register) */}
+              {/* Name Field  */}
               {state === "register" && (
                 <input
                   type="text"
@@ -147,8 +148,7 @@ const Login = () => {
                 disabled={loading}
                 className="w-full py-3 rounded-full text-white
                 bg-linear-to-r from-purple-500 to-cyan-400
-                shadow-lg transition-all flex items-center justify-center gap-2
-                active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed font-medium"
               >
                 {loading ? (
                   <>
@@ -159,6 +159,7 @@ const Login = () => {
                   <>{state === "login" ? "Login" : "Register"}</>
                 )}
               </button>
+
             </form>
 
             {/* Toggle */}
@@ -168,7 +169,8 @@ const Login = () => {
                   Don’t have an account ? {" "}
                   <span
                     onClick={() => setState("register")}
-                    className="text-cyan-400 cursor-pointer hover:underline"
+                    className="text-cyan-400 cursor-pointer
+                    hover:underline"
                   >
                     Register
                   </span>
@@ -185,6 +187,7 @@ const Login = () => {
                 </>
               )}
             </p>
+
           </motion.div>
         </motion.div>
       )}

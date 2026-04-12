@@ -3,16 +3,16 @@ import Hero from '../../components/features/resumeAnalysis/Hero'
 import ResumeAnalize from '../../components/features/resumeAnalysis/ResumeAnalize'
 
 const ResumeAnalyzer = () => {
-  const analyzeRef = useRef(null)
-  const [sampleSignal, setSampleSignal] = useState(0)
+  const analyzeRef = useRef(null);
+  const [sampleSignal, setSampleSignal] = useState(0);
 
   const scrollToAnalyzer = () => {
-    analyzeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    analyzeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   const handleLoadSample = () => {
-    setSampleSignal((prev) => prev + 1)
-    scrollToAnalyzer()
+    setSampleSignal((prev) => prev + 1);
+    scrollToAnalyzer();
   }
 
   return (
@@ -26,4 +26,4 @@ const ResumeAnalyzer = () => {
   )
 }
 
-export default ResumeAnalyzer
+export default ResumeAnalyzer;

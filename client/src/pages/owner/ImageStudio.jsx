@@ -4,8 +4,6 @@ import Builder from '../../components/features/imagegeration/Builder.jsx';
 import RecentImages from '../../components/features/imagegeration/RecentImages.jsx';
 import { useRef } from 'react';
 
-
-
 const ImageStudio = () => {
   const builderRef = useRef(null);
 
